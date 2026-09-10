@@ -1,1 +1,9 @@
 .worktrees/
+
+# Obsidian 本机状态
+.obsidian/
+
+# Jekyll 本地构建产物
+_site/
+.jekyll-cache/
+.jekyll-metadata

@@ -1,0 +1,7 @@
+title: 松的第二大脑
+description: 基于 LLM 持续维护的个人知识 Wiki
+lang: zh-CN
+url: https://p20230101.github.io
+baseurl: /song-second-brain
+theme: jekyll-theme-minimal
+show_downloads: false

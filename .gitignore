@@ -7,3 +7,9 @@
 _site/
 .jekyll-cache/
 .jekyll-metadata
+
+# 当前 Vault 中的本地 Obsidian 自动文件
+/2026-09-10.md
+/欢迎.md
+/未命名.canvas
+/未命名 1.canvas

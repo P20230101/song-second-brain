@@ -104,3 +104,7 @@ title: 维护日志
 - 对双库检索中 5 篇有公开 PDF 的方法论文使用官方 MinerU API、`--model vlm --ocr=false` 完成全文 Markdown、JSON 和独立图片导出。
 - 从全文提取 VFM 内/外虚功、DIC 全场输入、同步 load-cell、虚场/噪声敏感性、FEMU 交叉比较和应力场重构边界条件等方法证据。
 - 新增 [`wiki/双轴-DIC-VFM-方法比较与候选创新点.md`](wiki/双轴-DIC-VFM-方法比较与候选创新点.md)，将方法路线固定为测量层—同步层—识别层，并列出四个待预试验验证的创新候选。
+
+## [2026-09-11] env | 补齐可执行 Python
+
+- 安装 Python 3.12，并将用户级 PATH 中的 Python 路径置于旧 uv trampoline 之前；重新打开终端后，`python tools/literature_capture.py` 可直接执行。

@@ -39,6 +39,7 @@ status: local-only
 
 - 用户级 `S2_API_KEY` 已配置，下载器会从 `S2_API_KEY` 读取并发送 `x-api-key` 请求头；密钥值不写入本页。
 - 交互式 search 端点曾受 HTTP 429 限流；现已切换到官方 bulk search 端点，并完成带 API Key 的最小请求验证。若出口仍被整体限流，脚本会按既定策略重试并显式记录失败，不把限流当成检索成功。
+- Python 3.12 已安装，用户级 PATH 已将其置于旧的 uv trampoline 之前；安装后需重新打开 PowerShell 或 Obsidian Terminal，使新 PATH 生效。
 - 恢复稳定后可在 Vault 根目录运行：
 
   ```powershell

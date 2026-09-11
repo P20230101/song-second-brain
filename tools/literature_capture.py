@@ -28,11 +28,27 @@ USER_AGENT = "song-second-brain-literature-capture/1.0"
 SEMANTIC_SCHOLAR_BULK_URL = "https://api.semanticscholar.org/graph/v1/paper/search/bulk"
 ARXIV_URL = "https://export.arxiv.org/api/query"
 TIMEOUT_SECONDS = 30
+SEMANTIC_SCHOLAR_MIN_INTERVAL_SECONDS = 1.1
 SEMANTIC_SCHOLAR_MAX_RETRIES = 4
 SEMANTIC_SCHOLAR_DEFAULT_BACKOFF_SECONDS = 2
+_last_semantic_scholar_request_at: float | None = None
+
+
+def _wait_for_semantic_scholar_slot(url: str) -> None:
+    global _last_semantic_scholar_request_at
+    if urllib.parse.urlsplit(url).netloc != "api.semanticscholar.org":
+        return
+    now = time.monotonic()
+    if _last_semantic_scholar_request_at is not None:
+        delay = SEMANTIC_SCHOLAR_MIN_INTERVAL_SECONDS - (now - _last_semantic_scholar_request_at)
+        if delay > 0:
+            print(f"[search-wait] Semantic Scholar，{delay:.1f} 秒后发送下一请求", file=sys.stderr)
+            time.sleep(delay)
+    _last_semantic_scholar_request_at = time.monotonic()
 
 
 def _request(url: str, accept: str, extra_headers: dict[str, str] | None = None) -> bytes:
+    _wait_for_semantic_scholar_slot(url)
     headers = {"User-Agent": USER_AGENT, "Accept": accept}
     if extra_headers:
         headers.update(extra_headers)

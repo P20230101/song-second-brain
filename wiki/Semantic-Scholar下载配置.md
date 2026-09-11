@@ -31,7 +31,7 @@ status: local-only
 ## 使用规则
 
 - Key 只保存在本机环境变量中，不写入 Markdown、`download_manifest.json`、`.env` 或 Git。
-- 下载器优先使用官方 bulk search 端点；若仍遇 HTTP 429，会读取 `Retry-After`，否则按 2、4、8、16 秒指数退避，最多重试 4 次。仍被限流时会把错误写入下载清单，不将失败伪装成成功。
+- 下载器优先使用官方 bulk search 端点；对所有 `api.semanticscholar.org` 请求主动保持至少 1.1 秒间隔（约 0.91 request/second），并在仍遇 HTTP 429 时读取 `Retry-After`，否则按 2、4、8、16 秒指数退避，最多重试 4 次。仍被限流时会把错误写入下载清单，不将失败伪装成成功。
 - Semantic Scholar 的搜索元数据不等于可下载全文。只有 `openAccessPdf` 返回可公开访问的 PDF 地址时，下载器才保存原件。
 - 文献下载后仍需按主题筛选；关键词命中不等于与双轴-DIC-VFM 研究方向相关。
 

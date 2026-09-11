@@ -20,7 +20,7 @@ status: active
 ```text
 raw/参考文献/<项目>/
 ├── <原始论文>.pdf                 # 原始资料：只读、私有
-└── MinerU/
+└── MinerU-API/
     └── <论文短名>/
         ├── <论文短名>.md          # MinerU 版面化 Markdown
         ├── images/                # 从论文独立导出的图片、图表和图注关联素材
@@ -35,13 +35,15 @@ wiki/
 
 ## 执行方式
 
-在具备 GPU 或远程 VLM 服务的机器上，对单篇文字型 PDF 使用以下命令。先以单页执行确认日志和输出，再扩展到全文。
+当前已配置 MinerU 官方云端 API。对单篇文字型 PDF 使用 `mineru-open-api`，先以单页执行确认输出，再扩展到全文；`--ocr=false` 始终显式关闭 OCR。
 
 ```powershell
-$env:MINERU_MODEL_SOURCE = 'modelscope'
-mineru -p '<PDF 绝对路径>' -o '<MinerU 输出父目录>' `
-  -m txt -b hybrid-engine --image-analysis true
+$env:MINERU_TOKEN = [Environment]::GetEnvironmentVariable('MINERU_TOKEN', 'User')
+mineru-open-api extract '<PDF 绝对路径>' --model vlm --ocr=false `
+  --format md,json -o '<MinerU-API 输出目录>' --timeout 1800
 ```
+
+本机用户环境中的 `MINERU_TOKEN` 只由 CLI 读取，`MINERU_API_TOKEN` 由 MCP 读取；两个变量均不写入仓库。也可以在 Codex 重启后直接调用已注册的 `mineru` MCP 服务。
 
 提出“按 MinerU 非 OCR 流程解析这篇 PDF”时，依次完成：
 
@@ -53,7 +55,12 @@ mineru -p '<PDF 绝对路径>' -o '<MinerU 输出父目录>' `
 
 ## 当前机器状态
 
-本机已安装 MinerU 3.4.5 与本地模型依赖。当前无可用 CUDA，故 `hybrid-engine` 不能在本机完成推理；在 GPU 工作站或配置好远程 VLM 服务前，不生成正式 MinerU 解析结果。已有两篇 PDF 均为文字型论文，可在满足该前置条件后直接进入上述流程。
+本机已安装 MinerU 3.4.5、官方 `mineru-open-api` CLI v0.5.9 和 `mineru-open-mcp` 1.0.21；官方 `MinerU-Ecosystem` 源码保存在 Vault 外的 `C:\Users\Administrator\Downloads\MinerU-Ecosystem`。当前电脑无可用 CUDA，但云端 API 已成功以 `--ocr=false` 解析两篇首批论文：
+
+- `MinerU-API/孙正平等-2025/`：1 个 Markdown、1 个 JSON、45 张图片。
+- `MinerU-API/袁颖诗-2026/`：1 个 Markdown、1 个 JSON、87 张图片。
+
+这些文件仍是私有原始研究材料，尚未将图表逐项核验后升级为 Wiki 结论。
 
 ## 研读输出的最小格式
 

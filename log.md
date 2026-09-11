@@ -83,3 +83,10 @@ title: 维护日志
 - 新增 `模板/科研日报.md`、`模板/科研周报.md`、`模板/科研月报.md`，并完成 Obsidian 模板与每日笔记目录配置。
 - 新增 `研究报告/日报/2026-09-11.md`、`研究报告/周报/2026-W37.md`、`研究报告/月报/2026-09.md`，将当前 PA12 双轴-DIC-VFM 选题、证据、缺口和下一阶段写入周期报告。
 - 更新 `研究报告/README.md`、`index.md` 与每晚 21:00 自动审查任务；该任务只补建报告，不覆盖用户已写内容，且不推送原始 PDF 或 MinerU 私有解析输出。
+
+## [2026-09-11] capture | 通过 MinerU 云端 API 完成首批 PDF 图文解析
+
+- 从官方 `MinerU-Ecosystem` GitHub 仓库安装 `mineru-open-mcp` 与 `mineru-open-api`，并将源码保存在 Vault 外的 `C:\Users\Administrator\Downloads\MinerU-Ecosystem`。
+- 使用用户级 MinerU token，调用官方 `mineru-open-api extract --model vlm --ocr=false`：两篇首批论文均完成全文解析，分别生成 Markdown、JSON 和独立图片；输出保存在 `raw/参考文献/PA12-双轴-DIC-VFM/MinerU-API/`，不进入 Git。
+- 更新 [[MinerU-PDF解析与图文研读流程]] 与 2026-09-11 日报：解析完成不等于图表核验完成，下一步是逐图/表对照并将页码定位写回专题页。
+- Semantic Scholar 的用户级 `S2_API_KEY` 已存在；最小在线调用仍受 HTTP 429 限流，下载器保留一次重试并显式记录失败。

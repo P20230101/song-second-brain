@@ -119,7 +119,7 @@ git ls-remote --heads https://github.com/K-Dense-AI/scientific-agent-skills.git 
 
 每天讨论文献后：
 
-1. 将原始对话追加到本地 `每日对话记录.md`。
+1. 将原始对话追加到本地 `inbox/对话/每日对话记录.md`。
 2. 读取 `wiki/研究上下文.md` 和当天对话，生成每日闭环页。
 3. 把文献矩阵的新增行、证据冲突、待验证问题和下一步确认写入闭环页。
 4. 只有形成可复用结论并完成来源核验后，才回写主题 Wiki。

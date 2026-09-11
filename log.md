@@ -58,3 +58,9 @@ title: 维护日志
 - 使用 `tools/literature_capture.py` 捕获 8 篇方法型种子文献；原始 PDF 和清单保存在 `raw/参考文献/双轴-DIC-VFM-选题/`。
 - Semantic Scholar 返回 HTTP 429 限流；arXiv 返回 8 篇，其中 2 篇暂定纳入全文提取，6 篇因主题不匹配初筛排除。
 - 新增 [`wiki/双轴-DIC-VFM-种子文献筛选.md`](wiki/双轴-DIC-VFM-种子文献筛选.md)，明确初筛不等于证据结论，下一步只做 2 篇全文提取。
+
+## [2026-09-11] setup | 配置 Semantic Scholar 下载器
+
+- `tools/literature_capture.py` 现在读取本机 `S2_API_KEY` 或 `SEMANTIC_SCHOLAR_API_KEY`，以 `x-api-key` 请求头调用 Semantic Scholar；密钥不写入 Vault、下载清单或 Git。
+- 无 Key 的 HTTP 429 只重试一次，第二次失败会显式记录为检索错误。
+- 新增 [`wiki/Semantic-Scholar下载配置.md`](wiki/Semantic-Scholar下载配置.md)，记录本机配置和公开 PDF 下载边界。

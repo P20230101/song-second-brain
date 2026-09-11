@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 """检索公开学术来源并把可下载的 PDF 保存到 Raw sources。
 
-脚本只使用 Python 标准库，不依赖 API key。GPT Researcher 或人工筛选的
-结果可以通过 --from-results 以 JSON 数组（或 {"results": [...]}）传入。
+脚本只使用 Python 标准库。Semantic Scholar 可选读取本机 S2_API_KEY
+或 SEMANTIC_SCHOLAR_API_KEY，以提高限流阈值；密钥不会写入输出文件。
+GPT Researcher 或人工筛选的结果可以通过 --from-results 以 JSON 数组
+（或 {"results": [...]}）传入。
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -26,17 +30,25 @@ ARXIV_URL = "https://export.arxiv.org/api/query"
 TIMEOUT_SECONDS = 30
 
 
-def _request(url: str, accept: str) -> bytes:
+def _request(url: str, accept: str, extra_headers: dict[str, str] | None = None) -> bytes:
+    headers = {"User-Agent": USER_AGENT, "Accept": accept}
+    if extra_headers:
+        headers.update(extra_headers)
     request = urllib.request.Request(
         url,
-        headers={"User-Agent": USER_AGENT, "Accept": accept},
+        headers=headers,
     )
     with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
         return response.read()
 
 
-def _request_json(url: str) -> dict[str, Any]:
-    return json.loads(_request(url, "application/json"))
+def _request_json(url: str, extra_headers: dict[str, str] | None = None) -> dict[str, Any]:
+    return json.loads(_request(url, "application/json", extra_headers))
+
+
+def _semantic_scholar_headers() -> dict[str, str]:
+    api_key = os.environ.get("S2_API_KEY") or os.environ.get("SEMANTIC_SCHOLAR_API_KEY")
+    return {"x-api-key": api_key} if api_key else {}
 
 
 def _normalise_authors(value: Any) -> list[str]:
@@ -99,7 +111,15 @@ def _search_semantic_scholar(query: str, limit: int) -> list[dict[str, Any]]:
             "fields": "title,authors,year,url,openAccessPdf",
         }
     )
-    payload = _request_json(f"{SEMANTIC_SCHOLAR_URL}?{params}")
+    url = f"{SEMANTIC_SCHOLAR_URL}?{params}"
+    headers = _semantic_scholar_headers()
+    try:
+        payload = _request_json(url, headers)
+    except urllib.error.HTTPError as exc:
+        if exc.code != 429:
+            raise
+        time.sleep(3)
+        payload = _request_json(url, headers)
     return [_normalise_record(item, "semantic-scholar") for item in payload.get("data", [])]
 
 

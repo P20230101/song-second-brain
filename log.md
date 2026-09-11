@@ -64,3 +64,9 @@ title: 维护日志
 - `tools/literature_capture.py` 现在读取本机 `S2_API_KEY` 或 `SEMANTIC_SCHOLAR_API_KEY`，以 `x-api-key` 请求头调用 Semantic Scholar；密钥不写入 Vault、下载清单或 Git。
 - 无 Key 的 HTTP 429 只重试一次，第二次失败会显式记录为检索错误。
 - 新增 [`wiki/Semantic-Scholar下载配置.md`](wiki/Semantic-Scholar下载配置.md)，记录本机配置和公开 PDF 下载边界。
+
+## [2026-09-11] design | 固定双轴 DIC-VFM 同步采集与预试验门槛
+
+- 原样归档用户提供的宁波大学动态双轴拉压系统设备照片与参数海报至 `raw/设备/`；海报列出 0–10 kN、1 kHz、±150 mm、0–4 m/s，等待说明书和校准资料核对。
+- 新增 [`wiki/双轴-DIC-VFM-同步采集与预试验方案.md`](wiki/双轴-DIC-VFM-同步采集与预试验方案.md)，明确相机帧率不必等于 DAQ 采样率，但每个 VFM 图像帧必须具有可核验的帧—采样映射、触发事件和同步残差。
+- 更新 `wiki/研究上下文.md`、`wiki/工程力学-双轴DIC-VFM研究路线.md`、`raw/设备/README.md` 与 `index.md`，并将准静态/动态 VFM 分流、DIC 面外运动与正式试验前的同步验证写为固定闸门。

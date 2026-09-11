@@ -23,6 +23,7 @@ title: 首页
 - [工程力学｜双轴试验-DIC-VFM研究路线](wiki/工程力学-双轴DIC-VFM研究路线.md) — 固定双轴试验、DIC、VFM 从选题到论文的阶段闸门和输出文件。
 - [双轴-DIC-VFM｜同步采集与预试验方案](wiki/双轴-DIC-VFM-同步采集与预试验方案.md) — 固定相机帧、力/位移采样、触发事件的一对一映射规则，以及准静态与动态 VFM 的分流门槛。
 - [双轴-DIC-VFM｜两篇核心文献研读与 PA12 路线](wiki/双轴-DIC-VFM-两篇核心文献研读-PA12路线.md) — 区分双轴设备案例与 SLS PA12 基线，固定工业相机 2D DIC、同步采集和 VFM 前置条件。
+- [MinerU PDF 解析与图文研读流程](wiki/MinerU-PDF解析与图文研读流程.md) — 固定原始 PDF、Markdown、图片与专题结论的分离保存，以及非 OCR 解析的执行闸门。
 - [双轴-DIC-VFM｜种子文献筛选](wiki/双轴-DIC-VFM-种子文献筛选.md) — 记录首轮检索的 2 篇暂定纳入、6 篇初筛排除和下一道全文提取闸门。
 - [Semantic Scholar 下载配置](wiki/Semantic-Scholar下载配置.md) — 说明本机 API Key、429 重试和公开 PDF 下载规则。
 
@@ -30,5 +31,6 @@ title: 首页
 
 - [原始资料说明](raw/README.md)
 - [Wiki 页面说明](wiki/README.md)
+- [科研报告中心](研究报告/README.md)
 - [维护日志](log.md)
 - [维护规则](AGENTS.md)

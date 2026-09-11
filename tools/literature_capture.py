@@ -25,9 +25,11 @@ from typing import Any
 
 
 USER_AGENT = "song-second-brain-literature-capture/1.0"
-SEMANTIC_SCHOLAR_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
+SEMANTIC_SCHOLAR_BULK_URL = "https://api.semanticscholar.org/graph/v1/paper/search/bulk"
 ARXIV_URL = "https://export.arxiv.org/api/query"
 TIMEOUT_SECONDS = 30
+SEMANTIC_SCHOLAR_MAX_RETRIES = 4
+SEMANTIC_SCHOLAR_DEFAULT_BACKOFF_SECONDS = 2
 
 
 def _request(url: str, accept: str, extra_headers: dict[str, str] | None = None) -> bytes:
@@ -111,22 +113,46 @@ def _search_semantic_scholar(query: str, limit: int) -> list[dict[str, Any]]:
             "fields": "title,authors,year,url,openAccessPdf",
         }
     )
-    url = f"{SEMANTIC_SCHOLAR_URL}?{params}"
+    # The bulk search endpoint returns the same paper metadata in one request
+    # and is less prone to the interactive search endpoint's shared throttling.
+    url = f"{SEMANTIC_SCHOLAR_BULK_URL}?{params}"
     headers = _semantic_scholar_headers()
-    try:
-        payload = _request_json(url, headers)
-    except urllib.error.HTTPError as exc:
-        if exc.code != 429:
-            raise
-        time.sleep(3)
-        payload = _request_json(url, headers)
-    return [_normalise_record(item, "semantic-scholar") for item in payload.get("data", [])]
+    for attempt in range(SEMANTIC_SCHOLAR_MAX_RETRIES + 1):
+        try:
+            payload = _request_json(url, headers)
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code != 429 or attempt == SEMANTIC_SCHOLAR_MAX_RETRIES:
+                raise
+            retry_after = exc.headers.get("Retry-After")
+            try:
+                delay = float(retry_after) if retry_after else 0.0
+            except ValueError:
+                delay = 0.0
+            if delay <= 0:
+                delay = SEMANTIC_SCHOLAR_DEFAULT_BACKOFF_SECONDS * (2**attempt)
+            delay = min(delay, 60.0)
+            print(
+                f"[search-wait] Semantic Scholar HTTP 429，{delay:g} 秒后重试 "
+                f"（{attempt + 1}/{SEMANTIC_SCHOLAR_MAX_RETRIES}）",
+                file=sys.stderr,
+            )
+            time.sleep(delay)
+    return [_normalise_record(item, "semantic-scholar") for item in payload.get("data", [])[:limit]]
 
 
 def _search_arxiv(query: str, limit: int) -> list[dict[str, Any]]:
+    normalized_query = " ".join(query.lower().split())
+    if "digital image correlation" in normalized_query and "virtual fields" in normalized_query:
+        arxiv_query = 'all:"digital image correlation" AND all:"virtual fields"'
+    elif "digital image correlation" in normalized_query and "biaxial" in normalized_query:
+        arxiv_query = 'all:biaxial AND all:"digital image correlation"'
+    else:
+        terms = [term.strip('"') for term in normalized_query.split() if term.strip('"')]
+        arxiv_query = " AND ".join(f'all:"{term}"' for term in terms)
     params = urllib.parse.urlencode(
         {
-            "search_query": f"all:{query}",
+            "search_query": arxiv_query,
             "start": 0,
             "max_results": limit,
             "sortBy": "relevance",
@@ -175,13 +201,18 @@ def _collect_records(
     query: str | None,
     limit: int,
     result_file: Path | None,
-) -> tuple[list[dict[str, Any]], list[str]]:
+) -> tuple[list[dict[str, Any]], list[str], dict[str, int]]:
     records: list[dict[str, Any]] = []
     errors: list[str] = []
+    source_batches: list[list[dict[str, Any]]] = []
+    search_counts: dict[str, int] = {}
     if query:
         for name, search in (("Semantic Scholar", _search_semantic_scholar), ("arXiv", _search_arxiv)):
             try:
-                records.extend(search(query, limit))
+                found = search(query, limit)
+                source_batches.append(found)
+                records.extend(found)
+                search_counts[name] = len(found)
             except (
                 urllib.error.HTTPError,
                 urllib.error.URLError,
@@ -191,6 +222,8 @@ def _collect_records(
             ) as exc:
                 message = f"{name}: {exc}"
                 errors.append(message)
+                source_batches.append([])
+                search_counts[name] = 0
                 print(f"[search-error] {message}", file=sys.stderr)
     if result_file:
         payload = json.loads(result_file.read_text(encoding="utf-8"))
@@ -206,7 +239,16 @@ def _collect_records(
         if key not in seen:
             unique.append(record)
             seen.add(key)
-    return unique[:limit], errors
+    if query and len(source_batches) > 1:
+        interleaved: list[dict[str, Any]] = []
+        for index in range(limit):
+            for batch in source_batches:
+                if index < len(batch):
+                    candidate = batch[index]
+                    if candidate not in interleaved:
+                        interleaved.append(candidate)
+        unique = interleaved + [item for item in unique if item not in interleaved]
+    return unique[:limit], errors, search_counts
 
 
 def _safe_project_name(project: str) -> str:
@@ -255,7 +297,7 @@ def run(args: argparse.Namespace) -> int:
     if args.year_from and args.year_to and args.year_from > args.year_to:
         raise ValueError("--year-from 不能晚于 --year-to")
 
-    records, search_errors = _collect_records(args.query, args.limit, args.from_results)
+    records, search_errors, search_counts = _collect_records(args.query, args.limit, args.from_results)
     records = [
         item
         for item in records
@@ -304,6 +346,7 @@ def run(args: argparse.Namespace) -> int:
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "download_root": str(download_root),
         "search_errors": search_errors,
+        "search_counts": search_counts,
         "papers": papers,
     }
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

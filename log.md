@@ -90,3 +90,17 @@ title: 维护日志
 - 使用用户级 MinerU token，调用官方 `mineru-open-api extract --model vlm --ocr=false`：两篇首批论文均完成全文解析，分别生成 Markdown、JSON 和独立图片；输出保存在 `raw/参考文献/PA12-双轴-DIC-VFM/MinerU-API/`，不进入 Git。
 - 更新 [[MinerU-PDF解析与图文研读流程]] 与 2026-09-11 日报：解析完成不等于图表核验完成，下一步是逐图/表对照并将页码定位写回专题页。
 - Semantic Scholar 的用户级 `S2_API_KEY` 已存在；最小在线调用仍受 HTTP 429 限流，下载器保留一次重试并显式记录失败。
+
+## [2026-09-11] search | 修复双库检索并建立方法候选矩阵
+
+- 更新 `tools/literature_capture.py`：Semantic Scholar 429 按 `Retry-After`/指数退避最多重试 4 次；arXiv 主题查询改为 DIC/VFM 短语的 AND 组合；清单增加各来源命中数并交错保留两个来源。
+- Semantic Scholar 检索端点改为官方 `paper/search/bulk`；用带 API Key 的最小请求验证返回正常，避免交互式 search 端点的共享限流影响双库检索。
+- 实测同一主题检索：Semantic Scholar 命中 10 条、arXiv 命中 4 条；合并清单同时包含 `semantic-scholar` 与 `arXiv`，并下载 5 个公开 PDF。
+- 新增 [`wiki/双轴-DIC-VFM-扩展检索-2026-09-11.md`](wiki/双轴-DIC-VFM-扩展检索-2026-09-11.md)，仅将题名/摘要级方法候选列入矩阵，下一步执行全文方法提取和质量筛选。
+- 更新 `wiki/研究上下文.md`：MatchID 版本固定为 2019，后续优先核对该版本可导出的场量、质量指标和元数据格式。
+
+## [2026-09-11] study | 完成方法型种子论文的 MinerU 全文提取
+
+- 对双库检索中 5 篇有公开 PDF 的方法论文使用官方 MinerU API、`--model vlm --ocr=false` 完成全文 Markdown、JSON 和独立图片导出。
+- 从全文提取 VFM 内/外虚功、DIC 全场输入、同步 load-cell、虚场/噪声敏感性、FEMU 交叉比较和应力场重构边界条件等方法证据。
+- 新增 [`wiki/双轴-DIC-VFM-方法比较与候选创新点.md`](wiki/双轴-DIC-VFM-方法比较与候选创新点.md)，将方法路线固定为测量层—同步层—识别层，并列出四个待预试验验证的创新候选。

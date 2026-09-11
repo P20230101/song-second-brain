@@ -108,3 +108,4 @@ title: 维护日志
 ## [2026-09-11] env | 补齐可执行 Python
 
 - 安装 Python 3.12，并将用户级 PATH 中的 Python 路径置于旧 uv trampoline 之前；重新打开终端后，`python tools/literature_capture.py` 可直接执行。
+- 用 Python 3.12 从 `C:\Users\Administrator\Downloads\MinerU-Ecosystem\mcp` 重新安装 `mineru-open-mcp`，恢复 Codex MCP 启动器；`mineru-open-mcp --help` 与 `mineru-open-api --version` 均可执行。

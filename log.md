@@ -52,3 +52,9 @@ title: 维护日志
 
 - 新增 [`raw/设备/README.md`](raw/设备/README.md)，固定双轴试验机、夹具、DIC、VFM 和安全资料的首轮核对字段。
 - 更新 `raw/README.md`，明确设备原始资料的存放位置和只读规则。
+
+## [2026-09-11] capture | 双轴-DIC-VFM 首轮种子文献筛选
+
+- 使用 `tools/literature_capture.py` 捕获 8 篇方法型种子文献；原始 PDF 和清单保存在 `raw/参考文献/双轴-DIC-VFM-选题/`。
+- Semantic Scholar 返回 HTTP 429 限流；arXiv 返回 8 篇，其中 2 篇暂定纳入全文提取，6 篇因主题不匹配初筛排除。
+- 新增 [`wiki/双轴-DIC-VFM-种子文献筛选.md`](wiki/双轴-DIC-VFM-种子文献筛选.md)，明确初筛不等于证据结论，下一步只做 2 篇全文提取。

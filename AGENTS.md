@@ -63,6 +63,16 @@
 - 对话追加和 Wiki 写回是两个动作：先保留原始记录，再由用户确认可复用结论后更新 `wiki/`、`index.md` 和 `log.md`。
 - 没有形成可复用结论时，只生成每日闭环页，不创建孤立主题页。
 
+## 文献捕获与下载
+
+- 文献捕获入口是 `wiki/文献捕获与筑巢.md`，下载器是 `tools/literature_capture.py`。
+- 先读取本文件、`index.md`、`wiki/研究上下文.md` 和捕获模板，再执行搜索或下载。
+- 默认把 PDF 保存到 `raw/参考文献/<项目名称>/PDF原件/`，把标题、作者、年份、来源、原文链接、PDF 链接、本地文件名和状态写入同目录的 `download_manifest.json`。
+- Raw PDF 只读，不改写、重命名或删除；已有同名文件不得覆盖。没有可确认的 `pdf_url` 时登记为 `no-pdf-url`，不得凭空拼接地址。
+- 公开检索使用 arXiv 与 Semantic Scholar；GPT Researcher 或人工筛选结果通过 `--from-results` JSON 接入。SSRN 等来源须提供可追溯的公开链接。
+- 下载完成后先核对清单和 PDF，再进入摘要、证据链、引用位置和每日复盘；在 `log.md` 追加 `capture` 条目。
+- `raw/参考文献/` 被 Git 忽略，PDF 原件和个人下载记录不发布到公开仓库。
+
 ## Wiki 巡检
 
 用户要求巡检时，检查并修复：

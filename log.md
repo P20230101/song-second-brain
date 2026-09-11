@@ -28,3 +28,9 @@ title: 维护日志
 - 新增：`wiki/每日学习闭环-2026-09-10-集成测试.md`，并在 `index.md` 登记。
 - 更新：`每日对话记录.md` 的 `2026-09-10` 节追加测试记录。
 - 未修改：`raw/` 和 `wiki/研究上下文.md`。
+
+## [2026-09-11] capture | 建立文献捕获与筑巢流程
+
+- 新增：`tools/literature_capture.py`，支持 arXiv、Semantic Scholar 和外部结果 JSON，下载 PDF 并生成 `download_manifest.json`。
+- 新增：[`wiki/文献捕获与筑巢.md`](wiki/文献捕获与筑巢.md) 与 `raw/参考文献/README.md`。
+- 更新：`AGENTS.md`、`index.md`、`raw/README.md` 和 `.gitignore`，明确本地原件只读且不发布。

@@ -15,3 +15,11 @@ _site/
 /未命名 1.canvas
 /未命名.base
 /每日对话记录.md
+
+# 本地文献原件与下载清单（不发布到公开仓库）
+/raw/参考文献/*
+!/raw/参考文献/
+!/raw/参考文献/README.md
+
+# Python 运行缓存
+__pycache__/

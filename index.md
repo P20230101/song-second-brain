@@ -27,6 +27,9 @@ title: 首页
 - [双轴-DIC-VFM｜种子文献筛选](wiki/双轴-DIC-VFM-种子文献筛选.md) — 记录首轮检索的 2 篇暂定纳入、6 篇初筛排除和下一道全文提取闸门。
 - [双轴-DIC-VFM｜扩展检索 2026-09-11](wiki/双轴-DIC-VFM-扩展检索-2026-09-11.md) — 记录 Semantic Scholar 与 arXiv 双库检索式、命中数、候选方法矩阵和下一道全文提取闸门。
 - [双轴-DIC-VFM｜方法比较与候选创新点](wiki/双轴-DIC-VFM-方法比较与候选创新点.md) — 从首轮全文解析提取 DIC/VFM 方法证据，固定 MatchID 2019 的方法层和四个待验证创新候选。
+- [PA12-DIC-VFM｜文献方法矩阵](实验/PA12-双轴-DIC-VFM/02_文献方法矩阵.md) — 用统一字段比较全场输入、同步、识别、稳健性和验证方式。
+- [MatchID 2019｜字段映射](实验/PA12-双轴-DIC-VFM/03_MatchID2019字段映射.md) — 等待真实导出样例后填写的 2D DIC 字段接口。
+- [帧—力—位移同步验证](实验/PA12-双轴-DIC-VFM/04_帧力位移同步验证.md) — 固定触发、时间映射、同步残差和 VFM 前置闸门。
 - [Semantic Scholar 下载配置](wiki/Semantic-Scholar下载配置.md) — 说明本机 API Key、429 重试和公开 PDF 下载规则。
 
 ## 系统入口

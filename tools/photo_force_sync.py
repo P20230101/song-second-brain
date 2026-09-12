@@ -498,6 +498,111 @@ def write_event_alignment_markdown(path: Path, summaries: list[dict[str, object]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def build_event_force_candidates(all_rows: list[dict[str, object]], summaries: list[dict[str, object]]) -> list[dict[str, object]]:
+    by_key = {(row["test_id"], row["image_frame"]): row for row in all_rows}
+    candidates: list[dict[str, object]] = []
+    for item in summaries:
+        event_specs = [
+            ("load_onset", item.get("image_frame_onset_est"), item.get("force_onset_candidate_s")),
+            ("force_peak", item.get("image_frame_peak_est"), item.get("force_peak_candidate_s")),
+            ("force_drop", item.get("image_frame_drop_est"), item.get("force_drop_candidate_s")),
+            ("file_last", item.get("image_frame_last_file"), None),
+        ]
+        candidate_text = str(item["image_frame_last_event_candidate"])
+        match = re.match(r"^(\d+)$", candidate_text)
+        if match:
+            event_specs.append(("visual_last_event", int(match.group(1)), None))
+        seen: set[tuple[str, int]] = set()
+        for event_type, frame, event_time in event_specs:
+            if frame is None:
+                continue
+            key = (item["test_id"], int(frame))
+            if (event_type, int(frame)) in seen:
+                continue
+            seen.add((event_type, int(frame)))
+            source_row = by_key.get(key)
+            if source_row is None:
+                candidates.append(
+                    {
+                        "test_id": item["test_id"],
+                        "event_type": event_type,
+                        "image_frame": frame,
+                        "image_file": "",
+                        "t_image_s_est": "",
+                        "event_time_s": event_time,
+                        "force_mapping_status": "frame_not_in_photo_map",
+                    }
+                )
+                continue
+            row = {
+                "test_id": item["test_id"],
+                "direction": item["direction"],
+                "speed_mm_s": item["speed_mm_s"],
+                "event_type": event_type,
+                "image_frame": frame,
+                "image_file": source_row["image_file"],
+                "t_image_s_est": source_row["t_image_s_est"],
+                "event_time_s": event_time,
+                "force_mapping_status": "estimated_from_endpoint_time_map",
+                "visual_endpoint_evidence": item["visual_endpoint_evidence"],
+                "event_alignment_status": item["event_alignment_status"],
+                "event_vfm_ready": item["event_vfm_ready"],
+            }
+            for field in [
+                "X1_Press_N",
+                "X2_Press_N",
+                "Y1_Press_N",
+                "Y2_Press_N",
+                "X1_Pos_mm",
+                "X2_Pos_mm",
+                "Y1_Pos_mm",
+                "Y2_Pos_mm",
+            ]:
+                row[field] = source_row.get(field)
+            candidates.append(row)
+    return candidates
+
+
+def write_event_force_candidates_markdown(path: Path, candidates: list[dict[str, object]]) -> None:
+    lines = [
+        "# XY 事件帧—力—位移候选表",
+        "",
+        "本表把事件对齐表中的候选图像帧直接展开为四通道力和四通道机器位移，作为 VFM 输入准备表。当前力值来自端点时间映射估计，`event_vfm_ready=false` 的行不得直接视为硬件同步结果。",
+        "",
+        "| 试验 | 事件 | 图像帧 | 估计图像时间 (s) | X1 力 (N) | X2 力 (N) | Y1 力 (N) | Y2 力 (N) | X1 位移 (mm) | X2 位移 (mm) | Y1 位移 (mm) | Y2 位移 (mm) | 映射状态 |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|",
+    ]
+    for row in candidates:
+        lines.append(
+            "| {test_id} | {event_type} | {frame} | {time} | {x1f} | {x2f} | {y1f} | {y2f} | {x1p} | {x2p} | {y1p} | {y2p} | {status} |".format(
+                test_id=row["test_id"],
+                event_type=row["event_type"],
+                frame=row["image_frame"],
+                time=format_number(float(row["t_image_s_est"]), 4) if row.get("t_image_s_est") not in (None, "") else "待补",
+                x1f=format_number(float(row["X1_Press_N"]), 2) if row.get("X1_Press_N") not in (None, "") else "待补",
+                x2f=format_number(float(row["X2_Press_N"]), 2) if row.get("X2_Press_N") not in (None, "") else "待补",
+                y1f=format_number(float(row["Y1_Press_N"]), 2) if row.get("Y1_Press_N") not in (None, "") else "待补",
+                y2f=format_number(float(row["Y2_Press_N"]), 2) if row.get("Y2_Press_N") not in (None, "") else "待补",
+                x1p=format_number(float(row["X1_Pos_mm"]), 4) if row.get("X1_Pos_mm") not in (None, "") else "待补",
+                x2p=format_number(float(row["X2_Pos_mm"]), 4) if row.get("X2_Pos_mm") not in (None, "") else "待补",
+                y1p=format_number(float(row["Y1_Pos_mm"]), 4) if row.get("Y1_Pos_mm") not in (None, "") else "待补",
+                y2p=format_number(float(row["Y2_Pos_mm"]), 4) if row.get("Y2_Pos_mm") not in (None, "") else "待补",
+                status=row["force_mapping_status"],
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## 使用规则",
+            "",
+            "- `load_onset`、`force_peak`、`force_drop` 是力侧事件投影到图像帧的候选；`file_last` 和 `visual_last_event` 是图像末端候选。",
+            "- VFM 试跑先使用事件顺序完整且图像证据明确的试验；`XY-0.1-02` 的破坏候选帧因 DIC 输入未覆盖，必须先重建 MatchID 输入。",
+            "- 该表用于准备和筛选，真正提交论文前仍需共同触发/时间戳或同步敏感性分析。",
+        ]
+    )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, default=Path(r"D:\C盘迁移\Desktop\yuan\data"))
@@ -542,6 +647,9 @@ def main() -> None:
         args.out_dir / "xy_event_alignment.csv",
         [{field: item.get(field) for field in event_fields} for item in summaries],
     )
+    event_force_candidates = build_event_force_candidates(all_rows, summaries)
+    write_csv(args.out_dir / "xy_event_force_candidates.csv", event_force_candidates)
+    write_event_force_candidates_markdown(args.out_dir / "xy_event_force_candidates.md", event_force_candidates)
     print(f"mapped_images={len(all_rows)} trials={len(summaries)}")
     print(f"output_dir={args.out_dir.resolve()}")
 

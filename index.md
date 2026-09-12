@@ -56,6 +56,7 @@ title: 首页
 - [XY 照片—力同步汇总表](实验/PA12-双轴-DIC-VFM/results/xy_frequency_summary.md) — 10 组 XY 试验的截图结构汇总表；每张照片的逐帧插入力值见 [xy_photo_force_sync.csv](实验/PA12-双轴-DIC-VFM/results/xy_photo_force_sync.csv)。
 - [XY DIC 有效频率范围表](实验/PA12-双轴-DIC-VFM/results/xy_dic_frequency_range.md) — 将名义频率、完整力记录窗口和加载事件窗口合并为可用于粗同步的范围；非连续帧组明确跳过。
 - [XY 加载—峰值—破坏事件对齐表](实验/PA12-双轴-DIC-VFM/results/xy_event_alignment.md) — 把加载起点、力峰值、峰后下降投影到图像帧，并单独标出末帧图像证据和待核验项。
+- [XY 事件帧—力—位移候选表](实验/PA12-双轴-DIC-VFM/results/xy_event_force_candidates.md) — 将候选事件帧直接带出四通道力/位移，作为 VFM 输入准备和首批试验筛选表。
 - [XZ 图像—DIC 元数据表](实验/PA12-双轴-DIC-VFM/results/xz_image_dic_inventory.md) — 只列出当前可读的 XZ 图像/MatchID/CIHX 字段，缺失 `XZ.z01` 的力字段留空。
 
 ### 报告中心（按报告日期）

@@ -250,15 +250,15 @@ frame_id, image_file, t_image, trigger_id
 
 已将可读取的 XY 力记录与 10 组图像序列逐帧展开，覆盖 **5,309 张 JPEG**。每一行包含图像帧号、相对路径、估计图像时刻、四个力通道、四个位移通道以及力记录左右行号；因此每张照片都有一组可追溯的插入力值，而不是只给试验级平均值。
 
-- [汇总表（Markdown）](results/xy_frequency_summary.md)：按用户截图的列结构输出速度、照片数量、照片设置/实际频率、DIC 位移、力样本数、力数据位移/时间和力传感器频率。
-- [DIC 有效频率范围表](results/xy_dic_frequency_range.md)：按连续 MatchID/DIC 帧数给出完整力记录窗口与加载事件窗口的频率范围；非连续帧组跳过。
-- [事件对齐表（Markdown）](results/xy_event_alignment.md) 与 [事件对齐表（CSV）](results/xy_event_alignment.csv)：把加载起点、力峰值、峰后下降映射到图像帧，并保留末帧破坏/结束的图像证据状态。
-- [事件帧—力—位移候选表（Markdown）](results/xy_event_force_candidates.md) 与 [CSV](results/xy_event_force_candidates.csv)：将每个候选事件帧的四通道力和四通道机器位移直接展开，作为 VFM 输入准备入口。
+- [汇总表（Markdown）](results/审计/xy_frequency_summary.md)：按用户截图的列结构输出速度、照片数量、照片设置/实际频率、DIC 位移、力样本数、力数据位移/时间和力传感器频率。
+- [DIC 有效频率范围表](results/审计/xy_dic_frequency_range.md)：按连续 MatchID/DIC 帧数给出完整力记录窗口与加载事件窗口的频率范围；非连续帧组跳过。
+- [事件对齐表（Markdown）](results/审计/xy_event_alignment.md) 与 [事件对齐表（CSV）](results/审计/xy_event_alignment.csv)：把加载起点、力峰值、峰后下降映射到图像帧，并保留末帧破坏/结束的图像证据状态。
+- [事件帧—力—位移候选表（Markdown）](results/审计/xy_event_force_candidates.md) 与 [CSV](results/审计/xy_event_force_candidates.csv)：将每个候选事件帧的四通道力和四通道机器位移直接展开，作为 VFM 输入准备入口。
 - [VFM 照片—力对应表（简版）](results/01_VFM照片力对应.csv)：日常使用的最小表格，每张照片一行，只保留四通道力和必要的照片信息。
 - [事件和频率概览（简版）](results/02_事件和频率概览.md)：日常查看事件候选帧和频率范围；其余结果文件作为审计底稿保留。
-- [汇总表（CSV）](results/xy_frequency_summary.csv)：便于 Excel/Obsidian 继续筛选。
-- [逐帧照片—力映射（CSV）](results/xy_photo_force_sync.csv)：唯一的逐帧数据入口，包含 `image_frame`、`image_file`、`t_image_s_est`、`force_row_left/right`、`X1/X2/Y1/Y2_Press_N` 和 `X1/X2/Y1/Y2_Pos_mm`。
-- [XZ 图像—DIC 元数据表](results/xz_image_dic_inventory.md)：XZ 当前能读出的图像数量、CIHX、MatchID 和 CSV 缺帧情况；缺 `XZ.z01` 的力字段不填。
+- [汇总表（CSV）](results/审计/xy_frequency_summary.csv)：便于 Excel/Obsidian 继续筛选。
+- [逐帧照片—力映射（CSV）](results/审计/xy_photo_force_sync.csv)：唯一的逐帧数据入口，包含 `image_frame`、`image_file`、`t_image_s_est`、`force_row_left/right`、`X1/X2/Y1/Y2_Press_N` 和 `X1/X2/Y1/Y2_Pos_mm`。
+- [XZ 图像—DIC 元数据表](results/审计/xz_image_dic_inventory.md)：XZ 当前能读出的图像数量、CIHX、MatchID 和 CSV 缺帧情况；缺 `XZ.z01` 的力字段不填。
 - [生成脚本](../../tools/photo_force_sync.py)：从 `D:\C盘迁移\Desktop\yuan\data` 重新生成上述三个文件，避免手工复制表格。
 
 ### 9.1 当前映射定义

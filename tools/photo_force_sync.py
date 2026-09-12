@@ -684,7 +684,7 @@ def write_simple_overview_markdown(path: Path, summaries: list[dict[str, object]
             "2. 再用本页确认加载帧、峰值帧、峰后帧和破坏候选帧。",
             "3. 只有图像证据、力事件和同步时间都确认后，才把对应窗口送入 VFM；当前所有行仍是估计同步。",
             "",
-            "详细审计文件仍保留在同一 `results` 目录，但日常不需要打开。",
+            "详细审计文件统一保存在 `results/审计/`，日常不需要打开。",
         ]
     )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -710,11 +710,12 @@ def main() -> None:
         rows, summary = analyse_trial(args.data_root, image_root / name, force_root)
         all_rows.extend(rows)
         summaries.append(summary)
-    write_csv(args.out_dir / "xy_photo_force_sync.csv", all_rows)
-    write_csv(args.out_dir / "xy_frequency_summary.csv", summaries)
-    write_summary_markdown(args.out_dir / "xy_frequency_summary.md", summaries)
-    write_dic_frequency_range_markdown(args.out_dir / "xy_dic_frequency_range.md", summaries)
-    write_event_alignment_markdown(args.out_dir / "xy_event_alignment.md", summaries)
+    audit_dir = args.out_dir / "审计"
+    write_csv(audit_dir / "xy_photo_force_sync.csv", all_rows)
+    write_csv(audit_dir / "xy_frequency_summary.csv", summaries)
+    write_summary_markdown(audit_dir / "xy_frequency_summary.md", summaries)
+    write_dic_frequency_range_markdown(audit_dir / "xy_dic_frequency_range.md", summaries)
+    write_event_alignment_markdown(audit_dir / "xy_event_alignment.md", summaries)
     event_fields = [
         "test_id",
         "direction",
@@ -731,12 +732,12 @@ def main() -> None:
         "event_vfm_ready",
     ]
     write_csv(
-        args.out_dir / "xy_event_alignment.csv",
+        audit_dir / "xy_event_alignment.csv",
         [{field: item.get(field) for field in event_fields} for item in summaries],
     )
     event_force_candidates = build_event_force_candidates(all_rows, summaries)
-    write_csv(args.out_dir / "xy_event_force_candidates.csv", event_force_candidates)
-    write_event_force_candidates_markdown(args.out_dir / "xy_event_force_candidates.md", event_force_candidates)
+    write_csv(audit_dir / "xy_event_force_candidates.csv", event_force_candidates)
+    write_event_force_candidates_markdown(audit_dir / "xy_event_force_candidates.md", event_force_candidates)
     write_simple_vfm_force_csv(args.out_dir / "01_VFM照片力对应.csv", all_rows, summaries)
     write_simple_overview_markdown(args.out_dir / "02_事件和频率概览.md", summaries)
     print(f"mapped_images={len(all_rows)} trials={len(summaries)}")

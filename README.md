@@ -13,3 +13,10 @@
 - `AGENTS.md`：规定 Wiki 结构和维护工作流的 Schema。
 
 使用方式请从 [Wiki 首页](index.md) 开始。
+
+日常实验只看：
+
+- [事件和频率概览](实验/PA12-双轴-DIC-VFM/results/02_事件和频率概览.md)
+- [VFM 照片—力对应表](实验/PA12-双轴-DIC-VFM/results/01_VFM照片力对应.csv)
+
+详细技术结果统一放在 `实验/PA12-双轴-DIC-VFM/results/审计/`，不作为日常入口。

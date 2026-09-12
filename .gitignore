@@ -30,6 +30,9 @@ _site/
 /.opencode/
 /copilot/
 
+# Codex/Obsidian 临时预览和中间图片
+/tmp/
+
 # 本地文献原件与下载清单（不发布到公开仓库）
 /raw/参考文献/*
 !/raw/参考文献/

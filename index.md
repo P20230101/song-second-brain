@@ -33,6 +33,7 @@ title: 首页
 - [MatchID 2019｜字段映射](实验/PA12-双轴-DIC-VFM/03_MatchID2019字段映射.md) — 等待真实导出样例后填写的 2D DIC 字段接口。
 - [帧—力—位移同步验证](实验/PA12-双轴-DIC-VFM/04_帧力位移同步验证.md) — 固定触发、时间映射、同步残差和 VFM 前置闸门。
 - [事件记录模板](实验/PA12-双轴-DIC-VFM/同步/events.csv) — 以 `event_id`、`trigger_id`、`frame_id` 和机器采样号连接图像、力和位移。
+- [yuan 文件夹｜论文与数据审计 2026-09-12](wiki/yuan-论文与数据审计-2026-09-12.md) — 汇总 12,766 个文件的只读分类、4 篇 PDF 的 MinerU 解析、59 个公式和 22 个表格定位，以及当前数据字段缺口。
 - [Semantic Scholar 下载配置](wiki/Semantic-Scholar下载配置.md) — 说明本机 API Key、429 重试和公开 PDF 下载规则。
 
 ## 系统入口

@@ -5,3 +5,5 @@ url: https://p20230101.github.io
 baseurl: /song-second-brain
 theme: jekyll-theme-minimal
 show_downloads: false
+exclude:
+  - 模板

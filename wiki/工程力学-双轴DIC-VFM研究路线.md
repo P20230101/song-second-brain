@@ -47,7 +47,7 @@ status: draft-for-selection
 ```text
 raw/设备/设备规格与校准记录.md       # 原始说明或核对摘要
 wiki/研究上下文.md                    # 更新后的稳定边界
-wiki/每日学习闭环-YYYY-MM-DD.md       # 未决问题和确认记录
+研究报告/日报/YYYY-MM-DD.md           # 未决问题和确认记录
 ```
 
 ### 阶段 1：文献捕获与方法学习

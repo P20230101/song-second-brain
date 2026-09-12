@@ -136,3 +136,4 @@ title: 维护日志
 - 根据用户确认，将正式项目路线统一修正为 MatchID 2019 **3D 立体 DIC**；文献中的 2D DIC 只作为误差对照，袁文件夹中明确标注 `MatchID 2D-Version 19.2.2.0` 的旧工程只作为历史处理基线。
 - 只读核对 `D:\C盘迁移\Desktop\yuan` 的图像、伴随压缩帧、CSV/XLS、MatchID 工程、VFM 二进制文件和 CIHX 相机元数据，记录帧数不一致、旧路径引用、缺失 3D 标定/触发日志和二进制结果不可读等缺口。
 - 新增 [`wiki/yuan-仿真与实验数据深入分析-2026-09-12.md`](wiki/yuan-仿真与实验数据深入分析-2026-09-12.md)，把 3D DIC—同步四通道边界力—VFM/FEMU—有限元预测串成小论文与大论文的连续路线，并给出下一次只需提供一份匹配试验包的执行入口。
+- 复核代表性 `Img000000.jpg.csv` 导出表头只有 `x_pic/y_pic/u/v/r/sigma/correlationPath/ShapeIndex`，提交 `4d961cf` 将其记录为二维历史字段，明确 3D DIC 必须另建含 `Z/W` 的导出接口。

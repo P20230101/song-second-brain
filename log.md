@@ -185,3 +185,10 @@ title: 维护日志
 - 安装 7-Zip 26.03，并安装 Python `py7zr` 及其归档算法依赖；现有 `openpyxl`、`xlrd`、`pandas` 均通过导入和实际 Excel 工作簿读取验证。
 - 将 `C:\Program Files\7-Zip` 与 Python Scripts 目录写入用户级 `PATH`，新开的终端可直接调用 `7z`、`py7zr`。
 - 用 7-Zip 实测 `XZ.zip`：该归档共有 3 卷、当前为第 3 卷（`Volume Index=2`），明确报错 `Missing volume : XZ.z01`。由此确认 XZ 力 Excel 暂不可读的原因是原始第一分卷缺失，不是软件依赖不足；不以目录名、文件大小或图像帧数伪造力数据。
+
+## [2026-09-12] data-sync | 生成 XY 逐帧照片—力唯一值映射
+
+- 新增 `tools/photo_force_sync.py`，读取 `yuan/data/XY` 的 Excel `Press.T`/`Pos.T` 和 10 组 JPEG，生成 `实验/PA12-双轴-DIC-VFM/results/xy_photo_force_sync.csv`、`xy_frequency_summary.csv` 与 `xy_frequency_summary.md`。
+- 全量覆盖 5,309 张 JPEG；验收通过：10 组试验均有首帧/末帧，估计图像时刻严格递增，四个力通道和四个位移通道逐帧可插值，汇总列齐全，力传感器频率显示为 1000 Hz。
+- 起始事件改为只识别“高于基线”的连续上升，避免把初始回落/预载卸载当成加载起点；Y-11 明确标记 `estimated_preloaded_start`。该结果是端点锚定的唯一力值估计，因缺相机时间戳/共同触发号仍保持 `vfm_eligible=false`。
+- 在 `07_全量照片-力-DIC配对清单.md` 与 `index.md` 增加结果入口；XZ 仍因缺 `XZ.z01` 只完成目录级配对，未填充虚构的力值或频率。

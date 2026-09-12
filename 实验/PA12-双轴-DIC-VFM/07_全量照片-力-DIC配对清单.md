@@ -245,3 +245,29 @@ frame_id, image_file, t_image, trigger_id
 | 进入 VFM 本构识别 | 当前不允许；先完成同步闸门 |
 
 这份清单是后续 XY/XZ 所有数据处理的唯一配对入口；原始数据仍留在 `yuan/data`，不把大体积照片、Excel 或压缩包复制进 Wiki 仓库。
+
+## 9. XY 逐帧唯一力值结果（2026-09-12）
+
+已将可读取的 XY 力记录与 10 组图像序列逐帧展开，覆盖 **5,309 张 JPEG**。每一行包含图像帧号、相对路径、估计图像时刻、四个力通道、四个位移通道以及力记录左右行号；因此每张照片都有一组可追溯的插入力值，而不是只给试验级平均值。
+
+- [汇总表（Markdown）](results/xy_frequency_summary.md)：按用户截图的列结构输出速度、照片数量、照片设置/实际频率、DIC 位移、力样本数、力数据位移/时间和力传感器频率。
+- [汇总表（CSV）](results/xy_frequency_summary.csv)：便于 Excel/Obsidian 继续筛选。
+- [逐帧照片—力映射（CSV）](results/xy_photo_force_sync.csv)：唯一的逐帧数据入口，包含 `image_frame`、`image_file`、`t_image_s_est`、`force_row_left/right`、`X1/X2/Y1/Y2_Press_N` 和 `X1/X2/Y1/Y2_Pos_mm`。
+- [生成脚本](../../tools/photo_force_sync.py)：从 `D:\C盘迁移\Desktop\yuan\data` 重新生成上述三个文件，避免手工复制表格。
+
+### 9.1 当前映射定义
+
+1. 力记录使用 Excel `Press.T` 的实际时间列；当前 XY 文件的名义力传感器频率为 1000 Hz，持续时间和位移使用 `T_end`，不使用 `样本数/1000` 代替时间戳。
+2. 首帧锚定到“加载起点候选”：在前 50 个力样本中估计基线，取连续 3 个样本超过 `基线 + max(10×MAD, 5 N)` 的第一个时刻。这样不会把 X-05 的初始回落或 Y-11 的预载卸载误判为加载起点。
+3. 末帧锚定到 `Press.T` 最后一个样本；中间图像时刻按帧序号线性插值，力和位移再按时间线性插值。`force_row_left/right` 保留插值两侧的原始行号。
+4. Y-11 的记录从高预载开始且没有可识别的上升起点，首帧按 `t=0` 保留，并标记 `estimated_preloaded_start`；这不是把预载伪装成零载起点。
+
+### 9.2 结果边界
+
+这一步完成的是“每张照片均有唯一、可审计的插入力值估计”，不是硬件共同触发意义上的实测同步。当前 JPEG 没有可用逐帧时间戳，也没有相机—DAQ 共同触发号，所以逐帧字段仍为 `t_image_s_est`，全部 `vfm_eligible=false`。取得触发号、相机时间戳或一份可复核的同步事件后，只需替换 `t_image_s_est` 并保留同一 CSV 结构，不能把估计值直接当成 VFM 实测输入。
+
+汇总中的照片数量按实际递归找到的 JPEG 计数；它与部分截图中的 MatchID 输入数不同（例如 X-05 为 165 张 JPEG、130 个 m2inp 帧；X-06 为 133 张 JPEG），差异已保留在汇总 CSV 的 `m2inp_frame_count` 与清单表中，没有删除图片来强行对齐。
+
+## 10. XZ 当前阻塞
+
+XZ 的照片、MatchID 输入和 CSV 已完成目录级配对，但 `XZ.z01` 缺失导致 12 个 XZ 力 Excel 的压缩 payload 仍不可读。没有力时间列就无法为 XZ 照片生成同样的逐帧唯一力值，也不能填入 XZ 力传感器频率。补回 `XZ.z01`（或直接提供解压出的 XZ `.xls`）后，沿用本页第 9 节脚本和字段，不改变 XY 结果。

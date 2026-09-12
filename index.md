@@ -53,6 +53,7 @@ title: 首页
 - [PA12 双轴-DIC-VFM｜最小预试验矩阵](实验/PA12-双轴-DIC-VFM/05_最小预试验矩阵.md) — 按单变量原则验证事件链、3D DIC 和整体/全场对照。
 - [XY 方向照片—力传感器频率初步核验](实验/PA12-双轴-DIC-VFM/06_XY频率对照与初步核验.md) — 核对截图中的速度、力采样、照片数量和位移闭合；固定逐帧时间戳匹配表。
 - [全量照片—力—DIC 配对清单](实验/PA12-双轴-DIC-VFM/07_全量照片-力-DIC配对清单.md) — 盘点 `yuan/data` 的解压目录与 ZIP 分卷，按试验编号配对 XY/XZ 图像、MatchID、CSV 和力文件，并标注缺失分卷、重复项、孤立项与 VFM 闸门。
+- [XY 照片—力同步汇总表](实验/PA12-双轴-DIC-VFM/results/xy_frequency_summary.md) — 10 组 XY 试验的截图结构汇总表；每张照片的逐帧插入力值见 [xy_photo_force_sync.csv](实验/PA12-双轴-DIC-VFM/results/xy_photo_force_sync.csv)。
 
 ### 报告中心（按报告日期）
 

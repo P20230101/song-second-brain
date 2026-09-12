@@ -71,6 +71,19 @@ test_id
 
 要完成 XZ 的数值级配对，只需把与 `XZ.zip` 同一套压缩包的 `XZ.z01` 放回 `D:\C盘迁移\Desktop\yuan\data`，或者直接提供这些 XZ `.xls` 的解压文件；不需要重新拍照，也不需要改动原始图像。
 
+### 2.3 本地读取环境已补齐并验证
+
+本机已安装并验证以下读取能力：
+
+| 能力 | 已配置组件 | 验证结果 |
+|---|---|---|
+| 读取当前伪 `.xls`（实际为 Excel 工作簿） | Python 3.12、`openpyxl`、`pandas` | 成功打开 `x-05-0.1` 的 `Pos`、`Speed`、`Press` 工作表 |
+| 读取传统 `.xls` | `xlrd` | 已可由 Python 导入，作为传统二进制 Excel 的兼容读取器 |
+| 读取 ZIP/7z 与诊断分卷 | 7-Zip 26.03、`py7zr` 及算法依赖 | 命令行和 Python 导入均可用 |
+| 命令行可用性 | 用户级 `PATH` 已加入 `C:\Program Files\7-Zip` 和 Python Scripts 目录 | 新开的终端可直接使用 `7z` 与 `py7zr` |
+
+对 `XZ.zip` 的 7-Zip 实测结果是：`Multivolume=+`、总共 3 卷、`Volume Index=2`，并明确报告 `Missing volume : XZ.z01`。因此当前 XZ 力表不可读是**源分卷缺失**，不是依赖、权限、Excel 格式或解压软件的缺失；不能通过安装更多库修复不存在的压缩数据。
+
 ## 3. XY 全量照片—力配对
 
 ### 3.1 逐试验清单

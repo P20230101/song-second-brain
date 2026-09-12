@@ -111,3 +111,16 @@ title: 维护日志
 - 用 Python 3.12 从 `C:\Users\Administrator\Downloads\MinerU-Ecosystem\mcp` 重新安装 `mineru-open-mcp`，恢复 Codex MCP 启动器；`mineru-open-mcp --help` 与 `mineru-open-api --version` 均可执行。
 - 按 Semantic Scholar 官方 1 request/second 规则，在脚本的所有 `api.semanticscholar.org` 请求入口加入 1.1 秒最小间隔；429 退避重试继续保留。
 - 新增 `实验/PA12-双轴-DIC-VFM/02_文献方法矩阵.md`、`03_MatchID2019字段映射.md` 和 `04_帧力位移同步验证.md`，将方法证据、MatchID 2019 字段和同步闸门固定为可填充接口。
+
+## [2026-09-12] search | 扩大来源并整理试样/DIC/VFM 证据
+
+- 扩展双轴试样几何、DIC 散斑/不确定度、VFM 可辨识性和同步检索；来源地图覆盖 Web of Science、Scopus、ScienceDirect、OpenAlex、Crossref、Semantic Scholar 和 arXiv 的不同用途。
+- 完成 `yuan` 文件夹的论文与数据只读审计，将 4 篇核心 PDF 的 MinerU 解析结果和字段缺口写入 `wiki/yuan-论文与数据审计-2026-09-12.md`。
+- 新增 `wiki/科研产出型Skills-选择与使用.md`，登记 `literature-research`、`experiment-design` 和 `mineru` 的安装位置及科研产出分工。
+
+## [2026-09-12] design | 固定阶段 1、最小预试验和 VFM 软件接口
+
+- 新增 `wiki/阶段1-研究问题决策与下一步-2026-09-12.md`：将全场信息贡献列为主线候选 B，将同步误差列为质量闸门 A，将几何/加载路径列为扩展候选 C。
+- 新增 `实验/PA12-双轴-DIC-VFM/05_最小预试验矩阵.md`：按单变量原则固定事件链、平面/刚体 DIC、MatchID 2019 参数扫描、低载荷基线和整体/全场对照。
+- 新增 `wiki/VFM软件识别闭环与本构参数验收.md`：固定从 MatchID 2019 场量和双轴边界力到本构参数、独立验证和不确定度报告的软件接口。
+- 新增 `wiki/论文启发与GitHub工作时间线.md`：按论文启发和北京时间 Git 提交记录对应每日研究产出。

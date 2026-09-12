@@ -198,3 +198,9 @@ title: 维护日志
 - 新增 `实验/PA12-双轴-DIC-VFM/results/xy_dic_frequency_range.md`，以连续 MatchID/DIC 帧数分别计算完整力记录窗口和加载事件窗口，输出频率范围；`XY-0.1-02` 因仅有 10 个非连续 m2inp 帧暂时跳过频率计算。
 - 新增 `实验/PA12-双轴-DIC-VFM/results/xz_image_dic_inventory.csv` 与 `.md`，列出 7 组 XZ 图像/CIHX/MatchID/CSV 可读字段；缺失 `XZ.z01` 导致的力字段保持空白。
 - 更新 XY 汇总说明、全量配对清单和首页导航：频率仅作粗同步范围，不能替代逐帧硬件时间戳；缺失证据直接跳过，不用其他试验数据代填。
+
+## [2026-09-12] data-sync | 生成加载—峰值—破坏事件对齐表
+
+- 新增 `实验/PA12-双轴-DIC-VFM/results/xy_event_alignment.md` 与 `.csv`，为每组 XY 试验列出加载起点候选帧、力峰值候选帧、峰后下降候选帧、文件末帧和图像侧破坏/结束证据。
+- 事件帧沿用同一端点时间映射；无法从图像或力记录确认的项目明确标记 `review`，Y-11 标记预载起点，X-05 标记末端离开 ROI，XY-0.1-02 标记 DIC 输入未覆盖破坏帧。
+- 事件表只用于粗同步和 VFM 窗口筛选；在共同触发/时间戳补齐前，`event_vfm_ready` 保持 `false`。

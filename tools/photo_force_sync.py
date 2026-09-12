@@ -84,6 +84,32 @@ DIC_FREQUENCY_FRAME_COUNT: dict[str, int | None] = {
     "Y-11-10-01": 711,
 }
 
+VISUAL_ENDPOINT_EVIDENCE = {
+    "X-05-0.1-01": "末端 Img000128/129 起离开 ROI，Img000164 不作为破坏终点",
+    "X-06-1.0-01": "Img000132 可见断裂/破坏，候选有效末帧",
+    "X-07-10-01": "Img000080 模糊，末端破坏未确认",
+    "Xy-0.1-01": "Img000288 可见明显破坏，候选有效末帧",
+    "XY-0.1-02": "Img000258 可见破坏，但 m2inp 当前只到 Img000193",
+    "Xy-03-10-01": "Img000020 可见明显破坏，候选有效末帧",
+    "Xy-04-1-01": "Img000250/266 可见破坏，需确认最后有效 ROI",
+    "Y-09-0.1-02": "Img001824 中部断裂，候选有效末帧",
+    "Y-10-1-01": "Img001557 破坏；末端力大幅变化，事件类型需核对",
+    "Y-11-10-01": "Img000710 破坏；记录从高预载开始",
+}
+
+VISUAL_LAST_EVENT_CANDIDATE = {
+    "X-05-0.1-01": "待核验（建议回溯至 ROI 完整帧）",
+    "X-06-1.0-01": "132",
+    "X-07-10-01": "待核验",
+    "Xy-0.1-01": "288",
+    "XY-0.1-02": "258（DIC 输入未覆盖）",
+    "Xy-03-10-01": "20",
+    "Xy-04-1-01": "250/266（待核验）",
+    "Y-09-0.1-02": "1824",
+    "Y-10-1-01": "1557（事件类型待核验）",
+    "Y-11-10-01": "710",
+}
+
 
 def numeric_frame(path: Path) -> int:
     match = re.search(r"Img(\d+)\.jpg$", path.name, flags=re.IGNORECASE)
@@ -222,6 +248,14 @@ def format_number(value: float | int | None, digits: int = 6) -> str:
     return f"{value:.{digits}f}".rstrip("0").rstrip(".")
 
 
+def event_frame(event_time: float | None, anchor_start: float, anchor_end: float, image_count: int) -> int | None:
+    if event_time is None:
+        return None
+    fraction = (event_time - anchor_start) / (anchor_end - anchor_start)
+    fraction = min(max(fraction, 0.0), 1.0)
+    return int(math.floor(fraction * (image_count - 1) + 0.5))
+
+
 def analyse_trial(data_root: Path, image_directory: Path, force_directory: Path) -> tuple[list[dict[str, object]], dict[str, object]]:
     name = image_directory.name
     force_path = force_directory / IMAGE_DIR_TO_FORCE[name][0]
@@ -320,7 +354,15 @@ def analyse_trial(data_root: Path, image_directory: Path, force_directory: Path)
             "dic_frequency_range_high_Hz",
         ]:
             summary[field] = None
-        summary["dic_frequency_status"] = "blocked_incomplete_dic_frames"
+    summary["dic_frequency_status"] = "blocked_incomplete_dic_frames"
+    summary["image_frame_onset_est"] = event_frame(onset, anchor_start, anchor_end, len(photos))
+    summary["image_frame_peak_est"] = event_frame(peak_time, anchor_start, anchor_end, len(photos))
+    summary["image_frame_drop_est"] = event_frame(drop, anchor_start, anchor_end, len(photos))
+    summary["image_frame_last_file"] = numeric_frame(photos[-1])
+    summary["image_frame_last_event_candidate"] = VISUAL_LAST_EVENT_CANDIDATE[name]
+    summary["visual_endpoint_evidence"] = VISUAL_ENDPOINT_EVIDENCE[name]
+    summary["event_alignment_status"] = "preloaded_start_review" if onset is None else "event_frames_estimated_endpoint_review"
+    summary["event_vfm_ready"] = False
     return rows, summary
 
 
@@ -341,7 +383,7 @@ def write_summary_markdown(path: Path, summaries: list[dict[str, object]]) -> No
     lines = [
         "# XY 照片—力同步汇总表",
         "",
-        "本表按用户提供的列结构生成。照片实际频率和照片窗口位移采用首尾事件锚定估算；DIC 位移列只有用户截图提供的六组保留值，其余写为待导出。DIC 有效频率范围见 `xy_dic_frequency_range.md`，逐帧结果见 `xy_photo_force_sync.csv`。",
+        "本表按用户提供的列结构生成。照片实际频率和照片窗口位移采用首尾事件锚定估算；DIC 位移列只有用户截图提供的六组保留值，其余写为待导出。DIC 有效频率范围见 `xy_dic_frequency_range.md`，加载—峰值—破坏事件帧见 `xy_event_alignment.md`，逐帧结果见 `xy_photo_force_sync.csv`。",
         "",
         "| 试验 | 方向 | 速度 (mm/s) | 照片数量 | 照片设置频率 (Hz) | 照片实际拍摄频率估算 (Hz) | 照片导出的位移 (mm) | 力的数量 | 力数据算位移 (mm) | 力数据算时间 (s) | 力传感器频率 (Hz) | 同步状态 |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|",
@@ -419,6 +461,43 @@ def write_dic_frequency_range_markdown(path: Path, summaries: list[dict[str, obj
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def write_event_alignment_markdown(path: Path, summaries: list[dict[str, object]]) -> None:
+    lines = [
+        "# XY 加载起点—峰值—破坏/结束事件对齐表",
+        "",
+        "本表把力记录事件投影到图像帧号，供人工确认和后续 VFM 窗口筛选。帧号是端点映射下的候选值；没有共同触发/相机时间戳时，状态保持 `review`，不能写成实测同步。",
+        "",
+        "| 试验 | 首帧加载起点候选帧 | 力峰值时间 (s) | 峰值候选帧 | 力下降时间 (s) | 下降候选帧 | 文件末帧 | 破坏/结束图像候选 | 图像证据 | 状态 |",
+        "|---|---:|---:|---:|---:|---:|---:|---|---|---|",
+    ]
+    for item in summaries:
+        lines.append(
+            "| {test_id} | {onset_frame} | {peak_time} | {peak_frame} | {drop_time} | {drop_frame} | {last_file} | {last_event} | {visual} | {status} |".format(
+                test_id=item["test_id"],
+                onset_frame=item.get("image_frame_onset_est") if item.get("image_frame_onset_est") is not None else "待补（预载）",
+                peak_time=format_number(item.get("force_peak_candidate_s"), 3),
+                peak_frame=item.get("image_frame_peak_est") if item.get("image_frame_peak_est") is not None else "待补",
+                drop_time=format_number(item.get("force_drop_candidate_s"), 3),
+                drop_frame=item.get("image_frame_drop_est") if item.get("image_frame_drop_est") is not None else "待补",
+                last_file=item["image_frame_last_file"],
+                last_event=item["image_frame_last_event_candidate"],
+                visual=item["visual_endpoint_evidence"],
+                status=item["event_alignment_status"],
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## 固定使用规则",
+            "",
+            "- `首帧加载起点候选帧`、`峰值候选帧`和`下降候选帧`由同一端点时间映射得到，三者可以在同一帧轴上比较。",
+            "- `破坏/结束图像候选`来自当前图像侧核对；若写“待核验”，不得把文件末帧直接送入 VFM。",
+            "- 首帧、峰值、末帧三项均需在图像侧和力侧各有证据，且共同时间戳/触发号可复核后，`event_vfm_ready` 才能改为 `true`。",
+        ]
+    )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, default=Path(r"D:\C盘迁移\Desktop\yuan\data"))
@@ -443,6 +522,26 @@ def main() -> None:
     write_csv(args.out_dir / "xy_frequency_summary.csv", summaries)
     write_summary_markdown(args.out_dir / "xy_frequency_summary.md", summaries)
     write_dic_frequency_range_markdown(args.out_dir / "xy_dic_frequency_range.md", summaries)
+    write_event_alignment_markdown(args.out_dir / "xy_event_alignment.md", summaries)
+    event_fields = [
+        "test_id",
+        "direction",
+        "speed_mm_s",
+        "image_frame_onset_est",
+        "force_peak_candidate_s",
+        "image_frame_peak_est",
+        "force_drop_candidate_s",
+        "image_frame_drop_est",
+        "image_frame_last_file",
+        "image_frame_last_event_candidate",
+        "visual_endpoint_evidence",
+        "event_alignment_status",
+        "event_vfm_ready",
+    ]
+    write_csv(
+        args.out_dir / "xy_event_alignment.csv",
+        [{field: item.get(field) for field in event_fields} for item in summaries],
+    )
     print(f"mapped_images={len(all_rows)} trials={len(summaries)}")
     print(f"output_dir={args.out_dir.resolve()}")
 

@@ -252,6 +252,7 @@ frame_id, image_file, t_image, trigger_id
 
 - [汇总表（Markdown）](results/xy_frequency_summary.md)：按用户截图的列结构输出速度、照片数量、照片设置/实际频率、DIC 位移、力样本数、力数据位移/时间和力传感器频率。
 - [DIC 有效频率范围表](results/xy_dic_frequency_range.md)：按连续 MatchID/DIC 帧数给出完整力记录窗口与加载事件窗口的频率范围；非连续帧组跳过。
+- [事件对齐表（Markdown）](results/xy_event_alignment.md) 与 [事件对齐表（CSV）](results/xy_event_alignment.csv)：把加载起点、力峰值、峰后下降映射到图像帧，并保留末帧破坏/结束的图像证据状态。
 - [汇总表（CSV）](results/xy_frequency_summary.csv)：便于 Excel/Obsidian 继续筛选。
 - [逐帧照片—力映射（CSV）](results/xy_photo_force_sync.csv)：唯一的逐帧数据入口，包含 `image_frame`、`image_file`、`t_image_s_est`、`force_row_left/right`、`X1/X2/Y1/Y2_Press_N` 和 `X1/X2/Y1/Y2_Pos_mm`。
 - [XZ 图像—DIC 元数据表](results/xz_image_dic_inventory.md)：XZ 当前能读出的图像数量、CIHX、MatchID 和 CSV 缺帧情况；缺 `XZ.z01` 的力字段不填。

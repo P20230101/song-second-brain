@@ -603,6 +603,93 @@ def write_event_force_candidates_markdown(path: Path, candidates: list[dict[str,
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def chinese_event_labels(summaries: list[dict[str, object]]) -> dict[tuple[str, int], str]:
+    labels: dict[tuple[str, int], list[str]] = {}
+    for item in summaries:
+        events = [
+            ("加载起点", item.get("image_frame_onset_est")),
+            ("力峰值", item.get("image_frame_peak_est")),
+            ("峰后下降", item.get("image_frame_drop_est")),
+            ("文件末帧", item.get("image_frame_last_file")),
+        ]
+        candidate_text = str(item["image_frame_last_event_candidate"])
+        match = re.match(r"^(\d+)$", candidate_text)
+        if match:
+            events.append(("图像破坏候选", int(match.group(1))))
+        for label, frame in events:
+            if frame is None:
+                continue
+            key = (str(item["test_id"]), int(frame))
+            labels.setdefault(key, []).append(label)
+    return {key: "、".join(value) for key, value in labels.items()}
+
+
+def write_simple_vfm_force_csv(path: Path, all_rows: list[dict[str, object]], summaries: list[dict[str, object]]) -> None:
+    event_labels = chinese_event_labels(summaries)
+    rows: list[dict[str, object]] = []
+    for source in all_rows:
+        key = (str(source["test_id"]), int(source["image_frame"]))
+        rows.append(
+            {
+                "试验编号": source["test_id"],
+                "方向": source["direction"],
+                "速度_mm_s": source["speed_mm_s"],
+                "照片帧号": source["image_frame"],
+                "照片文件": source["image_file"],
+                "估计时间_s": source["t_image_s_est"],
+                "X1力_N": source.get("X1_Press_N"),
+                "X2力_N": source.get("X2_Press_N"),
+                "Y1力_N": source.get("Y1_Press_N"),
+                "Y2力_N": source.get("Y2_Press_N"),
+                "事件标签": event_labels.get(key, ""),
+                "同步状态": "预载起点待核验" if source.get("force_onset_candidate_s") in (None, "") else "估计同步待核验",
+            }
+        )
+    write_csv(path, rows)
+
+
+def write_simple_overview_markdown(path: Path, summaries: list[dict[str, object]]) -> None:
+    lines = [
+        "# 事件和频率概览",
+        "",
+        "日常只需要看本页和 `01_VFM照片力对应.csv`。频率使用范围，事件帧使用候选值；缺失证据的试验保留为“待核验”，不填猜测值。",
+        "",
+        "| 试验 | 方向 | 速度 (mm/s) | 照片数 | DIC 频率范围 (Hz) | 加载帧 | 峰值帧 | 峰后帧 | 破坏/结束候选 | 状态 |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---|---|",
+    ]
+    for item in summaries:
+        low = item.get("dic_frequency_range_low_Hz")
+        high = item.get("dic_frequency_range_high_Hz")
+        frequency = "待补" if low is None or high is None else f"{format_number(low, 2)}–{format_number(high, 2)}"
+        lines.append(
+            "| {test_id} | {direction} | {speed} | {photo_count} | {frequency} | {onset} | {peak} | {drop} | {last_event} | {status} |".format(
+                test_id=item["test_id"],
+                direction=item["direction"],
+                speed=format_number(item["speed_mm_s"], 3),
+                photo_count=item["photo_count"],
+                frequency=frequency,
+                onset=item.get("image_frame_onset_est") if item.get("image_frame_onset_est") is not None else "预载/待补",
+                peak=item.get("image_frame_peak_est") if item.get("image_frame_peak_est") is not None else "待补",
+                drop=item.get("image_frame_drop_est") if item.get("image_frame_drop_est") is not None else "待补",
+                last_event=item["image_frame_last_event_candidate"],
+                status="预载起点待核验" if item["event_alignment_status"] == "preloaded_start_review" else "候选事件待核验",
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## 怎么用",
+            "",
+            "1. 先打开 `01_VFM照片力对应.csv`，一张照片对应一行，直接筛选试验编号或事件标签。",
+            "2. 再用本页确认加载帧、峰值帧、峰后帧和破坏候选帧。",
+            "3. 只有图像证据、力事件和同步时间都确认后，才把对应窗口送入 VFM；当前所有行仍是估计同步。",
+            "",
+            "详细审计文件仍保留在同一 `results` 目录，但日常不需要打开。",
+        ]
+    )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, default=Path(r"D:\C盘迁移\Desktop\yuan\data"))
@@ -650,6 +737,8 @@ def main() -> None:
     event_force_candidates = build_event_force_candidates(all_rows, summaries)
     write_csv(args.out_dir / "xy_event_force_candidates.csv", event_force_candidates)
     write_event_force_candidates_markdown(args.out_dir / "xy_event_force_candidates.md", event_force_candidates)
+    write_simple_vfm_force_csv(args.out_dir / "01_VFM照片力对应.csv", all_rows, summaries)
+    write_simple_overview_markdown(args.out_dir / "02_事件和频率概览.md", summaries)
     print(f"mapped_images={len(all_rows)} trials={len(summaries)}")
     print(f"output_dir={args.out_dir.resolve()}")
 

@@ -254,6 +254,8 @@ frame_id, image_file, t_image, trigger_id
 - [DIC 有效频率范围表](results/xy_dic_frequency_range.md)：按连续 MatchID/DIC 帧数给出完整力记录窗口与加载事件窗口的频率范围；非连续帧组跳过。
 - [事件对齐表（Markdown）](results/xy_event_alignment.md) 与 [事件对齐表（CSV）](results/xy_event_alignment.csv)：把加载起点、力峰值、峰后下降映射到图像帧，并保留末帧破坏/结束的图像证据状态。
 - [事件帧—力—位移候选表（Markdown）](results/xy_event_force_candidates.md) 与 [CSV](results/xy_event_force_candidates.csv)：将每个候选事件帧的四通道力和四通道机器位移直接展开，作为 VFM 输入准备入口。
+- [VFM 照片—力对应表（简版）](results/01_VFM照片力对应.csv)：日常使用的最小表格，每张照片一行，只保留四通道力和必要的照片信息。
+- [事件和频率概览（简版）](results/02_事件和频率概览.md)：日常查看事件候选帧和频率范围；其余结果文件作为审计底稿保留。
 - [汇总表（CSV）](results/xy_frequency_summary.csv)：便于 Excel/Obsidian 继续筛选。
 - [逐帧照片—力映射（CSV）](results/xy_photo_force_sync.csv)：唯一的逐帧数据入口，包含 `image_frame`、`image_file`、`t_image_s_est`、`force_row_left/right`、`X1/X2/Y1/Y2_Press_N` 和 `X1/X2/Y1/Y2_Pos_mm`。
 - [XZ 图像—DIC 元数据表](results/xz_image_dic_inventory.md)：XZ 当前能读出的图像数量、CIHX、MatchID 和 CSV 缺帧情况；缺 `XZ.z01` 的力字段不填。

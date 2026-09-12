@@ -67,6 +67,23 @@ SCREENSHOT_DIC_DISPLACEMENT_MM = {
     "Y-11-10-01": 37.8,
 }
 
+# Frame counts used for the DIC-frequency table.  These are the contiguous
+# MatchID input counts that are usable for a frequency estimate.  The
+# XY-0.1-02 input contains only ten non-contiguous frames, so its frequency is
+# intentionally left unavailable until the MatchID input is rebuilt.
+DIC_FREQUENCY_FRAME_COUNT: dict[str, int | None] = {
+    "X-05-0.1-01": 130,
+    "X-06-1.0-01": 133,
+    "X-07-10-01": 81,
+    "Xy-0.1-01": 289,
+    "XY-0.1-02": None,
+    "Xy-03-10-01": 21,
+    "Xy-04-1-01": 267,
+    "Y-09-0.1-02": 1825,
+    "Y-10-1-01": 1558,
+    "Y-11-10-01": 711,
+}
+
 
 def numeric_frame(path: Path) -> int:
     match = re.search(r"Img(\d+)\.jpg$", path.name, flags=re.IGNORECASE)
@@ -282,6 +299,28 @@ def analyse_trial(data_root: Path, image_directory: Path, force_directory: Path)
         "sync_status": "estimated_preloaded_start" if onset is None else "estimated_unique_force_value",
         "vfm_eligible": False,
     }
+    dic_frequency_count = DIC_FREQUENCY_FRAME_COUNT[name]
+    summary["dic_frame_count_for_frequency"] = dic_frequency_count
+    summary["dic_frequency_count_source"] = (
+        "contiguous_m2inp_or_csv_audited" if dic_frequency_count is not None else "unavailable_noncontiguous_m2inp"
+    )
+    if dic_frequency_count is not None:
+        dic_frequency_full = (dic_frequency_count - 1) / force_span if force_span else None
+        dic_frequency_event = (dic_frequency_count - 1) / image_span if image_span else None
+        summary["dic_frequency_full_record_Hz"] = dic_frequency_full
+        summary["dic_frequency_event_window_Hz"] = dic_frequency_event
+        summary["dic_frequency_range_low_Hz"] = min(dic_frequency_full, dic_frequency_event)
+        summary["dic_frequency_range_high_Hz"] = max(dic_frequency_full, dic_frequency_event)
+        summary["dic_frequency_status"] = "estimated_range"
+    else:
+        for field in [
+            "dic_frequency_full_record_Hz",
+            "dic_frequency_event_window_Hz",
+            "dic_frequency_range_low_Hz",
+            "dic_frequency_range_high_Hz",
+        ]:
+            summary[field] = None
+        summary["dic_frequency_status"] = "blocked_incomplete_dic_frames"
     return rows, summary
 
 
@@ -302,7 +341,7 @@ def write_summary_markdown(path: Path, summaries: list[dict[str, object]]) -> No
     lines = [
         "# XY 照片—力同步汇总表",
         "",
-        "本表按用户提供的列结构生成。照片实际频率和照片窗口位移采用首尾事件锚定估算；DIC 位移列只有用户截图提供的六组保留值，其余写为待导出。逐帧结果见 `xy_photo_force_sync.csv`。",
+        "本表按用户提供的列结构生成。照片实际频率和照片窗口位移采用首尾事件锚定估算；DIC 位移列只有用户截图提供的六组保留值，其余写为待导出。DIC 有效频率范围见 `xy_dic_frequency_range.md`，逐帧结果见 `xy_photo_force_sync.csv`。",
         "",
         "| 试验 | 方向 | 速度 (mm/s) | 照片数量 | 照片设置频率 (Hz) | 照片实际拍摄频率估算 (Hz) | 照片导出的位移 (mm) | 力的数量 | 力数据算位移 (mm) | 力数据算时间 (s) | 力传感器频率 (Hz) | 同步状态 |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|",
@@ -337,6 +376,49 @@ def write_summary_markdown(path: Path, summaries: list[dict[str, object]]) -> No
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def write_dic_frequency_range_markdown(path: Path, summaries: list[dict[str, object]]) -> None:
+    lines = [
+        "# XY DIC 有效频率范围表",
+        "",
+        "频率只作为平均有效频率范围使用，不代表逐帧硬件时间戳。下限使用完整 `Press.T` 时间窗口，上限使用加载起点候选到力记录末端的窗口；帧数优先采用已审计的连续 MatchID 输入帧数。",
+        "",
+        "| 试验 | 方向 | 速度 (mm/s) | 名义相机频率 (Hz) | DIC 帧数 | 完整力记录频率 (Hz) | 事件窗口频率 (Hz) | 建议范围 (Hz) | 计数来源 | 状态 |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---|---|",
+    ]
+    for item in summaries:
+        low = item.get("dic_frequency_range_low_Hz")
+        high = item.get("dic_frequency_range_high_Hz")
+        if low is None or high is None:
+            range_text = "待补"
+        else:
+            range_text = f"{format_number(low, 2)}–{format_number(high, 2)}"
+        lines.append(
+            "| {test_id} | {direction} | {speed} | {nominal} | {count} | {full} | {event} | {range_text} | {source} | {status} |".format(
+                test_id=item["test_id"],
+                direction=item["direction"],
+                speed=format_number(item["speed_mm_s"], 3),
+                nominal=format_number(item["photo_set_frequency_Hz"], 3) or "待补",
+                count=item.get("dic_frame_count_for_frequency") or "待补",
+                full=format_number(item.get("dic_frequency_full_record_Hz"), 2) or "待补",
+                event=format_number(item.get("dic_frequency_event_window_Hz"), 2) or "待补",
+                range_text=range_text,
+                source=item["dic_frequency_count_source"],
+                status=item["dic_frequency_status"],
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## 使用规则",
+            "",
+            "- `DIC 帧数`不使用原始 JPEG 总数；优先使用连续 MatchID 输入/已核对 CSV 帧数。",
+            "- `XY-0.1-02` 的 m2inp 只有 10 个非连续帧，无法给出有意义的频率，暂时跳过；图片和力文件仍保留在逐帧清单中。",
+            "- 频率范围只用于粗同步和方案筛选；正式 VFM 仍以共同触发号或逐帧时间戳为准。",
+        ]
+    )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, default=Path(r"D:\C盘迁移\Desktop\yuan\data"))
@@ -360,6 +442,7 @@ def main() -> None:
     write_csv(args.out_dir / "xy_photo_force_sync.csv", all_rows)
     write_csv(args.out_dir / "xy_frequency_summary.csv", summaries)
     write_summary_markdown(args.out_dir / "xy_frequency_summary.md", summaries)
+    write_dic_frequency_range_markdown(args.out_dir / "xy_dic_frequency_range.md", summaries)
     print(f"mapped_images={len(all_rows)} trials={len(summaries)}")
     print(f"output_dir={args.out_dir.resolve()}")
 

@@ -1,0 +1,8 @@
+test_id,image_group,image_count_jpg,cihx_recordRate_Hz,cihx_totalFrame,cihx_recordedFrame,cihx_skipFrame,cihx_shutterSpeed,m2inp_frame_count,dic_csv_unique_frames,dic_csv_missing_frames,force_payload_status,force_sample_count,force_time_s,force_sensor_frequency_Hz,table_status,notes
+XZ_X-0.1-05,X-0.1-05,546,,,,,,,,,unreadable_missing_XZ.z01,,,,metadata_only,"图像组在压缩包中心目录；力 Excel payload 不可读"
+XZ_XZ-0.1-02,XZ-0.1-02,734,,,,,,,,,unreadable_missing_XZ.z01,,,,metadata_only,"图像组在压缩包中心目录；力 Excel payload 不可读"
+XZ_XZ-1-03,XZ-1-03,953,,,,,,,,,unreadable_missing_XZ.z01,,,,metadata_only,"中心目录为 953 帧，现有分卷本地可见 715 项；力 Excel payload 不可读"
+XZ_XZ-10-04,XZ-10-04,454,1000,454,2334,1,1000,454,454,,unreadable_missing_XZ.z01,,,,camera_dic_only,"CIHX/Job/CSV 可读；力时间轴仍缺失"
+XZ_Z-0.1-06,Z-0.1-06,227,60,227,2269,10,1000,227,227,,unreadable_missing_XZ.z01,,,,camera_dic_only,"CIHX/Job/CSV 可读；力时间轴仍缺失"
+XZ_Z-1-07,Z-1-07,546,500,546,5457,10,500,546,546,,unreadable_missing_XZ.z01,,,,camera_dic_only,"CIHX/Job/CSV 可读；力时间轴仍缺失"
+XZ_Z-1-08,Z-1-08,178,500,178,2173,10,500,178,167,131-141 (11),unreadable_missing_XZ.z01,,,,camera_dic_only,"CIHX/Job 可读；CSV 缺少 131–141 共 11 个唯一帧；力时间轴仍缺失"

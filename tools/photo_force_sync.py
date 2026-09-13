@@ -633,8 +633,6 @@ def simple_vfm_rows(all_rows: list[dict[str, object]], summaries: list[dict[str,
         rows.append(
             {
                 "试验编号": source["test_id"],
-                "方向": source["direction"],
-                "速度_mm_s": source["speed_mm_s"],
                 "照片帧号": source["image_frame"],
                 "照片文件": source["image_file"],
                 "估计时间_s": source["t_image_s_est"],
@@ -669,7 +667,7 @@ def write_simple_overview_markdown(path: Path, summaries: list[dict[str, object]
         "# 事件和频率概览",
         "",
         "日常只需要看本页和 `01_VFM照片力对应.csv`。频率使用范围，事件帧使用候选值；缺失证据的试验保留为“待核验”，不填猜测值。",
-        "按试验拆分的逐照片四通道力 CSV 保存在同目录的 `照片力对应/` 文件夹。",
+        "按试验拆分的逐照片四通道力 CSV 保存在同目录的 `照片力对应_关键字段/` 文件夹。",
         "",
         "| 试验 | 方向 | 速度 (mm/s) | 照片数 | DIC 频率范围 (Hz) | 加载帧 | 峰值帧 | 峰后帧 | 破坏/结束候选 | 状态 |",
         "|---|---|---:|---:|---:|---:|---:|---:|---|---|",
@@ -756,7 +754,7 @@ def main() -> None:
     write_csv(audit_dir / "xy_event_force_candidates.csv", event_force_candidates)
     write_event_force_candidates_markdown(audit_dir / "xy_event_force_candidates.md", event_force_candidates)
     write_simple_vfm_force_csv(args.out_dir / "01_VFM照片力对应.csv", all_rows, summaries)
-    write_per_trial_vfm_force_csvs(args.out_dir / "照片力对应", all_rows, summaries)
+    write_per_trial_vfm_force_csvs(args.out_dir / "照片力对应_关键字段", all_rows, summaries)
     write_simple_overview_markdown(args.out_dir / "02_事件和频率概览.md", summaries)
     print(f"mapped_images={len(all_rows)} trials={len(summaries)}")
     print(f"output_dir={args.out_dir.resolve()}")

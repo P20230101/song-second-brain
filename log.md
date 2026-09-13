@@ -252,6 +252,6 @@ title: 维护日志
 ## [2026-09-13] data-export | 输出按试验拆分的照片—四通道力 CSV
 
 - 运行 `tools/photo_force_sync.py`，从 `D:\C盘迁移\Desktop\yuan\data\XY` 生成 `实验/PA12-双轴-DIC-VFM/results/照片力对应/` 下 10 个中文 CSV，总计 5,309 行。
-- 验收：每个文件的照片路径均存在，`X1力_N/X2力_N/Y1力_N/Y2力_N` 均非空，首帧/末帧连续，估计时间严格递增；总表 `results/01_VFM照片力对应.csv` 保持为合并入口。
+- 验收：每个文件的照片路径均存在，`Fx1力_N/Fx2力_N/Fy1力_N/Fy2力_N` 均非空，首帧/末帧连续，估计时间严格递增；四个力字段均来自对应 Excel 的 `Press.T`；总表 `results/01_VFM照片力对应.csv` 保持为合并入口。
 - 修正 `XY_XY-0.1-02` 说明：实际 `Job.m2inp` 覆盖 Img000000–Img000257，照片 Img000258 未覆盖；照片—力 CSV 不删除，但完整 DIC 频率和 VFM 继续阻塞。
 - 拆分 CSV 属于本地实验派生输出，未推送；脚本和必要的审计说明已提交 `c80095d` 并推送。未移动、删除或修改 raw、原始照片、Excel 或 MatchID 工程。

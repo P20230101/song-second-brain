@@ -3,7 +3,7 @@ XY_X-05-0.1-01,X,0.2,0,12.782,141,12.837,142,164,待核验（建议回溯至 ROI
 XY_X-06-1.0-01,X,2.0,0,1.281,58,1.336,61,132,132,Img000132 可见断裂/破坏，候选有效末帧,event_frames_estimated_endpoint_review,False
 XY_X-07-10-01,X,20.0,0,0.171,28,0.226,40,80,待核验,Img000080 模糊，末端破坏未确认,event_frames_estimated_endpoint_review,False
 XY_Xy-0.1-01,XY,0.2,0,28.151,223,28.503,226,288,288,Img000288 可见明显破坏，候选有效末帧,event_frames_estimated_endpoint_review,False
-XY_XY-0.1-02,XY,0.2,0,25.612,235,25.832,237,258,258（DIC 输入未覆盖）,Img000258 可见破坏，但 m2inp 当前只到 Img000193,event_frames_estimated_endpoint_review,False
+XY_XY-0.1-02,XY,0.2,0,25.612,235,25.832,237,258,258（MatchID 输入未覆盖）,Img000258 可见破坏；当前 m2inp 覆盖到 Img000257，末帧未覆盖,event_frames_estimated_endpoint_review,False
 XY_Xy-03-10-01,XY,20.0,0,0.213,7,0.268,9,20,20,Img000020 可见明显破坏，候选有效末帧,event_frames_estimated_endpoint_review,False
 XY_Xy-04-1-01,XY,2.0,0,2.473,142,2.55,147,266,250/266（待核验）,Img000250/266 可见破坏，需确认最后有效 ROI,event_frames_estimated_endpoint_review,False
 XY_Y-09-0.1-02,Y,0.2,0,109.694,1112,178.979,1819,1824,1824,Img001824 中部断裂，候选有效末帧,event_frames_estimated_endpoint_review,False

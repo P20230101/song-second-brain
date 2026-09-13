@@ -69,8 +69,9 @@ SCREENSHOT_DIC_DISPLACEMENT_MM = {
 
 # Frame counts used for the DIC-frequency table.  These are the contiguous
 # MatchID input counts that are usable for a frequency estimate.  The
-# XY-0.1-02 input contains only ten non-contiguous frames, so its frequency is
-# intentionally left unavailable until the MatchID input is rebuilt.
+# XY-0.1-02 currently covers Img000000--Img000257 while the photo set also
+# contains Img000258. Its frequency is intentionally left unavailable until
+# the final MatchID frame is included.
 DIC_FREQUENCY_FRAME_COUNT: dict[str, int | None] = {
     "X-05-0.1-01": 130,
     "X-06-1.0-01": 133,
@@ -89,7 +90,7 @@ VISUAL_ENDPOINT_EVIDENCE = {
     "X-06-1.0-01": "Img000132 可见断裂/破坏，候选有效末帧",
     "X-07-10-01": "Img000080 模糊，末端破坏未确认",
     "Xy-0.1-01": "Img000288 可见明显破坏，候选有效末帧",
-    "XY-0.1-02": "Img000258 可见破坏，但 m2inp 当前只到 Img000193",
+    "XY-0.1-02": "Img000258 可见破坏；当前 m2inp 覆盖到 Img000257，末帧未覆盖",
     "Xy-03-10-01": "Img000020 可见明显破坏，候选有效末帧",
     "Xy-04-1-01": "Img000250/266 可见破坏，需确认最后有效 ROI",
     "Y-09-0.1-02": "Img001824 中部断裂，候选有效末帧",
@@ -102,7 +103,7 @@ VISUAL_LAST_EVENT_CANDIDATE = {
     "X-06-1.0-01": "132",
     "X-07-10-01": "待核验",
     "Xy-0.1-01": "288",
-    "XY-0.1-02": "258（DIC 输入未覆盖）",
+    "XY-0.1-02": "258（MatchID 输入未覆盖）",
     "Xy-03-10-01": "20",
     "Xy-04-1-01": "250/266（待核验）",
     "Y-09-0.1-02": "1824",
@@ -454,7 +455,7 @@ def write_dic_frequency_range_markdown(path: Path, summaries: list[dict[str, obj
             "## 使用规则",
             "",
             "- `DIC 帧数`不使用原始 JPEG 总数；优先使用连续 MatchID 输入/已核对 CSV 帧数。",
-            "- `XY-0.1-02` 的 m2inp 只有 10 个非连续帧，无法给出有意义的频率，暂时跳过；图片和力文件仍保留在逐帧清单中。",
+            "- `XY-0.1-02` 的 m2inp 覆盖 Img000000–Img000257，照片 Img000258 尚未进入 MatchID；暂不计算完整 DIC 频率，图片和力文件仍保留在逐帧清单中。",
             "- 频率范围只用于粗同步和方案筛选；正式 VFM 仍以共同触发号或逐帧时间戳为准。",
         ]
     )
@@ -624,7 +625,7 @@ def chinese_event_labels(summaries: list[dict[str, object]]) -> dict[tuple[str, 
     return {key: "、".join(value) for key, value in labels.items()}
 
 
-def write_simple_vfm_force_csv(path: Path, all_rows: list[dict[str, object]], summaries: list[dict[str, object]]) -> None:
+def simple_vfm_rows(all_rows: list[dict[str, object]], summaries: list[dict[str, object]]) -> list[dict[str, object]]:
     event_labels = chinese_event_labels(summaries)
     rows: list[dict[str, object]] = []
     for source in all_rows:
@@ -645,7 +646,22 @@ def write_simple_vfm_force_csv(path: Path, all_rows: list[dict[str, object]], su
                 "同步状态": "预载起点待核验" if source.get("force_onset_candidate_s") in (None, "") else "估计同步待核验",
             }
         )
-    write_csv(path, rows)
+    return rows
+
+
+def write_simple_vfm_force_csv(path: Path, all_rows: list[dict[str, object]], summaries: list[dict[str, object]]) -> None:
+    write_csv(path, simple_vfm_rows(all_rows, summaries))
+
+
+def write_per_trial_vfm_force_csvs(output_dir: Path, all_rows: list[dict[str, object]], summaries: list[dict[str, object]]) -> None:
+    rows = simple_vfm_rows(all_rows, summaries)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    grouped: dict[str, list[dict[str, object]]] = {}
+    for row in rows:
+        grouped.setdefault(str(row["试验编号"]), []).append(row)
+    for test_id, trial_rows in grouped.items():
+        safe_name = re.sub(r"[^A-Za-z0-9_.-]+", "_", test_id)
+        write_csv(output_dir / f"{safe_name}_照片力对应.csv", trial_rows)
 
 
 def write_simple_overview_markdown(path: Path, summaries: list[dict[str, object]]) -> None:
@@ -653,6 +669,7 @@ def write_simple_overview_markdown(path: Path, summaries: list[dict[str, object]
         "# 事件和频率概览",
         "",
         "日常只需要看本页和 `01_VFM照片力对应.csv`。频率使用范围，事件帧使用候选值；缺失证据的试验保留为“待核验”，不填猜测值。",
+        "按试验拆分的逐照片四通道力 CSV 保存在同目录的 `照片力对应/` 文件夹。",
         "",
         "| 试验 | 方向 | 速度 (mm/s) | 照片数 | DIC 频率范围 (Hz) | 加载帧 | 峰值帧 | 峰后帧 | 破坏/结束候选 | 状态 |",
         "|---|---|---:|---:|---:|---:|---:|---:|---|---|",
@@ -739,6 +756,7 @@ def main() -> None:
     write_csv(audit_dir / "xy_event_force_candidates.csv", event_force_candidates)
     write_event_force_candidates_markdown(audit_dir / "xy_event_force_candidates.md", event_force_candidates)
     write_simple_vfm_force_csv(args.out_dir / "01_VFM照片力对应.csv", all_rows, summaries)
+    write_per_trial_vfm_force_csvs(args.out_dir / "照片力对应", all_rows, summaries)
     write_simple_overview_markdown(args.out_dir / "02_事件和频率概览.md", summaries)
     print(f"mapped_images={len(all_rows)} trials={len(summaries)}")
     print(f"output_dir={args.out_dir.resolve()}")

@@ -222,7 +222,7 @@ title: 维护日志
 - 自动任务会检查 Wiki 重复页、空草稿、失效链接和过程性文件；只有确认无独立证据/行动且已有替代页面时才删除，并同步更新 `index.md`、`wiki/README.md` 和 `log.md`。
 - 明确保护用户 README 改动、`tmp/`、`raw/`、PDF、MinerU 私有产物、实验原始数据、脚本、实验接口和不确定归属的文件；无实质变化时不提交、不推送。
 
-## [2026-09-13] maintenance | 重新整理日常入口与报告口径
+## [2026-09-12] maintenance | 重新整理日常入口与报告口径
 
 - 核对根目录 `index.md`、`wiki/README.md` 与 `实验/PA12-双轴-DIC-VFM/results/`：日常入口仍仅为 `01_VFM照片力对应.csv` 和 `02_事件和频率概览.md`，详细审计底稿均位于 `results/审计/`。
 - 修正 `研究报告/README.md` 的总述，使其与已确定的 PA12 双轴拉伸/压缩、3D 立体 DIC 与 VFM 主线一致。

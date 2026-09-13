@@ -634,7 +634,6 @@ def simple_vfm_rows(all_rows: list[dict[str, object]], summaries: list[dict[str,
             {
                 "试验编号": source["test_id"],
                 "照片帧号": source["image_frame"],
-                "照片文件": source["image_file"],
                 "估计时间_s": source["t_image_s_est"],
                 "Fx1力_N": source.get("X1_Press_N"),
                 "Fx2力_N": source.get("X2_Press_N"),

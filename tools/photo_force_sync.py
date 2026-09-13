@@ -47,6 +47,22 @@ SPEED_MM_S = {
     "Y-11-10-01": 20.0,
 }
 
+# 当前 yuan/data/XY 数据集来自 PA12 双轴拉伸基线；Excel Press.T 中该批次
+# 的力通道以负号记录，因此在日常 VFM 表中统一转换为拉伸为正。后续加入
+# 压缩试验时，必须在此处按试验编号明确登记为“压缩”，输出会统一为负值。
+LOADING_MODE_BY_TRIAL = {
+    "X-05-0.1-01": "拉伸",
+    "X-06-1.0-01": "拉伸",
+    "X-07-10-01": "拉伸",
+    "Xy-0.1-01": "拉伸",
+    "XY-0.1-02": "拉伸",
+    "Xy-03-10-01": "拉伸",
+    "Xy-04-1-01": "拉伸",
+    "Y-09-0.1-02": "拉伸",
+    "Y-10-1-01": "拉伸",
+    "Y-11-10-01": "拉伸",
+}
+
 # Values shown in the user's latest two summary tables. They are retained as
 # a source-labelled field; they are not recomputed from the endpoint mapping.
 SCREENSHOT_CAMERA_HZ = {
@@ -309,6 +325,7 @@ def analyse_trial(data_root: Path, image_directory: Path, force_directory: Path)
     summary: dict[str, object] = {
         "test_id": f"XY_{name}",
         "direction": direction_for(name),
+        "loading_mode": LOADING_MODE_BY_TRIAL[name],
         "speed_mm_s": speed,
         "photo_count": len(photos),
         "photo_first_frame": numeric_frame(photos[0]),
@@ -625,20 +642,37 @@ def chinese_event_labels(summaries: list[dict[str, object]]) -> dict[tuple[str, 
     return {key: "、".join(value) for key, value in labels.items()}
 
 
+def standardized_force(value: object, loading_mode: str) -> float | None:
+    if value is None:
+        return None
+    magnitude = abs(float(value))
+    return magnitude if loading_mode == "拉伸" else -magnitude
+
+
 def simple_vfm_rows(all_rows: list[dict[str, object]], summaries: list[dict[str, object]]) -> list[dict[str, object]]:
     event_labels = chinese_event_labels(summaries)
+    summary_by_id = {str(item["test_id"]): item for item in summaries}
     rows: list[dict[str, object]] = []
     for source in all_rows:
         key = (str(source["test_id"]), int(source["image_frame"]))
+        summary_item = summary_by_id[str(source["test_id"])]
+        loading_mode = str(summary_item["loading_mode"])
+        fx1 = standardized_force(source.get("X1_Press_N"), loading_mode)
+        fx2 = standardized_force(source.get("X2_Press_N"), loading_mode)
+        fy1 = standardized_force(source.get("Y1_Press_N"), loading_mode)
+        fy2 = standardized_force(source.get("Y2_Press_N"), loading_mode)
         rows.append(
             {
-                "试验编号": source["test_id"],
+                "试样编号": source["test_id"],
                 "照片帧号": source["image_frame"],
                 "估计时间_s": source["t_image_s_est"],
-                "Fx1力_N": source.get("X1_Press_N"),
-                "Fx2力_N": source.get("X2_Press_N"),
-                "Fy1力_N": source.get("Y1_Press_N"),
-                "Fy2力_N": source.get("Y2_Press_N"),
+                "Fx1力_N": fx1,
+                "Fx2力_N": fx2,
+                "Fx平均力_N": (fx1 + fx2) / 2 if fx1 is not None and fx2 is not None else None,
+                "Fy1力_N": fy1,
+                "Fy2力_N": fy2,
+                "Fy平均力_N": (fy1 + fy2) / 2 if fy1 is not None and fy2 is not None else None,
+                "加载类型": loading_mode,
                 "事件标签": event_labels.get(key, ""),
                 "同步状态": "预载起点待核验" if source.get("force_onset_candidate_s") in (None, "") else "估计同步待核验",
             }
@@ -655,7 +689,7 @@ def write_per_trial_vfm_force_csvs(output_dir: Path, all_rows: list[dict[str, ob
     output_dir.mkdir(parents=True, exist_ok=True)
     grouped: dict[str, list[dict[str, object]]] = {}
     for row in rows:
-        grouped.setdefault(str(row["试验编号"]), []).append(row)
+        grouped.setdefault(str(row["试样编号"]), []).append(row)
     for test_id, trial_rows in grouped.items():
         safe_name = re.sub(r"[^A-Za-z0-9_.-]+", "_", test_id)
         write_csv(output_dir / f"{safe_name}_照片力对应.csv", trial_rows)
@@ -666,7 +700,7 @@ def write_simple_overview_markdown(path: Path, summaries: list[dict[str, object]
         "# 事件和频率概览",
         "",
         "日常只需要看本页和 `01_VFM照片力对应.csv`。频率使用范围，事件帧使用候选值；缺失证据的试验保留为“待核验”，不填猜测值。",
-        "按试验拆分的逐照片四通道力 CSV 保存在同目录的 `照片力对应_关键字段/` 文件夹。",
+        "按试样拆分的逐照片四通道力 CSV 保存在同目录的 `照片力对应_关键字段/` 文件夹；表内同时给出 Fx/Fy 方向平均力。日常表统一采用拉伸为正、压缩为负。",
         "",
         "| 试验 | 方向 | 速度 (mm/s) | 照片数 | DIC 频率范围 (Hz) | 加载帧 | 峰值帧 | 峰后帧 | 破坏/结束候选 | 状态 |",
         "|---|---|---:|---:|---:|---:|---:|---:|---|---|",
@@ -694,7 +728,7 @@ def write_simple_overview_markdown(path: Path, summaries: list[dict[str, object]
             "",
             "## 怎么用",
             "",
-            "1. 先打开 `01_VFM照片力对应.csv`，一张照片对应一行，直接筛选试验编号或事件标签。",
+            "1. 先打开 `01_VFM照片力对应.csv`，一张照片对应一行，直接筛选试样编号或事件标签。",
             "2. 再用本页确认加载帧、峰值帧、峰后帧和破坏候选帧。",
             "3. 只有图像证据、力事件和同步时间都确认后，才把对应窗口送入 VFM；当前所有行仍是估计同步。",
             "",

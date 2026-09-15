@@ -381,8 +381,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--download-root",
         type=Path,
-        default=Path("raw") / "参考文献",
-        help="下载根目录（默认 raw/参考文献）",
+        default=Path("双轴/raw") / "参考文献",
+        help="下载根目录（默认 双轴/raw/参考文献）",
     )
     parser.add_argument("--from-results", type=Path, help="外部结果 JSON 文件")
     return parser

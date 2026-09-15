@@ -1,0 +1,107 @@
+{
+  "dataset": "01_VFM照片力对应.csv",
+  "total_rows": 5309,
+  "columns_count": 12,
+  "column_statistics": {
+    "﻿试验编号": {
+      "type": "categorical",
+      "total_count": 5309,
+      "null_count": 0,
+      "distinct_values": 10
+    },
+    "方向": {
+      "type": "categorical",
+      "total_count": 5309,
+      "null_count": 0,
+      "distinct_values": 3
+    },
+    "速度_mm_s": {
+      "type": "numeric",
+      "count": 5309,
+      "null_count": 0,
+      "mean": 3.896,
+      "std": 6.8978,
+      "min": 0.2,
+      "median": 2.0,
+      "max": 20.0
+    },
+    "照片帧号": {
+      "type": "numeric",
+      "count": 5309,
+      "null_count": 0,
+      "mean": 615.1825,
+      "std": 516.6295,
+      "min": 0.0,
+      "median": 479.0,
+      "max": 1824.0
+    },
+    "照片文件": {
+      "type": "categorical",
+      "total_count": 5309,
+      "null_count": 0,
+      "distinct_values": 5309
+    },
+    "估计时间_s": {
+      "type": "numeric",
+      "count": 5309,
+      "null_count": 0,
+      "mean": 35.4206,
+      "std": 50.135,
+      "min": 0.0,
+      "median": 10.3903,
+      "max": 179.516
+    },
+    "X1力_N": {
+      "type": "numeric",
+      "count": 5309,
+      "null_count": 0,
+      "mean": -172.3354,
+      "std": 421.6467,
+      "min": -1677.0,
+      "median": -8.7324,
+      "max": -6.0
+    },
+    "X2力_N": {
+      "type": "numeric",
+      "count": 5309,
+      "null_count": 0,
+      "mean": -173.6446,
+      "std": 424.8376,
+      "min": -1698.0,
+      "median": -8.0,
+      "max": -7.0
+    },
+    "Y1力_N": {
+      "type": "numeric",
+      "count": 5309,
+      "null_count": 0,
+      "mean": -1129.9677,
+      "std": 562.7061,
+      "min": -1670.0,
+      "median": -1421.0,
+      "max": -2.0
+    },
+    "Y2力_N": {
+      "type": "numeric",
+      "count": 5309,
+      "null_count": 0,
+      "mean": -1128.0403,
+      "std": 562.161,
+      "min": -1628.0,
+      "median": -1422.0,
+      "max": 9.0
+    },
+    "事件标签": {
+      "type": "categorical",
+      "total_count": 5309,
+      "null_count": 5272,
+      "distinct_values": 5
+    },
+    "同步状态": {
+      "type": "categorical",
+      "total_count": 5309,
+      "null_count": 0,
+      "distinct_values": 2
+    }
+  }
+}

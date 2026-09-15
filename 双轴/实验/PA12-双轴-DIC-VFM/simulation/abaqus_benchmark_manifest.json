@@ -1,0 +1,10 @@
+{
+  "source": "synthetic",
+  "odb_source": "D:\\SIMULIA\\Commands\\PA12_Biaxial_Benchmark_20260915.odb",
+  "model": "plane_stress_CPS4R",
+  "E_MPa": 300.0,
+  "nu": 0.35,
+  "thickness_mm": 2.0,
+  "ux_right_mm": 0.5,
+  "uy_top_mm": 0.5
+}

@@ -1,0 +1,9 @@
+[
+  {"claim":"PA12 SLS tensile response depends on build orientation and part thickness.","doi":"10.3390/polym16162241"},
+  {"claim":"VFM identifies constitutive parameters by combining full-field kinematics, boundary loading and virtual work.","doi":"10.1111/j.1475-1305.2006.tb01504.x"},
+  {"claim":"Out-of-plane motion can bias 2D-DIC displacement/strain measurements and therefore VFM identification.","doi":"10.1016/j.optlaseng.2008.05.005"},
+  {"claim":"Missing deformation data near specimen edges and DIC noise can affect biaxial VFM parameter identification.","doi":"10.1080/15376494.2021.1979138"},
+  {"claim":"Cruciform geometry influences gauge-zone homogeneity, load transfer and constitutive characterization.","doi":"10.1007/s11340-024-01052-2"},
+  {"claim":"DIC reporting requires hardware, calibration and processing metadata sufficient for reproducibility.","doi":"10.32720/idics/gpg.ed2"},
+  {"claim":"A claim of improved identifiability requires an independent loading path or specimen not used for fitting.","doi":"10.1111/j.1475-1305.2006.tb01504.x"}
+]

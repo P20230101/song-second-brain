@@ -9,18 +9,15 @@ _site/
 .jekyll-metadata
 
 # 当前 Vault 中的本地 Obsidian 自动文件
-/2026-09-10.md
-/欢迎.md
-/未命名.canvas
-/未命名 1.canvas
-/未命名.base
-/每日对话记录.md
-/未命名*.base
-/未命名*.canvas
+/双轴/2026-09-10.md
+/双轴/欢迎.md
+/双轴/每日对话记录.md
+/双轴/未命名*.base
+/双轴/未命名*.canvas
 
 # 本地收件箱、个人摘录与原始对话（不发布到公开仓库）
-/inbox/
-/个人/
+/双轴/inbox/
+/双轴/个人/
 
 # AI 工具与插件运行目录（保留本地功能，不纳入公开仓库）
 /.agents/
@@ -34,17 +31,21 @@ _site/
 /tmp/
 
 # 未发表论文工作区（仅本地整理，不发布到公开仓库）
-/draft_paper/
+/双轴/draft_paper/
+/双轴/processed/
 
 # 本地文献原件与下载清单（不发布到公开仓库）
-/raw/参考文献/*
-!/raw/参考文献/
-!/raw/参考文献/README.md
+/双轴/raw/参考文献/*
+!/双轴/raw/参考文献/
+!/双轴/raw/参考文献/README.md
 
 # Python 运行缓存
 __pycache__/
 
+# 个人科研门禁检测器及其本地审计输出（不作为科研代码交付）
+/private_tools/research_sop_innovation_audit/
+
 # 本地实验输出（保留实验区说明页）
-/实验/*
-!/实验/
-!/实验/README.md
+/双轴/实验/*
+!/双轴/实验/
+!/双轴/实验/README.md

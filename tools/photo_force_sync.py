@@ -744,7 +744,7 @@ def main() -> None:
     parser.add_argument(
         "--out-dir",
         type=Path,
-        default=Path("实验/PA12-双轴-DIC-VFM/results"),
+        default=Path("双轴/实验/PA12-双轴-DIC-VFM/results"),
     )
     args = parser.parse_args()
     image_root = args.data_root / "XY" / "袁-20250529"

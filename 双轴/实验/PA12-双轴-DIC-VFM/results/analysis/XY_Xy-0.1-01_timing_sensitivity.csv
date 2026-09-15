@@ -1,0 +1,8 @@
+﻿trial,shift_frames,max_abs_channel_delta_N,mean_abs_channel_delta_N,delta_at_force_peak_N,delta_at_postpeak_drop_N,interpretation
+XY_Xy-0.1-01,-5,1595.0,55.06156286043827,5.0,1591.0,hypothetical frame-registration scenario; not a confidence interval
+XY_Xy-0.1-01,-2,1594.0,22.083417435601692,2.0,1592.5,hypothetical frame-registration scenario; not a confidence interval
+XY_Xy-0.1-01,-1,1592.5,11.067786428296804,1.5,1592.5,hypothetical frame-registration scenario; not a confidence interval
+XY_Xy-0.1-01,0,0.0,0.0,0.0,0.0,hypothetical frame-registration scenario; not a confidence interval
+XY_Xy-0.1-01,1,1592.5,11.067786428296804,0.5,1.5,hypothetical frame-registration scenario; not a confidence interval
+XY_Xy-0.1-01,2,1594.0,22.028054113802384,0.5,2.0,hypothetical frame-registration scenario; not a confidence interval
+XY_Xy-0.1-01,5,1595.0,54.47332756632063,1594.0,1.5,hypothetical frame-registration scenario; not a confidence interval

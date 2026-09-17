@@ -65,7 +65,11 @@
 
 该基准的材料仍是输入卡中的 `E=300 MPa, ν=0.35` 线弹性材料，几何与四侧位移边界也是仿真契约，不是已核实的 PA12 实验参数。四侧反力在 ODB 中可用，但实际四个力传感器的物理通道、合力定义和时间绑定仍待确认。故项目总 Gate 3/4 状态更新为“Stage-A 基准通过；真实 PA12 仍阻塞”。
 
+在同一十字形离散契约上，已新增 nonlinear synthetic M0–M2 基准。Abaqus 独立生成真值场和四侧反力，本地解析 J2 积分器只消费总应变历史；UX+EQ 用于识别，R05 整条路径完全留出。M0/M1/M2 最大无噪声参数误差分别为 `1.42e-5`、`2.34e-4`、`1.29e-3`，留出路径虚功误差分别为 `6.00e-6`、`2.12e-6`、`1.92e-5`。因此 Gate 4 在 synthetic M0–M2 层通过，Gate 8 仅在 synthetic 留出路径层通过；多初值、真实噪声量级、FIM/条件数和实验留出仍未通过。完整契约与命令见 [results/m0_m2_virtual_experiment_handoff.md](results/m0_m2_virtual_experiment_handoff.md)。
+
 真实 PA12 Gate 3 的最低条件：虚场由 admissible 位移场导出应变；真值场由独立 FE 计算产生；边界反力由 FE 输出；加载状态至少包含能够激活目标参数的异质应变；内部虚功和外部虚功分别可追溯；虚场离散化与实际单元积分规则一致。真实 PA12 Gate 4 还需在无噪声下回收独立给定的本构参数。只有这两项通过后，才允许把噪声、模型形式误差和真实实验串入主识别链。
+
+ODB 的实际打开与逐帧场量抽取记录在 [results/abaqus_odb_open_validation.md](results/abaqus_odb_open_validation.md)；这份证据只覆盖 synthetic FE 接口，不替代真实 PA12 的字段、同步和边界力准入。
 
 ## 6. 真实数据准入与退出
 

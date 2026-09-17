@@ -35,6 +35,8 @@
 - 全集 MatchID 审计器：`tools/audit_matchid_collection.py`（只读扫描 XY/XZ 全部 `.dat`，输出试验汇总和照片—力—DAT 候选关联）
 - 仿真资产：`双轴/实验/PA12-双轴-DIC-VFM/simulation/`（保存在 D 盘；Stage-A 基准 Gate 3/4 已通过，真实 PA12 Gate 仍未通过）
 - [Abaqus–VFM Stage-A 审计报告](results/abaqus_vfm_gate_audit.md)
+- [M0–M2 synthetic 基线 handoff](results/m0_m2_virtual_experiment_handoff.md)
+- [Abaqus ODB 实际打开验证](results/abaqus_odb_open_validation.md)
 - ODB 场量审计：`scripts/audit_abaqus_vfm_odb.py`
 - 离散 FE–VFM 重算：`scripts/recompute_vfm_from_abaqus_odb.py`
 

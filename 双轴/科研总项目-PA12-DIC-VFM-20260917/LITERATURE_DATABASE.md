@@ -92,7 +92,7 @@
 | VF15 | Maček et al. 2024, “Uncertainty quantification of material parameters identified from full-field measurements”, DOI [10.1016/j.optlaseng.2023.107958](https://doi.org/10.1016/j.optlaseng.2023.107958) | 复材/全场；不确定度 | 参数概率/传播 | 是 | 相关 | 可能 | 未报告 | 是 | 是 | 官方页 | 系统误差和置信区间 |
 | VF16 | Pierron & Grédiac 2021, “Towards Material Testing 2.0: A review of test design for identification of constitutive parameters from full-field measurements”, DOI [10.1111/str.12370](https://doi.org/10.1111/str.12370) | 全场测试综述 | 试验设计/识别 | 是 | 是 | 视案例 | 视案例 | 视案例 | 是 | 官方页 | FIM/试验设计总依据 |
 | VF17 | Jiang et al. 2022, “Extracting material parameters under biaxial tensile tests using virtual fields and investigating missing-edge data”, DOI [10.1080/15376494.2021.1979138](https://doi.org/10.1080/15376494.2021.1979138) | 硅橡胶；双轴/DIC | 多步 VFM/边缘缺失 | 是 | 是 | 是 | 否 | 否 | 是 | 官方页 | 噪声/边缘缺失设计 |
-| VF18 | Jiang & Wang 2023, “Reformulation of the virtual fields method based on the variation of elastic energy for hyperelastic materials”, DOI [10.1016/j.ijsolstr.2023.112303](https://doi.org/10.1016/j.ijsolstr.2023.112303) | 超弹性材料 | 弹性能变分 VFM | 全场 | 是 | 可能 | 否 | 否 | 是 | 官方页 | 内外功接口检查 |
+| VF18 | Jiang & Wang 2023, “Reformulation of the virtual fields method based on the variation of elastic energy for hyperelastic materials”, DOI [10.1016/j.ijsolstr.2023.112303](https://doi.org/10.1016/j.ijsolstr.2023.112303)（Crossref/OpenAlex 未找到匹配元数据，待补证） | 超弹性材料 | 弹性能变分 VFM | 全场 | 是 | 可能 | 否 | 否 | 是 | 缺失/待补证 | 内外功接口检查 |
 | VF19 | Nguyen et al. 2026, “Full-field identification of anisotropic polymer behavior from biaxial experiments: FEMU and VFM comparison”, DOI [10.1002/pen.70150](https://doi.org/10.1002/pen.70150) | PET；十字形双轴/DIC | FEMU/VFM；各向异性 | 是 | 是 | 是 | 未报告 | 是 | 是 | 官方页 | 直接否定宽泛方法空白 |
 | VF20 | Zhang et al. 2025, “Anisotropic plasticity identification using FE-VFM and sensitivity-based virtual fields”, DOI [10.1016/j.ijmecsci.2025.110815](https://doi.org/10.1016/j.ijmecsci.2025.110815) | SUS316；单轴/双轴虚拟试验 | Hill48/Yld2000-2D；FE/S-VFM | 是 | 是 | 是 | 否 | 是 | 是 | 官方页 | M4 路径和 FIM 先例 |
 | VF21 | Meng, Yousefi & Avril 2025, “Machine-learning-driven virtual fields for anisotropic hyperelastic identification”, DOI [10.1016/j.cma.2024.117580](https://doi.org/10.1016/j.cma.2024.117580) | 生物组织/异质全场 | 学习式 VFM/各向异性超弹 | 是 | 是 | 视案例 | 未报告 | 是 | 是 | 官方页 | AI 后置，不进首篇 |
@@ -120,10 +120,48 @@
 | 分类 | 数量 | 可以说什么 | 不能说什么 |
 |---|---:|---|---|
 | 项目内部全文 P00 | 1 | 已有资料明确覆盖 PA12 十字形、DIC、XY/XZ、单轴/等双轴和三档速率 | 不能替代同行评审证据 |
-| 同行评审全文+图像 | 9 | 已实际读取 5 个 VFM/双轴方法与试样条目，以及 PA12 的超黏弹、速率/热暴露、率相关超弹和剪切损伤公开全文/图注 | 不能把不同材料或不同工艺批次的参数/模型移植到当前 PA12 |
-| 官方 DOI/出版社页 | 约 40 | 作者/题名/期刊/DOI 入口已核对，可支撑方向性缺口判断 | 不等于正文和图像已经逐篇审计 |
-| 本地引用题录 | 约 20 | 有真实本地来源线索，可排入待全文核查队列 | 不能支撑精确数值、方法细节或“首次” |
+| 同行评审全文+图像 | 9 | PA22–PA25、BX16、VF25–VF28 已实际读取正文/图注或图表 | 不能把不同材料或不同工艺批次的参数/模型移植到当前 PA12 |
+| 官方页（未完成正文/图像） | 39 | 作者/题名/期刊/DOI 入口或摘要级信息已核对，可支撑方向性判断 | 不等于正文和图像已经逐篇审计 |
+| 本地引用题录 | 34 | 有真实本地来源线索，可排入待全文核查队列 | 不能支撑精确数值、方法细节或“首次” |
+| 元数据/题录待补证 | 1 | VF18 的原登记 DOI 未通过 Crossref/OpenAlex 元数据核验；相关官方记录见字段审计附录 | 不得把该 DOI 或相近题名直接当作同一篇期刊论文 |
 | 最终可用于投稿参考文献 | 0（当前审计阶段） | 需完成全文、图像/图注、版本、DOI 和与正文论断逐条绑定 | 不提前生成投稿版参考文献表 |
+
+## E. 字段状态审计（2026-09-17）
+
+本轮对本注册表的 84 个唯一 ID 做了记录级字段盘点，覆盖目标 `≥50`。这里的“状态清楚”指每条记录都明确标出证据等级和字段是否为 `是/否/未报告/可能/视案例`；它不把未报告字段升级为已证实事实。
+
+### E.1 记录级状态映射
+
+| 本表原状态 | 统一审计状态 | 数量 | 含义 |
+|---|---|---:|---|
+| `全文+图像`、`官方全文+图像` | 已核验 | 10 | 正文、图注或图表已实际读取；其中 P00 是项目内部全文，同行评审条目为 9 篇 |
+| `官方页` | 摘要核验 | 39 | 官方期刊/出版社/DOI 页面已核对；未完成本项目登记所需的正文与图像审计 |
+| `本地引用` | 仅线索 | 34 | 有本地题录或引用位置，但没有在本轮取得可直接复核的外部来源页 |
+| `缺失/待补证` | 缺失 | 1 | VF18 原登记 DOI 元数据核验失败，暂不作为可引用的有效来源 |
+
+### E.2 目标字段盘点
+
+| 字段 | 当前覆盖/状态 | 仍缺失或不能据此声称 |
+|---|---|---|
+| 作者、年份、题名 | 80/84 行显式给出作者与年份；BX14、VF24、VF27、VF28 仍缺作者或年份；PA17 的题名待官方页复核 | 题名占位或作者缺失的记录不能进入投稿参考文献表 |
+| 材料、实验 | 84/84 行有登记值 | 只有“已核验”子集的正文/图像证据可支撑实验细节；其余仍按摘要级或线索级使用 |
+| 本构/模型、识别方法 | 84/84 行有登记值；可辨识性为“是”27、“部分”21、“未报告”30、“未重点报告”6 | “未报告/部分”不能写成已完成参数可辨识性验证 |
+| DIC | 是 48；否 1；非核心 3；辅助 1；相关 1；全场 1；未报告 29 | 29 条未报告，不能当作无 DIC；但也不能当作使用了 DIC |
+| VFM | 是 28；相关 5；否 51 | 相关不等于 VFM 识别已完成 |
+| 双轴 | 是 24；组合 1；可能 14；视案例 7；未报告 10；否 28 | 只有 24 条明确写“是”；不能把可能/视案例并入双轴先例计数 |
+| 速率 | 是 11；否 13；可能 9；视案例 5；间接 1；未报告 45 | 速率字段是当前最大未报告项之一，不能据此比较材料速率规律 |
+| 各向异性 | 是 26；否 8；可能 20；可扩展 10；视案例 3；近似各向同性 1；未重点报告 1；未报告 15 | 可能/可扩展/视案例不是当前材料的已证实各向异性 |
+| 主要创新、局限 | `LITERATURE_MAP.md` 核心矩阵规范化 15/84 行；数据库其余 69 行没有独立的创新/局限字段 | 不能把 15 条核心矩阵的判断外推为 84 篇逐篇创新审计 |
+| 与本项目关系 | 84/84 行有“本项目用途” | 用途字段是项目决策，不是论文原文结论 |
+| 真实来源链接 | 题录行有直接 URL 42/84；其中 41 个 DOI 通过元数据核验，VF18 失败；42/84 行没有直接外部链接 | 本地引用和项目内部全文仍需补作者/出版社/DOI 或机构全文入口 |
+
+无直接外部链接的 ID：`P00, PA01–PA15, PA17, PA20–PA21, BX01–BX02, BX04, BX06–BX09, VF02–VF03, VF05–VF07, VF09, VF11, VF25–VF29, VF40`。其中 VF25–VF28 有本地正文解析记录，但尚未在题录行补入可追溯外部来源链接。
+
+### E.3 元数据纠正与证据边界
+
+- VF18 的 DOI `10.1016/j.ijsolstr.2023.112303` 在本轮 Crossref/OpenAlex 校验中未找到匹配元数据；已保留原登记值作为待补证线索，不把它替换成相近题名的另一条记录。可核对的相关官方记录是 [TechScience ICCES 页面](https://www.techscience.com/icces/v26n2/53906)，其 DOI 为 `10.32604/icces.2023.08949`，不能据此自动修复原 IJSS 题录。
+- 本轮没有新增 PDF 或正文图像读取，因此 `LITERATURE_BODY_IMAGE_EVIDENCE.md` 仍只支持 PA22–PA25 四条公开全文记录；`MINERU_BODY_IMAGE_EVIDENCE.md` 仍是项目内部解析和四条同行评审本地全文的独立证据页。
+- “已核验”不等于材料参数可移植，也不等于全文所有实验事实、图表数值和原始数据可获得；正式写作仍须把具体论断绑定到正文/图注和真实来源。
 
 ## 交叉结论
 

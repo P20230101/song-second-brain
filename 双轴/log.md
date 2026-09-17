@@ -339,3 +339,9 @@ title: 维护日志
 - 发现字段 9–12 不应继续标作直接应变候选；现改为局部仿射参数候选。字段 7/8、13/14 也改为带“候选”标记的位移和质量指标命名。
 - 重生成主试样 259 帧和全集 6,327 帧本地审计表；行数与可解析数不变。新增 [`wiki/PA12-MatchID-DAT字段Schema审计-2026-09-17.md`](wiki/PA12-MatchID-DAT字段Schema审计-2026-09-17.md) 与项目内 schema 审计页。
 - 结论保持克制：全场 payload 入口已确认，私有 `.dat` 官方字段 schema、最终掩膜、同步和边界力仍未闭合，真实 PA12 VFM 不开启。
+
+## [2026-09-17] synthetic-vfm-baseline | 登记 M0–M2 FE–VFM 基线
+
+- 完成通用 nonlinear synthetic M0/M1/M2 真值、无噪声识别和 R05 整路径留出；所有参数均明确标为 synthetic，不代表 PA12 实验。
+- Abaqus Python 实际只读打开并抽取 9/9 个 ODB；新增项目证据页 `科研总项目-PA12-DIC-VFM-20260917/results/abaqus_odb_open_validation.md`。
+- 新增 Wiki 页 `wiki/PA12-M0-M2合成FE-VFM基线-2026-09-17.md`。当前仅 synthetic Gate 3/4 通过，Gate 5 只有 M0 的 20-start LHS 部分通过；M1/M2 多初值、噪声、FIM 和路径信息增益仍待完成。

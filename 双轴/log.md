@@ -300,6 +300,13 @@ title: 维护日志
 - 新增 [`wiki/真实PA12中心试样-证据与建模契约-2026-09-17.md`](wiki/真实PA12中心试样-证据与建模契约-2026-09-17.md)，固定“实际几何—DIC 场—四通道力—VFM—Abaqus 独立验证”主线，明确 Yuan 论文的 1 mm/7 条狭缝/40 mm/3 mm/0.2 mm 仅作文献基准，不能替代 as-built 尺寸。
 - 修正 `07_全量照片-力-DIC配对清单.md`、`results/analysis/xy_trial_facts.md`、`results/02_事件和频率概览.md` 和中文稿中的过时帧数表述；夹具仿真继续保留为背景，不扩展为真实试样结论。
 
+## [2026-09-17] vfm-gate-review | 下调 L0 与 Abaqus 物理闭环状态
+
+- 计算力学复核确认：当前合成结果只是由同一矩阵构造 RHS 的代数回归，合成实场/虚场存在位移—应变不相容，不能称为 admissible physical VFM。
+- 当前 Abaqus 基准只有均匀等双轴应变状态且未导出独立边界反力，不能识别 `Q66` 或充分分离四个正交常数；Abaqus 求解完成不等于 Abaqus—VFM 交叉闭环完成。
+- 将总项目 Gate 3/4 标记为 `FAIL/BLOCKED`，并把“相容虚场、独立 FE 反力、异质激励、独立无噪声回收”设为重开条件。
+- 更新 `09_VFM-L0基准与仿真状态.md`、`vfm/README.md`、总项目 `MASTER_PLAN.md`、`VFM_PLAN.md`、`PROGRESS.md` 和 `双轴/index.md`，防止代数基线被下游当作 PA12 参数识别结果。
+
 ## [2026-09-17] research-governance | 建立 PA12-DIC-VFM 总项目控制文档
 
 - 完成第一轮公开文献交叉审查：不保留“首次 PA12 DIC/VFM、首次双轴 VFM、首次可辨识性或首次多轴 PA12”这类宽泛表述。

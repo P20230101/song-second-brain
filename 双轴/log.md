@@ -332,3 +332,10 @@ title: 维护日志
 - 用 CPS4R 节点虚位移、双线性插值和单点积分重算离散 VFM；三条路径矩阵秩均为 4，外功—内功相对误差为 `2.28e-7`–`3.61e-7`，外部反力右端项最大参数误差为 `2.04e-5`–`2.18e-5`。
 - 将总计划中的 Gate 3/4 更新为“Stage-A 基准通过；真实 PA12 阻塞”。明确该材料仍是 `E=300 MPa, ν=0.35` 线弹性仿真，不冒充 FS3300PA、真实 DIC 或实验同步结果。
 - 新增 [`wiki/PA12-Abaqus-VFM-StageA基准闭环-2026-09-17.md`](wiki/PA12-Abaqus-VFM-StageA基准闭环-2026-09-17.md) 和项目内 `results/abaqus_vfm_gate_audit.md`；未移动、删除或公开 ODB、PDF、图片、MatchID 工程、机器数据和原始实验数据。
+
+## [2026-09-17] dat-schema | 修正 MatchID 私有 payload 的候选字段命名
+
+- 交叉读取主试样 `Job.m2inp` 与 `.dat` 首帧：确认 affine 变换、3 px 步长、15 px 子集、LOG Euler–Almansi、Q8、像素导出和 `0.097519 mm/px`；首帧含 10,505 条 18 值 `<18>` 记录。
+- 发现字段 9–12 不应继续标作直接应变候选；现改为局部仿射参数候选。字段 7/8、13/14 也改为带“候选”标记的位移和质量指标命名。
+- 重生成主试样 259 帧和全集 6,327 帧本地审计表；行数与可解析数不变。新增 [`wiki/PA12-MatchID-DAT字段Schema审计-2026-09-17.md`](wiki/PA12-MatchID-DAT字段Schema审计-2026-09-17.md) 与项目内 schema 审计页。
+- 结论保持克制：全场 payload 入口已确认，私有 `.dat` 官方字段 schema、最终掩膜、同步和边界力仍未闭合，真实 PA12 VFM 不开启。

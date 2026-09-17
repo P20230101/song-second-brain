@@ -53,19 +53,19 @@ def parse_dat(path: pathlib.Path) -> dict[str, object]:
         "实际点数": len(rows),
         "行解析错误数": malformed,
         "转换系数_mm每px": conversion,
-        "R最小": min(r_values) if r_values else math.nan,
-        "R均值": statistics.fmean(r_values) if r_values else math.nan,
-        "R低于0.90点数": sum(value < 0.90 for value in r_values),
-        "Sigma均值": statistics.fmean(sigma_values) if sigma_values else math.nan,
-        "Sigma高于0.10点数": sum(value > 0.10 for value in sigma_values),
-        "U字段7均值_px": statistics.fmean(u_values) if u_values else math.nan,
-        "V字段8均值_px": statistics.fmean(v_values) if v_values else math.nan,
-        "U字段7均值_mm": statistics.fmean(u_values) * conversion if u_values else math.nan,
-        "V字段8均值_mm": statistics.fmean(v_values) * conversion if v_values else math.nan,
-        "应变字段9均值": statistics.fmean(column(9)) if rows else math.nan,
-        "应变字段10均值": statistics.fmean(column(10)) if rows else math.nan,
-        "应变字段11均值": statistics.fmean(column(11)) if rows else math.nan,
-        "字段12均值": statistics.fmean(column(12)) if rows else math.nan,
+        "字段13候选_R最小": min(r_values) if r_values else math.nan,
+        "字段13候选_R均值": statistics.fmean(r_values) if r_values else math.nan,
+        "字段13候选_R低于0.90点数": sum(value < 0.90 for value in r_values),
+        "字段14候选_Sigma均值": statistics.fmean(sigma_values) if sigma_values else math.nan,
+        "字段14候选_Sigma高于0.10点数": sum(value > 0.10 for value in sigma_values),
+        "字段7候选_位移均值_px": statistics.fmean(u_values) if u_values else math.nan,
+        "字段8候选_位移均值_px": statistics.fmean(v_values) if v_values else math.nan,
+        "字段7候选_位移均值_mm": statistics.fmean(u_values) * conversion if u_values else math.nan,
+        "字段8候选_位移均值_mm": statistics.fmean(v_values) * conversion if v_values else math.nan,
+        "字段9候选_仿射参数均值": statistics.fmean(column(9)) if rows else math.nan,
+        "字段10候选_仿射参数均值": statistics.fmean(column(10)) if rows else math.nan,
+        "字段11候选_仿射参数均值": statistics.fmean(column(11)) if rows else math.nan,
+        "字段12候选_仿射参数均值": statistics.fmean(column(12)) if rows else math.nan,
         "解析状态": "可解析" if rows and malformed == 0 else "需检查",
     }
     return summary
@@ -100,10 +100,10 @@ def main() -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     audit_fields = [
         "照片帧号", "文件名", "参考图像", "变形图像", "解析状态", "行解析错误数",
-        "实际点数", "期望点数", "转换系数_mm每px", "R最小", "R均值", "R低于0.90点数",
-        "Sigma均值", "Sigma高于0.10点数", "U字段7均值_px", "V字段8均值_px",
-        "U字段7均值_mm", "V字段8均值_mm", "应变字段9均值", "应变字段10均值",
-        "应变字段11均值", "字段12均值",
+        "实际点数", "期望点数", "转换系数_mm每px", "字段13候选_R最小", "字段13候选_R均值", "字段13候选_R低于0.90点数",
+        "字段14候选_Sigma均值", "字段14候选_Sigma高于0.10点数", "字段7候选_位移均值_px", "字段8候选_位移均值_px",
+        "字段7候选_位移均值_mm", "字段8候选_位移均值_mm", "字段9候选_仿射参数均值", "字段10候选_仿射参数均值",
+        "字段11候选_仿射参数均值", "字段12候选_仿射参数均值",
     ]
     audit_path = args.output_dir / "XY-0.1-02_MatchID-DAT_帧审计_259行.csv"
     with audit_path.open("w", encoding="utf-8-sig", newline="") as handle:
@@ -118,8 +118,8 @@ def main() -> None:
     merged_fields = [
         "试样编号", "照片帧号", "估计时间_s", "Fx平均力_N", "Fy平均力_N", "加载类型",
         "照片状态", "事件标签", "MatchID文件名", "实际点数", "期望点数", "点数完整率",
-        "R均值", "Sigma均值", "U字段7均值_px", "V字段8均值_px", "U字段7均值_mm",
-        "V字段8均值_mm", "DAT解析状态", "VFM候选状态", "同步状态",
+        "字段13候选_R均值", "字段14候选_Sigma均值", "字段7候选_位移均值_px", "字段8候选_位移均值_px", "字段7候选_位移均值_mm",
+        "字段8候选_位移均值_mm", "DAT解析状态", "VFM候选状态", "同步状态",
     ]
     merged_path = args.output_dir / "XY-0.1-02_照片力MatchID-DAT_259行候选表.csv"
     with merged_path.open("w", encoding="utf-8-sig", newline="") as handle:
@@ -148,12 +148,12 @@ def main() -> None:
                 "实际点数": actual,
                 "期望点数": expected,
                 "点数完整率": fmt(ratio),
-                "R均值": fmt(item["R均值"]),
-                "Sigma均值": fmt(item["Sigma均值"]),
-                "U字段7均值_px": fmt(item["U字段7均值_px"]),
-                "V字段8均值_px": fmt(item["V字段8均值_px"]),
-                "U字段7均值_mm": fmt(item["U字段7均值_mm"]),
-                "V字段8均值_mm": fmt(item["V字段8均值_mm"]),
+                "字段13候选_R均值": fmt(item["字段13候选_R均值"]),
+                "字段14候选_Sigma均值": fmt(item["字段14候选_Sigma均值"]),
+                "字段7候选_位移均值_px": fmt(item["字段7候选_位移均值_px"]),
+                "字段8候选_位移均值_px": fmt(item["字段8候选_位移均值_px"]),
+                "字段7候选_位移均值_mm": fmt(item["字段7候选_位移均值_mm"]),
+                "字段8候选_位移均值_mm": fmt(item["字段8候选_位移均值_mm"]),
                 "DAT解析状态": item["解析状态"],
                 "VFM候选状态": candidate,
                 "同步状态": force["同步状态"],

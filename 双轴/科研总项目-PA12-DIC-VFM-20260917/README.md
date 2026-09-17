@@ -16,6 +16,7 @@
 - [MINERU_BODY_IMAGE_EVIDENCE.md](MINERU_BODY_IMAGE_EVIDENCE.md)：已实际解析的正文、图像/图注和证据边界。
 - [LITERATURE_BODY_IMAGE_EVIDENCE.md](LITERATURE_BODY_IMAGE_EVIDENCE.md)：官方开放全文中已核实的正文、图注/图表与本项目约束。
 - [DATA_AUDIT.md](DATA_AUDIT.md)：原始数据、派生数据、缺失项和可重算项。
+- [MatchID `.dat` Schema 审计](results/matchid_dat_schema_audit.md)：18 列记录的结构证据、候选字段和未决边界。
 - [RESEARCH_GAP.md](RESEARCH_GAP.md)：收窄后的主问题、子问题与假设。
 - [CONSTITUTIVE_MODELS.md](CONSTITUTIVE_MODELS.md)：M0–M7 模型阶梯和准入条件。
 - [VFM_PLAN.md](VFM_PLAN.md)：虚拟实验、VFM 数据契约和验证顺序；含 Stage-A Abaqus–VFM 闭环判定。

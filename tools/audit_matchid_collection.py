@@ -57,8 +57,8 @@ def parse_dat(path: pathlib.Path) -> dict[str, object]:
         "实际点数": len(rows),
         "行解析错误数": malformed,
         "转换系数_mm每px": conversion,
-        "R均值": statistics.fmean(r_values) if r_values else math.nan,
-        "Sigma均值": statistics.fmean(sigma_values) if sigma_values else math.nan,
+        "字段13候选_R均值": statistics.fmean(r_values) if r_values else math.nan,
+        "字段14候选_Sigma均值": statistics.fmean(sigma_values) if sigma_values else math.nan,
         "解析状态": "可解析" if rows and malformed == 0 else "需检查",
     }
 
@@ -180,7 +180,7 @@ def main() -> None:
 
     frame_fields = [
         "试验编号", "帧号", "DAT相对路径", "参考图像", "变形图像", "解析状态",
-        "行解析错误数", "实际点数", "期望点数", "转换系数_mm每px", "R均值", "Sigma均值",
+        "行解析错误数", "实际点数", "期望点数", "转换系数_mm每px", "字段13候选_R均值", "字段14候选_Sigma均值",
     ]
     summary_fields = [
         "试验编号", "DAT文件数", "可解析数", "首帧", "末帧", "期望点数中位数",
@@ -214,15 +214,15 @@ def main() -> None:
                     "实际点数": audit.get("实际点数", "") if audit else "",
                     "期望点数": audit.get("期望点数", "") if audit else "",
                     "点数完整率": (int(audit["实际点数"]) / int(audit["期望点数"])) if audit and int(audit["期望点数"]) else "",
-                    "R均值": audit.get("R均值", "") if audit else "",
-                    "Sigma均值": audit.get("Sigma均值", "") if audit else "",
+                    "字段13候选_R均值": audit.get("字段13候选_R均值", "") if audit else "",
+                    "字段14候选_Sigma均值": audit.get("字段14候选_Sigma均值", "") if audit else "",
                     "DAT解析状态": audit.get("解析状态", "") if audit else "无DAT对应",
                     "VFM候选状态": "先质量筛选；同步仍为估计" if audit else "照片有力、缺少DAT",
                 }
             )
         merged_fields = [
             "试样编号", "照片帧号", "估计时间_s", "Fx平均力_N", "Fy平均力_N", "加载类型", "事件标签", "同步状态",
-            "DAT文件名", "实际点数", "期望点数", "点数完整率", "R均值", "Sigma均值", "DAT解析状态", "VFM候选状态",
+            "DAT文件名", "实际点数", "期望点数", "点数完整率", "字段13候选_R均值", "字段14候选_Sigma均值", "DAT解析状态", "VFM候选状态",
         ]
         write_csv(args.output_dir / "all_matchid_dat_force_candidates.csv", merged, merged_fields)
     print(f"dat_files={len(frame_rows)}")

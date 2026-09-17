@@ -70,6 +70,7 @@
 | Yan et al., 2025, [arXiv:2510.07683](https://arxiv.org/abs/2510.07683) | VFM-GA 用 DIC 位移与力传感器同步数据构造目标函数，并在优化中剔除不稳定的本构参数集合；目前是预印本和超弹性泡沫案例。 | 可借鉴“稳定性筛选 + 优化器”结构，但不把预印本的算法精度或材料结论移植为 PA12 证据。 |
 | Oliveira, [开源 Python VFM](https://github.com/migueljgoliveira/virtual-fields-method) | README 要求节点、单元、逐时刻位移、方向、厚度和力等输入，并提供识别/仿真两种模式。 | 首轮代码数据契约固定为 `nodes/elements/U(t)/thickness/force`；缺节点、厚度、边界合力或同步证据时只做审计/虚拟试验。 |
 | Fully 3D VFM, 2025, DOI [10.1186/s40323-025-00293-7](https://doi.org/10.1186/s40323-025-00293-7) | 提供 Python 数组化的 3D VFM，用几何、位移场、载荷和本构方程识别硬化行为。 | 该路线证明代码化 VFM 可行，但本项目先完成平面内 2D 场的可复现闭环；只有真实立体场和标定齐备时才升级 3D。 |
+| Chen et al., [FEMU-DIC 开源实现](https://github.com/BinChenOPEN/FEMU-DIC) | 其转换说明把 MatchID CSV 的前 7 列固定为 `X,Y,U,V,exx,eyy,exy`，并明确像素到物理尺度的转换要求。 | 作为 `.dat` 字段 5–11 的外部命名交叉依据；在带表头导出核对前仍保留“候选”而不改写原始字段。 |
 
 ### 交叉结论
 

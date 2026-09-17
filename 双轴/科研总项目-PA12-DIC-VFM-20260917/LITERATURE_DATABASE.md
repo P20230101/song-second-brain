@@ -42,11 +42,11 @@
 | PA20 | Salazar, Cano & Rodríguez 2022, “Mechanical and fatigue behaviour of polyamide 12 processed via injection moulding and selective laser sintering” | PA12；注塑/SLS；疲劳 | Kitagawa–Takahashi 图 | 未报告 | 否 | 否 | 未报告 | 可能 | 未报告 | 本地引用 | 失效扩展背景 |
 | PA21 | Cobian et al. 2022, “Micromechanical characterization of the material response in a PA12-SLS fabricated lattice structure and its correlation with bulk behavior” | SLS PA12 晶格与块体 | 微观—宏观相关 | 未报告 | 否 | 否 | 未报告 | 可能 | 未报告 | 本地引用 | 晶格不替代块体 |
 | PA22 | Kadkhodaei et al. 2024, “A hyper-viscoelastic constitutive model for SLS PA12”, DOI [10.1371/journal.pone.0304823](https://doi.org/10.1371/journal.pone.0304823) | SLS PA12；单调/循环/松弛 | 超黏弹卷积模型 + FE | 非核心 | 否 | 否 | 是 | 是 | 未重点报告 | 官方页 | 只有历史数据足够时才开放 M6 |
-| PA23 | “Effect of strain rates and heat exposure on the mechanical behavior of SLS PA12”, 2023, PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC10342904/) | SLS PA12；速率/热暴露 | 速率效应表征 | 有相关全场 | 否 | 否 | 是 | 未重点报告 | 官方页 | 速率扩展物理依据 |
-| PA24 | “Hyper-viscoelastic behavior of SLS PA12”, 2024, PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC11285931/) | SLS PA12；时间相关响应 | 超黏弹模型 | 非核心 | 否 | 否 | 是 | 未重点报告 | 官方页 | 防止过早用 M6 |
+| PA23 | “Effect of strain rates and heat exposure on the mechanical behavior of SLS PA12”, 2023, PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC10342904/) | SLS PA12；速率/热暴露 | 速率效应表征 | 有相关全场 | 否 | 否 | 是 | 未重点报告 | 未报告 | 官方页 | 速率扩展物理依据 |
+| PA24 | “Hyper-viscoelastic behavior of SLS PA12”, 2024, PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC11285931/) | SLS PA12；时间相关响应 | 超黏弹模型 | 非核心 | 否 | 否 | 是 | 未重点报告 | 未报告 | 官方页 | 防止过早用 M6 |
 | PA25 | “Shear-induced damage in SLS PA12”, 2024, PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC10780187/) | SLS PA12；剪切/损伤 | 损伤/剪切响应 | 非核心 | 否 | 否 | 可能 | 是 | 未重点报告 | 官方页 | 损伤后续线，不进首篇 |
 | PA26 | Chen et al. 2021, “A finite strain viscoelastic-viscoplastic model for additively manufactured PA12”, DOI [10.1016/j.ijplas.2021.103029](https://doi.org/10.1016/j.ijplas.2021.103029) | MJF PA12；加载—卸载—恢复；μCT/RVE | 有限应变黏弹–黏塑–损伤 | 相关 | 否 | 组合 | 是 | 可能 | 未重点报告 | 官方页 | MJF 与 SLS 分开处理 |
-| PA27 | Zhao et al. 2026, “Multiaxial ratchetting of SLS PA12”, DOI [10.1111/ffe.70373](https://doi.org/10.1111/ffe.70373) | SLS PA12；多轴比例/非比例循环；温度/方向 | 温度相关多轴棘轮 | 非核心 | 否 | 是 | 是 | 是 | 官方页 | 否定“PA12 多轴空白” |
+| PA27 | Zhao et al. 2026, “Multiaxial ratchetting of SLS PA12”, DOI [10.1111/ffe.70373](https://doi.org/10.1111/ffe.70373) | SLS PA12；多轴比例/非比例循环；温度/方向 | 温度相关多轴棘轮 | 非核心 | 否 | 是 | 是 | 是 | 未报告 | 官方页 | 否定“PA12 多轴空白” |
 
 ## B. 双轴十字形试样、设备与路径设计
 

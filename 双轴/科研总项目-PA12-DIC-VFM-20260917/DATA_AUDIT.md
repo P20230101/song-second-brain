@@ -31,6 +31,8 @@
 
 字段审计器 `scripts/audit_dic_field_csv.py` 已对 `D:\C盘迁移\Desktop\yuan\DIC-xy_0.2` 重现：133 个连续帧（0–132）、每帧 3,104 点、统一六列 header、无坏字段行。可复现摘要保存为 `results/dic_field_audit_xy_0.2.json`；该结果只证明文件结构，不证明同源、应变、同步或 VFM 准入。
 
+字段命名的外部交叉依据：开源 [FEMU-DIC](https://github.com/BinChenOPEN/FEMU-DIC) 的数据转换说明要求 MatchID CSV 前 7 列依次为 `X,Y,U,V,exx,eyy,exy`，并要求像素单位通过 scale 转换到物理坐标。这个约束支持将当前 `.dat` 的字段 5–11 作为 `X/Y/U/V/exx/eyy/exy` 候选，但不能单独证明私有 `.dat` 的内部字段顺序；因此标准化表仍保留“候选”命名，待一次带表头的 MatchID CSV 导出后锁定。
+
 原始 MatchID `.dat` 已确认 259 个逐帧文件全部存在，并已逐个解压、解析出 `<18>` 逐点记录。每个文件含参考/变形图像名、`Conversion=0.097519 mm/px`、期望点数和逐点质量字段；0–250、252 帧为 10,505 点，251、253–257 帧为 10,504 点，258 帧为 7,599 点。字段 7、8 按像素位移读取并保留 mm 换算列，字段 9–12 保留为应变候选字段，字段 13/14 为 R/Sigma 摘要；正式识别前仍需用 MatchID 导出说明核对字段语义和有效掩膜规则。另有一个独立 legacy DIC 导出目录已确认能读出 `X[Pixels];Y[Pixels];U[Pixels];V[Pixels];R;Sigma` 六列的 133 帧候选场；其首帧坐标范围/点布局与 `.dat` ROI 不一致，不能仅凭 `Img` 帧名认定同源，因此只作为交叉质量检查，不替代全量 `.dat`。
 
 已将同一审计扩展到 `yuan/data` 下的 XY/XZ 全部试样：共 5,295 个 `.dat`，14 个试验目录，全部可解压解析。汇总见 [ALL_TRIALS_AUDIT](ALL_TRIALS_AUDIT.md)。XY 的现有照片—力候选表共 5,309 行，可与 DAT 按试验编号和帧号关联；X-05 有 14 张照片没有对应 DAT，不能补成虚构全场。XZ 的 `.dat` 可读，但当前目录没有逐照片力时序，暂不进入真实 VFM。

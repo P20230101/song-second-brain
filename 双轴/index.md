@@ -36,7 +36,7 @@ title: 首页
 - [PA12-MinerU 正文与图像证据](wiki/PA12-MinerU正文图像证据-2026-09-17.md) — 登记已实际读取的正文、图注、图像对象和证据边界。
 - [PA12 公开全文正文与图像证据](wiki/PA12-公开全文正文图像证据-2026-09-17.md) — 核实 PA12 率效应、超弹/超黏弹、剪切损伤与多轴棘轮文献的正文和图表边界。
 - [Abaqus–VFM Stage-A 基准闭环证据](wiki/PA12-Abaqus-VFM-StageA基准闭环-2026-09-17.md) — 三个十字形基准 ODB 的只读场量/反力审计与 CPS4R 一致离散 VFM 真参数回收；不等同真实 PA12 识别。
-- [PA12 M0–M2 合成 FE–VFM 基线](wiki/PA12-M0-M2合成FE-VFM基线-2026-09-17.md) — 通用 nonlinear synthetic 真值、无噪声回收、R05 留出和 ODB 实际打开证据；M0/M1 多初值通过，M2 为 19/20 收敛且有 1 个触限。
+- [PA12 M0–M2 合成 FE–VFM 基线](wiki/PA12-M0-M2合成FE-VFM基线-2026-09-17.md) — 通用 nonlinear synthetic 真值、无噪声回收、R05 留出和 ODB 实际打开证据；M0/M1 多初值通过，M2 为 19/20 收敛且有 1 个触限，定向复现受 SciPy–MKL LAPACK 工作区错误阻塞。
 - [MatchID `.dat` 字段 Schema 审计](wiki/PA12-MatchID-DAT字段Schema审计-2026-09-17.md) — 主试样 18 列逐点 payload 的结构证据、候选字段和不能直接进入 VFM 的边界。
 
 ## 实验、原始资料与审计

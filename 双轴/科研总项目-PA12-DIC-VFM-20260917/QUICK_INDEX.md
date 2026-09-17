@@ -11,6 +11,7 @@
 ## 证据与数据
 
 - [文献地图](LITERATURE_MAP.md)
+- [MinerU 正文与图像证据](MINERU_BODY_IMAGE_EVIDENCE.md)
 - [数据审计](DATA_AUDIT.md)
 - [试验矩阵](EXPERIMENT_PLAN.md)
 - 真实样本证据：[双轴/wiki/真实PA12中心试样-证据与建模契约-2026-09-17.md](../wiki/真实PA12中心试样-证据与建模契约-2026-09-17.md)

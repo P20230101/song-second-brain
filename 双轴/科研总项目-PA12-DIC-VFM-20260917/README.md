@@ -12,6 +12,7 @@
 - [QUICK_INDEX.md](QUICK_INDEX.md)：按研究总控、证据/数据、计算方法和现有结果快速定位。
 - [MASTER_PLAN.md](MASTER_PLAN.md)：范围、阶段、Gate 与停止规则。
 - [LITERATURE_MAP.md](LITERATURE_MAP.md)：公开证据和文献矩阵。
+- [MINERU_BODY_IMAGE_EVIDENCE.md](MINERU_BODY_IMAGE_EVIDENCE.md)：已实际解析的正文、图像/图注和证据边界。
 - [DATA_AUDIT.md](DATA_AUDIT.md)：原始数据、派生数据、缺失项和可重算项。
 - [RESEARCH_GAP.md](RESEARCH_GAP.md)：收窄后的主问题、子问题与假设。
 - [CONSTITUTIVE_MODELS.md](CONSTITUTIVE_MODELS.md)：M0–M7 模型阶梯和准入条件。

@@ -13,6 +13,7 @@
 - [文献地图](LITERATURE_MAP.md)
 - [文献数据库审计注册表](LITERATURE_DATABASE.md)
 - [MinerU 正文与图像证据](MINERU_BODY_IMAGE_EVIDENCE.md)
+- [公开全文正文与图像证据](LITERATURE_BODY_IMAGE_EVIDENCE.md)
 - [数据审计](DATA_AUDIT.md)
 - [全试样 MatchID 审计](ALL_TRIALS_AUDIT.md)
 - [试验矩阵](EXPERIMENT_PLAN.md)

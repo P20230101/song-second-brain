@@ -11,6 +11,7 @@
 状态代码：
 
 - `全文+图像`：正文、图注/图表已由 MinerU 或本地全文实际读取；
+- `官方全文+图像`：官方开放全文已读取正文、图注或图表；
 - `官方页`：作者/题名/DOI/期刊入口已由官方页面或 DOI 页面核对，正文与图像尚未登记；
 - `本地引用`：题录从项目内已解析文献或内部论文参考文献读出，独立全文待核；
 - `待补证`：只作为检索候选，不进入最终投稿参考文献表。
@@ -37,16 +38,16 @@
 | PA15 | Yao, Li & Zhu 2020, “Effect of powder recycling on anisotropic tensile properties of selective laser sintered PA2200 polyamide” | SLS PA2200；回收粉末；拉伸 | 方向性拉伸表征 | 未报告 | 否 | 否 | 未报告 | 是 | 未报告 | 本地引用 | 不能把 PA2200 参数移植 PA12 |
 | PA16 | Schneider & Kumar 2020, “Multiscale characterization and constitutive parameters identification of polyamide PA12 processed via selective laser sintering”, DOI [10.1016/j.polymertesting.2020.106357](https://doi.org/10.1016/j.polymertesting.2020.106357) | SLS PA12；拉/压/弯/剪/断裂 | Three-Network；多试验标定 | 非核心 | 否 | 否 | 间接 | 是 | 未重点报告 | 官方页 | PA12 本构先验；不等于双轴 VFM |
 | PA17 | Lammens et al. 2016, SLS PA12 directional/rate response [题名待官方页复核] | SLS PA12；方向/速率拉伸 | 方向性、速率响应 | 是 | 否 | 否 | 是 | 是 | 未重点报告 | 本地引用 | M3/M4 准入依据 |
-| PA18 | Lammens et al. 2017, “A comprehensive experimental investigation of the mechanical response of SLS PA12”, DOI [10.1016/j.polymertesting.2016.11.032](https://doi.org/10.1016/j.polymertesting.2016.11.032) | SLS PA12；拉伸/压缩/剪切/松弛 | 黏弹塑/方向性 | 辅助 | 否 | 否 | 是 | 是 | 未重点报告 | 官方页 | M6 只能条件开放 |
-| PA19 | Faes et al. 2017, “Variability in the mechanical properties of SLS PA12 parts”, DOI [10.1111/str.12219](https://doi.org/10.1111/str.12219) | SLS PA12；多方向单轴 | 弹性刚度与变异性 | 是 | 否 | 否 | 未报告 | 是 | 部分 | 官方页 | 批次/位置变异性 |
+| PA18 | Lammens, Kersemans, De Baere & Van Paepegem 2017, “On the visco-elasto-plastic response of additively manufactured polyamide-12 (PA-12) through selective laser sintering”, DOI [10.1016/j.polymertesting.2016.11.032](https://doi.org/10.1016/j.polymertesting.2016.11.032) | SLS PA12；拉伸/压缩/剪切/松弛 | 黏弹塑/方向性 | 辅助 | 否 | 否 | 是 | 是 | 未重点报告 | 官方页 | M6 只能条件开放 |
+| PA19 | Faes, Wang, Lava & Moens 2016/2017, “Variability, heterogeneity, and anisotropy in the quasi-static response of laser sintered PA12 components”, DOI [10.1111/str.12219](https://doi.org/10.1111/str.12219) | SLS PA12；多方向单轴；DIC | 弹性刚度与变异性；VFM | 是 | 是 | 否 | 未报告 | 是 | 部分 | 官方页 | 批次/位置变异性；支持“已有 PA12-VFM 先例” |
 | PA20 | Salazar, Cano & Rodríguez 2022, “Mechanical and fatigue behaviour of polyamide 12 processed via injection moulding and selective laser sintering” | PA12；注塑/SLS；疲劳 | Kitagawa–Takahashi 图 | 未报告 | 否 | 否 | 未报告 | 可能 | 未报告 | 本地引用 | 失效扩展背景 |
 | PA21 | Cobian et al. 2022, “Micromechanical characterization of the material response in a PA12-SLS fabricated lattice structure and its correlation with bulk behavior” | SLS PA12 晶格与块体 | 微观—宏观相关 | 未报告 | 否 | 否 | 未报告 | 可能 | 未报告 | 本地引用 | 晶格不替代块体 |
-| PA22 | Kadkhodaei et al. 2024, “A hyper-viscoelastic constitutive model for SLS PA12”, DOI [10.1371/journal.pone.0304823](https://doi.org/10.1371/journal.pone.0304823) | SLS PA12；单调/循环/松弛 | 超黏弹卷积模型 + FE | 非核心 | 否 | 否 | 是 | 是 | 未重点报告 | 官方页 | 只有历史数据足够时才开放 M6 |
-| PA23 | “Effect of strain rates and heat exposure on the mechanical behavior of SLS PA12”, 2023, PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC10342904/) | SLS PA12；速率/热暴露 | 速率效应表征 | 有相关全场 | 否 | 否 | 是 | 未重点报告 | 未报告 | 官方页 | 速率扩展物理依据 |
-| PA24 | “Hyper-viscoelastic behavior of SLS PA12”, 2024, PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC11285931/) | SLS PA12；时间相关响应 | 超黏弹模型 | 非核心 | 否 | 否 | 是 | 未重点报告 | 未报告 | 官方页 | 防止过早用 M6 |
-| PA25 | “Shear-induced damage in SLS PA12”, 2024, PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC10780187/) | SLS PA12；剪切/损伤 | 损伤/剪切响应 | 非核心 | 否 | 否 | 可能 | 是 | 未重点报告 | 官方页 | 损伤后续线，不进首篇 |
+| PA22 | Kadkhodaei, Pawlikowski, Drobnicki & Domański 2024, “An experimental and theoretical investigation on the hyper-viscoelasticity of polyamide 12 produced by selective laser sintering”, DOI [10.1371/journal.pone.0304823](https://doi.org/10.1371/journal.pone.0304823) | SLS PA12；单调/循环/两阶段松弛；标准试样与晶格 | 超黏弹卷积模型 + FE | 非核心 | 否 | 否 | 是 | 是 | 未重点报告 | 官方全文+图像 | 只有历史数据足够时才开放 M6 |
+| PA23 | Morano, Alfano & Pagnotta 2023, “Effect of Strain Rates and Heat Exposure on Polyamide (PA12) Processed via Selective Laser Sintering”, DOI [10.3390/ma16134654](https://doi.org/10.3390/ma16134654), PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC10342904/) | SLS PA12；速率/热暴露；DSC/拉伸/DIC | 速率效应表征 | 是 | 否 | 否 | 是 | 未重点报告 | 未报告 | 官方全文+图像 | 速率扩展物理依据；正文 Figure 5 明确含 y 位移场 |
+| PA24 | Kadkhodaei, Pawlikowski, Drobnicki & Domański 2023, “Modeling of hyperelasticity in polyamide 12 produced by selective laser sintering”, DOI [10.1007/s00161-023-01199-8](https://doi.org/10.1007/s00161-023-01199-8) | SLS PA12；PA2200；四方向单轴；循环/速率 | 2/5 参数 Mooney–Rivlin；率相关超弹性 | 否 | 否 | 否 | 是 | 近似各向同性 | 未报告 | 官方全文+图像 | M0–M2 前的弹性非线性筛选；支持不要把弹性默认线性 |
+| PA25 | Schob et al. 2023/2024, “Characterization and Simulation of Shear-Induced Damage in Selective-Laser-Sintered Polyamide 12”, DOI [10.3390/ma17010038](https://doi.org/10.3390/ma17010038), PMC [全文入口](https://pmc.ncbi.nlm.nih.gov/articles/PMC10780187/) | SLS PA12；准静态剪切；DIC/FE/UMAT | Chaboche 黏塑 + 修正 GTN 损伤；kw 敏感性 | 是 | 否 | 可能 | 可能 | 是 | 未重点报告 | 官方全文+图像 | 损伤后续线，不进首篇 |
 | PA26 | Chen et al. 2021, “A finite strain viscoelastic-viscoplastic model for additively manufactured PA12”, DOI [10.1016/j.ijplas.2021.103029](https://doi.org/10.1016/j.ijplas.2021.103029) | MJF PA12；加载—卸载—恢复；μCT/RVE | 有限应变黏弹–黏塑–损伤 | 相关 | 否 | 组合 | 是 | 可能 | 未重点报告 | 官方页 | MJF 与 SLS 分开处理 |
-| PA27 | Zhao et al. 2026, “Multiaxial ratchetting of SLS PA12”, DOI [10.1111/ffe.70373](https://doi.org/10.1111/ffe.70373) | SLS PA12；多轴比例/非比例循环；温度/方向 | 温度相关多轴棘轮 | 非核心 | 否 | 是 | 是 | 是 | 未报告 | 官方页 | 否定“PA12 多轴空白” |
+| PA27 | Zhao, Chen, Linghu, Kan & Kang 2026, “Temperature-Dependent Multiaxial Ratchetting of Polyamide 12 Fabricated by Selective Laser Sintering”, DOI [10.1111/ffe.70373](https://doi.org/10.1111/ffe.70373) | SLS PA12；多轴比例/非比例循环；温度/方向 | 温度相关多轴棘轮 | 非核心 | 否 | 是 | 是 | 是 | 未报告 | 官方页 | 否定“PA12 多轴空白”；数据按作者要求提供 |
 
 ## B. 双轴十字形试样、设备与路径设计
 

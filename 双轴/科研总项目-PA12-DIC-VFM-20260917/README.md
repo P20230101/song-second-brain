@@ -14,6 +14,7 @@
 - [LITERATURE_MAP.md](LITERATURE_MAP.md)：公开证据和文献矩阵。
 - [LITERATURE_DATABASE.md](LITERATURE_DATABASE.md)：84 个唯一条目的正文/图像证据分级注册表；候选数量不等于逐篇全文完成。
 - [MINERU_BODY_IMAGE_EVIDENCE.md](MINERU_BODY_IMAGE_EVIDENCE.md)：已实际解析的正文、图像/图注和证据边界。
+- [LITERATURE_BODY_IMAGE_EVIDENCE.md](LITERATURE_BODY_IMAGE_EVIDENCE.md)：官方开放全文中已核实的正文、图注/图表与本项目约束。
 - [DATA_AUDIT.md](DATA_AUDIT.md)：原始数据、派生数据、缺失项和可重算项。
 - [RESEARCH_GAP.md](RESEARCH_GAP.md)：收窄后的主问题、子问题与假设。
 - [CONSTITUTIVE_MODELS.md](CONSTITUTIVE_MODELS.md)：M0–M7 模型阶梯和准入条件。

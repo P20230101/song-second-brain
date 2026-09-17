@@ -18,7 +18,7 @@
 - [DATA_AUDIT.md](DATA_AUDIT.md)：原始数据、派生数据、缺失项和可重算项。
 - [RESEARCH_GAP.md](RESEARCH_GAP.md)：收窄后的主问题、子问题与假设。
 - [CONSTITUTIVE_MODELS.md](CONSTITUTIVE_MODELS.md)：M0–M7 模型阶梯和准入条件。
-- [VFM_PLAN.md](VFM_PLAN.md)：虚拟实验、VFM 数据契约和验证顺序。
+- [VFM_PLAN.md](VFM_PLAN.md)：虚拟实验、VFM 数据契约和验证顺序；含 Stage-A Abaqus–VFM 闭环判定。
 - [IDENTIFIABILITY_PLAN.md](IDENTIFIABILITY_PLAN.md)：FIM、敏感度、噪声和路径信息分析。
 - [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md)：已有试验矩阵与不新增实验路线。
 - [PAPER_PLAN.md](PAPER_PLAN.md)：第一篇论文的结果驱动结构和图表计划。
@@ -38,3 +38,9 @@
 - `pending`：存在文件或线索，但关键字段/假设未核实。
 - `blocked`：缺少必要数据，不能进入下一 Gate。
 - `synthetic`：虚拟/合成数据，只用于方法验证和设计分析，不冒充实验结果。
+
+## 当前计算力学证据
+
+- [Abaqus–VFM Stage-A 审计报告](results/abaqus_vfm_gate_audit.md)：只读打开 `FO_G00_reference_UX/EQ/R05.odb`，并用 CPS4R 一致的离散虚场重算内外功。
+- [ODB 场量审计脚本](scripts/audit_abaqus_vfm_odb.py) 与 [离散 VFM 重算脚本](scripts/recompute_vfm_from_abaqus_odb.py)：脚本不修改 ODB；结果 JSON 保留在 `results/`。
+- 该证据只证明基准 FE 接口和线弹性真参数回收，不证明真实 PA12、MatchID-DIC 同步、模型判别或跨路径实验预测。

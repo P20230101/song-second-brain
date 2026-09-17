@@ -1,0 +1,64 @@
+{
+  "displacement_components": [
+    "U1",
+    "U2"
+  ],
+  "field_output_counts": {
+    "E": 692,
+    "RF": 789,
+    "S": 692,
+    "U": 789
+  },
+  "instance_names": [
+    "SPECIMEN-1"
+  ],
+  "last_frame_value": 1.0,
+  "load_frame_count": 2,
+  "odb_path": "D:\\\u677e\u7684\u7b2c\u4e8c\u5927\u8111\\\u677e\u7684\u7b2c\u4e8c\u5927\u8111\\\u53cc\u8f74\\\u5b9e\u9a8c\\PA12-\u53cc\u8f74-DIC-VFM\\simulation\\fixture_optimization\\jobs\\FO_G00_reference_EQ.odb",
+  "open_status": "OPENED_READ_ONLY",
+  "physical_field_gate": {
+    "all_basic_checks_pass": true,
+    "heterogeneous_strain": true,
+    "nonzero_reaction": true,
+    "required_outputs_present": true,
+    "virtual_work_available": true
+  },
+  "reaction_components": [
+    "RF1",
+    "RF2"
+  ],
+  "reaction_mean_abs": {
+    "RF1": 0.40898979813124897,
+    "RF2": 0.40898979813124897
+  },
+  "reaction_sum": {
+    "RF1": 0.0,
+    "RF2": -2.4868995751603507e-14
+  },
+  "required_field_outputs": [
+    "U",
+    "S",
+    "E",
+    "RF"
+  ],
+  "step_names": [
+    "Load"
+  ],
+  "strain_span": {
+    "E11": 0.018906340934336185,
+    "E12": 0.03227494657039642,
+    "E22": 0.018906340934336185
+  },
+  "strain_std": {
+    "E11": 0.005633665569198633,
+    "E12": 0.003819421879487968,
+    "E22": 0.005633665569198633
+  },
+  "stress_span": {
+    "S11": 5.032750189304352,
+    "S12": 3.5861053466796875,
+    "S22": 5.032750189304352
+  },
+  "vfm_json_path": "D:\\\u677e\u7684\u7b2c\u4e8c\u5927\u8111\\\u677e\u7684\u7b2c\u4e8c\u5927\u8111\\\u53cc\u8f74\\\u5b9e\u9a8c\\PA12-\u53cc\u8f74-DIC-VFM\\simulation\\fixture_optimization\\fields\\FO_G00_reference_EQ_vfm.json",
+  "virtual_work_external_internal_relative_error": 0.00040046790960226504
+}

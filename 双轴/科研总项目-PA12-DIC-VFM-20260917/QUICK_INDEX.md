@@ -32,7 +32,10 @@
 - DIC 字段审计器：`科研总项目-PA12-DIC-VFM-20260917/scripts/audit_dic_field_csv.py`（只读审计，不推断应变/力/同步）
 - MatchID `.dat` 帧审计器：`tools/audit_matchid_dat.py`（只读解压并生成 259 行摘要，不修改原始 `.dat`）
 - 全集 MatchID 审计器：`tools/audit_matchid_collection.py`（只读扫描 XY/XZ 全部 `.dat`，输出试验汇总和照片—力—DAT 候选关联）
-- 仿真资产：`双轴/实验/PA12-双轴-DIC-VFM/simulation/`（保存在 D 盘；当前 Gate 3/4 未通过）
+- 仿真资产：`双轴/实验/PA12-双轴-DIC-VFM/simulation/`（保存在 D 盘；Stage-A 基准 Gate 3/4 已通过，真实 PA12 Gate 仍未通过）
+- [Abaqus–VFM Stage-A 审计报告](results/abaqus_vfm_gate_audit.md)
+- ODB 场量审计：`scripts/audit_abaqus_vfm_odb.py`
+- 离散 FE–VFM 重算：`scripts/recompute_vfm_from_abaqus_odb.py`
 
 ## 现有派生结果
 
@@ -42,6 +45,7 @@
 - XY 同步审计：`双轴/实验/PA12-双轴-DIC-VFM/results/审计/xy_photo_force_sync.csv`
 - 同步事件表：`双轴/实验/PA12-双轴-DIC-VFM/同步/events.csv`（当前只有表头）
 - VFM L0 状态页：`双轴/实验/PA12-双轴-DIC-VFM/09_VFM-L0基准与仿真状态.md`
+- Stage-A JSON 结果：`results/abaqus_vfm_recompute_UX.json`、`results/abaqus_vfm_recompute_EQ.json`、`results/abaqus_vfm_recompute_R05.json`
 - 论文草稿：`双轴/draft_paper/`
 - 日报/研究报告：`双轴/研究报告/`
 

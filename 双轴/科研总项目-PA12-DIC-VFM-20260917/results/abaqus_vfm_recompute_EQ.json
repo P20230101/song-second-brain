@@ -1,0 +1,66 @@
+{
+  "A_condition_number": 26.59412810599406,
+  "A_rank": 4,
+  "element_count": 692,
+  "external_internal_relative_error": 2.2804721429434388e-07,
+  "external_rhs_fit": {
+    "condition_number": 26.59412810599406,
+    "max_relative_parameter_error": 2.042201843524083e-05,
+    "q_fit_MPa": [
+      341.88034275490287,
+      341.88034275490276,
+      119.65811900329814,
+      111.10884199795163
+    ],
+    "rank": 4,
+    "relative_residual": 5.856665349639084e-16
+  },
+  "external_virtual_work_Nmm": [
+    282.2862159013748,
+    282.2862159013747,
+    -4.440892098500626e-16,
+    1.1102230246251565e-16,
+    19.012726464271548,
+    19.012726464271537,
+    554.9969268639683,
+    554.9969268639682
+  ],
+  "integration": "CPS4R reduced integration: nodal virtual displacements, bilinear interpolation, and one-point element work",
+  "internal_rhs_diagnostic_fit": {
+    "condition_number": 26.59412810599406,
+    "max_relative_parameter_error": 5.527641179980947e-08,
+    "q_fit_MPa": [
+      341.8803433982518,
+      341.88034339825117,
+      119.65811907440684,
+      111.11111725293463
+    ],
+    "rank": 4,
+    "relative_residual": 8.110813268513523e-16
+  },
+  "internal_virtual_work_Nmm": [
+    282.2862163383513,
+    282.2862163383513,
+    1.27675647831893e-15,
+    -2.1371793224034263e-15,
+    19.01286852257107,
+    19.012868522571072,
+    554.9969278447268,
+    554.9969278447264
+  ],
+  "nonzero_reaction_nodes": 52,
+  "odb_path": "D:\\\u677e\u7684\u7b2c\u4e8c\u5927\u8111\\\u677e\u7684\u7b2c\u4e8c\u5927\u8111\\\u53cc\u8f74\\\u5b9e\u9a8c\\PA12-\u53cc\u8f74-DIC-VFM\\simulation\\fixture_optimization\\jobs\\FO_G00_reference_EQ.odb",
+  "q_true_MPa": [
+    341.88034188034186,
+    341.88034188034186,
+    119.65811965811965,
+    111.1111111111111
+  ],
+  "shear_convention": "Abaqus E12 used as exported; no extra factor of 2",
+  "status": "OPENED_READ_ONLY_RECOMPUTED",
+  "strain_component_max_abs": [
+    0.014100571162998676,
+    0.014100571162998676,
+    0.01613747328519821
+  ]
+}

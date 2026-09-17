@@ -72,3 +72,23 @@
 - 以 synthetic data 验证方法边界。
 
 这是有效的研究降级路线，不把缺失证据藏在优化结果里。
+
+## 7. 当前首轮代码的最小数据包
+
+已从 `yuan/data` 全量找到并审计 14 个试验目录、5,295 个 `.dat`。首轮代码不读取原始图像，而读取由审计脚本产生的标准化中间表：
+
+```text
+trial_id, frame_id, x_px, y_px, u_px, v_px,
+u_mm, v_mm, R, Sigma, valid_mask,
+Fx_N, Fy_N, t_image_s_est, sync_status
+```
+
+其中 `x/y/u/v` 的字段语义和单位必须先由 MatchID 2019 导出说明确认；当前 `.dat` 审计只把字段 7/8 保留为“位移候选”，字段 9–12 保留为“应变候选”，不把候选名改成已证实语义。厚度先按用户确认的 `1.0 mm` 写入配置；几何和边界牵引仍使用试样真实尺寸与夹具记录。
+
+首轮只输出三类文件：
+
+1. `all_matchid_dat_summary.csv`：每个试验一行，判断是否存在连续全场入口；
+2. `all_matchid_dat_frame_audit.csv`：每个 DAT 帧一行，记录点数、R/Sigma 和解析状态；
+3. `all_matchid_dat_force_candidates.csv`：已有 XY 照片—力表按试验编号/帧号合并，缺 DAT 的照片明确标记，不填猜测场。
+
+这三类文件已在本地生成，路径见 [ALL_TRIALS_AUDIT](ALL_TRIALS_AUDIT.md)。它们是进入 VFM 前的审计层，不是最终本构参数结果。下一轮代码只允许消费 `解析状态=可解析`、点数/质量掩膜通过且同步情景已明确的帧段。

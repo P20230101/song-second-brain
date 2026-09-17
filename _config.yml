@@ -6,6 +6,7 @@ baseurl: /song-second-brain
 theme: jekyll-theme-minimal
 show_downloads: false
 exclude:
+  - 模板
   - 双轴/模板
   - 双轴/inbox
   - 双轴/draft_paper

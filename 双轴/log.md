@@ -325,3 +325,10 @@ title: 维护日志
 
 - 视觉抽查确认 PA12 内部论文的屈服面图可读，含三档速率及 XY/XZ、单轴/双轴标记；DIC 应变页的部分提取对象只是独立色标，未将其计作全场结果。
 - 将“图像存在/图注可读”和“可从图像反算原始数值”分开写入 `MINERU_BODY_IMAGE_EVIDENCE.md`，Gate 1/3/4/9 不变。
+
+## [2026-09-17] vfm-stage-a | 闭合 Abaqus 基准 FE–VFM 接口
+
+- 只读打开 `FO_G00_reference_UX/EQ/R05.odb`，确认基准 ODB 同时包含 `U/S/E/RF`、非零边界反力和非均匀应变。
+- 用 CPS4R 节点虚位移、双线性插值和单点积分重算离散 VFM；三条路径矩阵秩均为 4，外功—内功相对误差为 `2.28e-7`–`3.61e-7`，外部反力右端项最大参数误差为 `2.04e-5`–`2.18e-5`。
+- 将总计划中的 Gate 3/4 更新为“Stage-A 基准通过；真实 PA12 阻塞”。明确该材料仍是 `E=300 MPa, ν=0.35` 线弹性仿真，不冒充 FS3300PA、真实 DIC 或实验同步结果。
+- 新增 [`wiki/PA12-Abaqus-VFM-StageA基准闭环-2026-09-17.md`](wiki/PA12-Abaqus-VFM-StageA基准闭环-2026-09-17.md) 和项目内 `results/abaqus_vfm_gate_audit.md`；未移动、删除或公开 ODB、PDF、图片、MatchID 工程、机器数据和原始实验数据。

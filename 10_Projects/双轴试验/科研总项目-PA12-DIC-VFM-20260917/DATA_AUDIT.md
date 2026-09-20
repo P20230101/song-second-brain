@@ -1,0 +1,124 @@
+# DATA AUDIT｜已有数据清单、缺失项与可重算项
+
+审计日期：2026-09-17。以下是只读核查结果；原始目录未修改。
+
+## 1. 原始数据位置与规模
+
+实际原始根目录是 `D:\C盘迁移\Desktop\yuan\data`，不是 `C:\Users\Administrator\Desktop\yuan`。前者包含 `XY` 和 `XZ` 两组数据，共 37,392 个文件、约 13.46 GB：
+
+| 区域 | 文件数 | 主要内容 | 当前结论 |
+|---|---:|---|---|
+| `XY` | 35,313 | JPG、逐帧 MatchID `.dat`、`.xls`、`.m2inp`、CSV | 文件级配对较完整；VFM 字段与时间契约仍未完成 |
+| `XZ` | 2,074 | JPG、逐帧 `.dat`、工程/压缩分卷 | 缺 `XZ.z01`，力数据 payload 不能恢复 |
+| 根目录 | 37,392 | `.jpg` 30,941、`.dat` 6,328、`.csv` 48、`.xls` 15、`.m2inp` 13 等 | 原始数据存在，但格式不是研究结论 |
+
+压缩卷：`XY.z01`、`XY.z02`、`XY.zip` 存在；`XZ.z02`、`XZ.zip` 存在，`XZ.z01` 缺失。
+
+## 2. 已有研究区文件
+
+| 资料 | 已确认内容 | 能否直接用于真实 VFM |
+|---|---|---|
+| `双轴/实验/PA12-双轴-DIC-VFM/results/01_VFM照片力对应.csv` | 5,310 行，含图像帧、估计时间、Fx/Fy、事件标签和同步状态 | 否；时间映射标记为估计同步 |
+| `results/审计/xy_photo_force_sync.csv` | XY 逐帧照片—力候选映射；`vfm_eligible=False` | 否；端点锚定不等于共同触发 |
+| `results/审计/xy_event_alignment.csv`、`xy_event_force_candidates.csv` | 事件候选和对齐情景 | 否；均未形成已验证 VFM 事件 |
+| `同步/events.csv` | 只有表头，无有效共同触发事件行；已有端点估计和事件候选表 | 否；共同触发/时间戳仍是同步硬缺口 |
+| `yuan/data/XY/袁-20250529/vertical_all_v1/reports/manifest.csv` | S16（XY-0.1-02）259 个原始图像帧 0–258 的文件名映射 | 可确认图像帧清单；不等于共同触发日志 |
+| `D:\C盘迁移\Desktop\yuan\DIC-xy_0.2` | 133 个逐点 CSV，对应 `Img000000`–`Img000132`；每帧 3,104 点；字段为 `X[Pixels];Y[Pixels];U[Pixels];V[Pixels];R;Sigma` | 0–131 是简洁 legacy 候选场；132 无效；与 raw `.dat` 的点布局不一致，作为独立交叉检查，不替代全量 `.dat` |
+| `results/审计/xz_image_dic_inventory.md` | 7 个 XZ 序列的图像/DIC 库存；一组缺 11 帧 | 否；还缺 `XZ.z01` 力卷和完整时基 |
+| `vfm/vfm_l0.py` 与 `vfm/examples/synthetic_l0/` | 平面应力 L0 代数基线、合成字段和噪声情景 | 仅 synthetic/代数验证 |
+| `simulation/abaqus_biaxial_benchmark.py` 与派生 CSV | Abaqus 平面应力基准和派生节点/单元场；另有夹具优化 ODB | 尚未证明物理场量已闭合进入 VFM 内外功 |
+| `processed/dic_vertical/` | 251 个 TIF | 是图像资产，不是全场位移/应变表 |
+
+字段审计器 `scripts/audit_dic_field_csv.py` 已对 `D:\C盘迁移\Desktop\yuan\DIC-xy_0.2` 重现：133 个连续帧（0–132）、每帧 3,104 点、统一六列 header、无坏字段行。可复现摘要保存为 `results/dic_field_audit_xy_0.2.json`；该结果只证明文件结构，不证明同源、应变、同步或 VFM 准入。
+
+字段命名的外部交叉依据：开源 [FEMU-DIC](https://github.com/BinChenOPEN/FEMU-DIC) 的数据转换说明要求 MatchID CSV 前 7 列依次为 `X,Y,U,V,exx,eyy,exy`，并要求像素单位通过 scale 转换到物理坐标。这个约束只适用于带表头的 MatchID CSV，不能直接套用私有 `.dat`。本地 `.dat` 的 `<18>` 记录在 `Transformation=1`（affine）时含 6 个连续浮点量；结合其结构，字段 7、8 暂作为位移候选，字段 9–12 暂作为局部仿射变换参数候选，不再称为直接应变列；字段 13/14 暂作为 `R/Sigma` 质量指标候选。字段顺序仍待一次带表头的 MatchID CSV 导出或官方内部映射锁定。
+
+本轮针对 MatchID 2019 `.dat` 内部记录的公开检索未找到逐字段格式说明。MatchID 官方软件页公开说明可导出 `CSV/MAT/HDF` 等结果，并支持位移、应变、应变率和应力重建；官方硬件页说明触发单元可同步相机与外部模拟信号。这些页面能证明软件/硬件具备相应能力，但不能把私有 `.dat` 的字段位置升级为正式 schema；因此仍需一次带表头的 MatchID 导出或工程内字段对照。
+
+已对 `XY-0.1-02` 的 `.dat` 首帧与 `DIC-xy_0.2/Img000000.jpg.csv` 做定量交叉检查：`.dat` 为 10,505 点、候选坐标约 `x=7–436, y=7–430 px`；legacy CSV 为 3,104 点、坐标约 `x=67–672, y=116–706 px`，位移范围也不同。结果见 [xy_dat_legacy_crosscheck](results/xy_dat_legacy_crosscheck.md)。两者不能按点直接合并；legacy 只保留为独立交叉质量检查。
+
+原始 MatchID `.dat` 已确认 259 个逐帧文件全部存在，并已逐个解压、解析出 `<18>` 逐点记录。每个文件含参考/变形图像名、`Conversion=0.097519 mm/px`、期望点数和逐点质量字段；0–250、252 帧为 10,505 点，251、253–257 帧为 10,504 点，258 帧为 7,599 点。字段 7、8 按位移候选读取并保留 mm 换算列；字段 9–12 按局部仿射参数候选保留，不能直接当作应变；字段 13/14 按 `R/Sigma` 质量指标候选保留。正式识别前仍需用 MatchID 带表头导出核对字段语义和有效掩膜规则。另有一个独立 legacy DIC 导出目录已确认能读出 `X[Pixels];Y[Pixels];U[Pixels];V[Pixels];R;Sigma` 六列的 133 帧候选场；其首帧坐标范围/点布局与 `.dat` ROI 不一致，不能仅凭 `Img` 帧名认定同源，因此只作为交叉质量检查，不替代全量 `.dat`。
+
+已将同一审计扩展到 `yuan/data` 下的 XY/XZ 全部试样：共 6,327 个 `.dat`（XY 5,295 个、XZ 1,032 个），14 个试验目录，全部可解压解析。汇总见 [ALL_TRIALS_AUDIT](ALL_TRIALS_AUDIT.md)。XY 的现有照片—力候选表共 5,309 行，可与 DAT 按试验编号和帧号关联；X-05 有 14 张照片没有对应 DAT，不能补成虚构全场。XZ 的 `.dat` 可读，但当前目录没有逐照片力时序，暂不进入真实 VFM。
+
+## 3. 数据清单
+
+### 已有且可读
+
+- XY 图像序列和逐帧 `.dat`；
+- XY 多组 `.xls` 机器记录，包含 `Press`、`Pos`、`Speed` 等列；
+- 若干 DIC CSV，但当前抽样 header 为 `Serie;X;Y`，更像剖面/系列导出，不是已确认的二维全场表；
+- 10 个 XY 试样目录及相关 MatchID 工程线索；
+- 7 个 XZ 图像/DIC 序列的库存信息；
+- 项目内 VFM 代数基准和 Abaqus 数值资产；
+- 一份独立 legacy 导出的 133 帧逐点 `U/V/R/Sigma` 候选场；帧 0–131 的点数和 header 一致，帧 132 应判为失效/无效候选帧；与 `XY-0.1-02` raw `.dat` 和力曲线的同源关系待证。
+
+### 缺失或未证实
+
+- 逐帧相机时间戳、机器时间戳和共同触发 ID；
+- 每帧可靠的 `t_image ↔ t_force` 映射及同步残差；
+- 可直接消费的 calibrated 全场 `x,y,u,v,exx,eyy,gxy` 表与最终质量掩膜；全量 `.dat` 已可解析，但字段语义/单位和有效掩膜仍需按导出说明核对；
+- 外轮廓、臂宽及 `d/ds/ws/Rs` 的数值化记录；中心减薄厚度 1.0 mm 已由用户确认；
+- Fx/Fy 的正负号、零点、单位、采样率与边界牵引/合力的最终契约；
+- 试样材料牌号、粉末批次、打印工艺、构建方向与重复试样的可追溯元数据；
+- XZ 的 `XZ.z01`，以及可用于 XZ VFM 的完整力时序；
+- 可以独立留出的同条件路径或试样是否存在，尚未确认。
+
+## 4. 可以重新计算
+
+在不新增实验的优先路线中可以做：
+
+1. 已对 `XY-0.1-02` 的 259 个 `.dat` 完成逐点解析和帧摘要导出；下一步核对字段 schema 后批量导出全场；
+2. 证明 legacy 候选场与指定 raw `.dat`/力曲线同源，或明确将其作为独立数据源；
+3. 对 0–131 帧候选场使用已核实的像素标定重建坐标和位移单位；
+4. 从位移场重建应变，同时验证网格/ROI、应变窗和边缘缺失掩膜；
+5. 从 `.xls` 重建力时间轴、零点和方向通道；
+6. 仅在有证据时重建逐帧同步；否则保留多个时移情景，不把它们写成置信区间；
+7. 完成独立场量/边界力 Abaqus Virtual Experiment 与 VFM；
+8. 计算 M0–M2 的曲线-only、单轴全场和联合全场灵敏度、FIM、条件数、相关性和噪声结果；
+9. 对 1:0、1:0.25、1:0.5、1:0.75、1:1 路径做 synthetic/virtual DOE；
+10. 进行整条路径留出，而非帧级随机拆分。
+
+## 5. 只有补证据或新增实验才能获得
+
+优先先查现有 MatchID/机器文件和实验记录。若确实不存在，才需要：
+
+- 共同触发或可追溯的相机—机器同步证据；
+- 实际厚度、几何和边界力映射；
+- 同工艺/同批次的独立留出路径或重复试样；
+- 若研究速率/松弛，必须有同路径时间历史和保持段；
+- 若研究损伤，必须有峰后场、局部化/断裂和足够重复。
+
+这些不是当前首篇论文默认新增的实验清单，而是缺口无法由现有资料补齐时的最小新增需求。名义几何和 0–131 帧候选 VFM 不再等待上述全部项目。
+
+## 6. 真实管线闭合复核（2026-09-20）
+
+本轮对 `实验/PA12-双轴-DIC-VFM/real_data_pipeline/runs/` 的现有输出做了只读复核。已有 `vfm_ready_check.json` 的 8 个试验目录为：`XY_X-06-1.0-01`（133 帧）、`XY_X-07-10-01`（80 帧）、`XY_Xy-0.1-01`（289 帧）、`XY_Xy-03-10-01`（21 帧）、`XY_Xy-04-1-01`（253 帧）、`XY_Y-09-0.1-02`（1,825 帧）、`XY_Y-10-1-01`（1,558 帧）和 `XY_Y-11-10-01`（711 帧）。这些文件均记录 `force_missing_ratio=0`、`boundary_complete=true` 和 `vfm_eligible=true`；这证明项目管线已经能够生成形式上可消费的输入，不等于材料本构识别已经有效。`XY_Y-09-0.1-02` 虽然接口闭合，但因 Phase 12 力 RMSE `0.3951552071` 超过数据库质量阈值 `0.2`，被排除在 PA12 材料数据库之外。
+
+主试样 `XY_Xy-0.1-01` 的可追溯事实如下：
+
+- `formal_vfm_input.csv.gz` 的正式表头包含 `frame_id, point_id, x_mm, y_mm, u_mm, v_mm, exx, eyy, exy, time_s`，并保留 `Fx, Fy, boundary_force`、质量指标、有效掩膜、来源 DAT 和转换系数等字段；
+- 289 帧均匹配到力表，力表为 N、时间为 s，`force_missing_ratio=0`，最近力样本最大时间距离为 `0.000881944444444 s`；
+- `vfm_ready_check.json` 将相机时间来源写为 `xy_photo_force_sync.csv:t_image_s_est`，验证依据写为用户确认的实验记录；当前没有独立的相机硬件时间戳、共同触发 ID 或原始同步日志可供复核。
+
+因此，`vfm_eligible=true` 在本项目中应解释为“在已声明的端点锚定/共同触发假设下，字段、力值和时间映射满足管线接口”，不能升级为“同步已被独立实验记录证明”。Gate 1 仍为部分通过，Gate 9 仍未通过；真实 VFM 结果只能作为闭环诊断，不能单凭收敛或低维参数输出写成 PA12 材料真值。`PA12_database.h5` 的存在也只证明数据容器已生成，不证明跨试样参数唯一或跨路径预测成立。
+
+对上述 8 个 run contract 运行 `tools/audit_real_pipeline.py` 的结果为 `passed=true`、`error_count=0`；该审计只证明真实入口代码和结果状态满足项目契约，不证明参数唯一性或模型正确性。
+
+## 7. 单试样正式 MatchID 导出字段的直接证据（2026-09-20）
+
+对 `real_data_pipeline/runs/XY_Xy-0.1-01/formal_vfm_input.csv.gz` 直接读取压缩 CSV 的表头和首行，并与 `matchid_export_runtime.json`、`vfm_ready_check.json` 交叉核对。该试样的正式导出具有 289 帧、289 个非空 CSV 和 3,034,764 行；表头实际包含：
+
+```text
+frame_id, point_id, x_mm, y_mm, z_mm, u_mm, v_mm, w_mm,
+exx, eyy, exy, time_s, time_description, fx_N, fy_N,
+thickness_mm, quality_r, quality_sigma, valid,
+x_px_candidate, y_px_candidate, u_px_candidate, v_px_candidate,
+x_mm_candidate, y_mm_candidate, u_mm_candidate, v_mm_candidate,
+quality_r_candidate, quality_sigma_candidate, valid_quality_candidate,
+time_s_est, fx_N_est, fy_N_est, sync_status, vfm_eligible,
+source_dat, conversion_mm_per_px, source_export, point_id_scope,
+Fx, Fy, boundary_force
+```
+
+首行同时给出了 `frame_id=0`、`point_id=0`、毫米坐标/位移、`exx/eyy/exy`、质量字段、`source_dat` 和 `conversion_mm_per_px=0.096193`。这足以把 `XY_Xy-0.1-01` 的正式 CSV 字段 schema 从“待确认”提升为“该试样已确认”。它不能反向证明其他试样私有 `.dat` 的字段顺序，也不能把 `time_s_est` 或 `sync_status=verified_common_trigger` 升级成独立硬件时间戳；`exx/eyy/exy` 的应变定义、质量阈值和最终边界牵引积分规则仍需单独审计。

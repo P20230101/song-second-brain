@@ -7,10 +7,19 @@ theme: jekyll-theme-minimal
 show_downloads: false
 exclude:
   - 模板
-  - 双轴/模板
-  - 双轴/inbox
-  - 双轴/draft_paper
-  - 双轴/processed
-  - 双轴/raw
-  - 双轴/Clippings
-  - 双轴/tmp
+  - 40_Reference/模板
+  - 00_Inbox/Raw
+  - 10_Projects/PA12/raw
+  - 10_Projects/PA12/processed
+  - 10_Projects/PA12/draft_paper
+  - 10_Projects/双轴试验/raw
+  - 10_Projects/双轴试验/inbox
+  - 10_Projects/双轴试验/processed
+  - 10_Projects/双轴试验/draft_paper
+  - 10_Projects/双轴试验/Clippings
+  - 10_Projects/双轴试验/tmp
+  - .agents
+  - .claude
+  - .claudian
+  - .copilot
+  - .opencode

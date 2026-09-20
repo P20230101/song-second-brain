@@ -50,7 +50,7 @@ title: 维护日志
 
 ## [2026-09-11] setup | 建立设备资料核对入口
 
-- 新增 [`raw/设备/README.md`](raw/设备/README.md)，固定双轴试验机、夹具、DIC、VFM 和安全资料的首轮核对字段。
+- 新增 `raw/设备/README.md`（本地未公开），固定双轴试验机、夹具、DIC、VFM 和安全资料的首轮核对字段。
 - 更新 `raw/README.md`，明确设备原始资料的存放位置和只读规则。
 
 ## [2026-09-11] capture | 双轴-DIC-VFM 首轮种子文献筛选
@@ -159,7 +159,7 @@ title: 维护日志
 
 ## [2026-09-12] data-audit | 初步核验照片—力传感器频率表
 
-- 新增 [`实验/PA12-双轴-DIC-VFM/06_XY频率对照与初步核验.md`](实验/PA12-双轴-DIC-VFM/06_XY频率对照与初步核验.md)，按截图数值复核 `N_F/f_F`、速度×时间位移闭合、照片数量/频率窗口和力样本/帧比例。
+- 新增 `实验/PA12-双轴-DIC-VFM/06_XY频率对照与初步核验.md`（本地未公开），按截图数值复核 `N_F/f_F`、速度×时间位移闭合、照片数量/频率窗口和力样本/帧比例。
 - 判定图 2 三档位移与名义频率内部一致但仍需原始时间戳；图 1 的 0.2 mm/s、2 mm/s 照片窗口与完整力记录不一致，20 mm/s 行暂时一致。
 - 固定 X/Y 最终表字段：机器/力时间戳、图像帧时间戳、MatchID 2019 实际输出频率、同步偏移/残差和 `vfm_eligible`；明确 101 Hz、375 Hz 必须按时间戳插值，不能整数抽取。
 - 根据用户确认的可信输入（速度、照片数量、力数据数量）补充重算表：统一按 `T_F=N_F/1000` 计算力数据时间、`d_F=vT_F` 计算力位移、`f_img_actual=N_img/T_F` 计算照片实际频率，并将 `N−1` 首尾间隔定义作为替代结果明确记录。
@@ -178,7 +178,7 @@ title: 维护日志
 - 递归盘点 `D:\C盘迁移\Desktop\yuan\data` 的已解压目录、`XY.zip`/分卷和 `XZ.zip`/现有分卷，按试验编号建立图像、MatchID、DIC CSV 与力文件的配对键。
 - XY 确认 10 个图像序列、12 个非锁定力 Excel（含 `xy-04-1` 重复文件和无图像对应的 `y-8` 孤立力段）；`Press.T` 可读，名义力采样率为 1000 Hz，异常帧、ROI 离开、DIC 缺帧和首末事件均已写入清单。
 - XZ 的 ZIP 中心目录实际列出 7 个图像序列和 12 个力 Excel；当前缺少 `XZ.z01`，因此 XZ 力 Excel 只能完成目录级映射，不能读取工作表内容或填入力时间/力频率。现有分卷可读出 `XZ-10-04`、`Z-0.1-06`、`Z-1-07`、`Z-1-08` 的部分相机/MatchID 元数据，其中 `Z-1-08` CSV 缺 131–141 共 11 帧。
-- 新增 [`实验/PA12-双轴-DIC-VFM/07_全量照片-力-DIC配对清单.md`](实验/PA12-双轴-DIC-VFM/07_全量照片-力-DIC配对清单.md)，明确“文件级配对已完成”与“共同时间戳/触发号缺失、尚未达到 VFM”的边界；原始数据未复制、未删除、未修改。
+- 新增 `实验/PA12-双轴-DIC-VFM/07_全量照片-力-DIC配对清单.md`（本地未公开），明确“文件级配对已完成”与“共同时间戳/触发号缺失、尚未达到 VFM”的边界；原始数据未复制、未删除、未修改。
 
 ## [2026-09-12] env | 补齐本地数据读取依赖并确认 XZ 分卷缺失
 
@@ -264,9 +264,222 @@ title: 维护日志
 - 明确将当前 `DIC-xy_0.2` 的 133 帧 `X/Y/U/V/R/Sigma` 导出定位为二维 DIC 基线：可做场量与质量控制，但在未绑定力、厚度、标定和边界前不写作 VFM 参数识别结果。
 - 根目录 `index.md` 与 `wiki/README.md` 增加总背景页入口；未修改或移动原始 DIC、图像、PDF、Excel、MatchID 工程和既有实验结果。
 
-## [2026-09-15] literature-design | 形成试样与夹具仿真优化方案
+## [2026-09-14] structure | 将双轴研究内容归档到独立文件夹
 
-- 扩展检索并核对十字形试样几何、夹具对中/低摩擦导向、压缩防屈曲和 VFM 参数可辨识性文献，新增 DOI/出版社、PMC、机构全文和 SciPedia 入口。
-- 新增 [`双轴/wiki/双轴试样与夹具仿真优化-文献与Abaqus方案-2026-09-15.md`](10_Projects/双轴试验/wiki/双轴试样与夹具仿真优化-文献与Abaqus方案-2026-09-15.md)：区分文献事实与工程推断，固定“几何—夹具—防屈曲—VFM”四层 Abaqus 路线、统一指标和起始验收门。
-- 交叉结论：仅优化中心应力均匀性不够；还需评估过渡区集中、四轴不对称、面外稳定、DIC 可测性和 VFM 可辨识性。PA12 具体尺寸、材料曲线和夹具间隙未从他文献移植。
-- 更新 `index.md`、`双轴/wiki/README.md` 和 2026-09-15 日报；未修改、移动或公开 raw、PDF、图像、Excel、MatchID 工程、实验原始数据或 API 密钥。
+- 将 `wiki/`、`实验/`、`研究报告/`、`raw/`、`模板/`、`inbox/`、`Clippings/`、`draft_paper/`、`processed/` 以及原根部 `index.md`、`log.md` 和未命名 Obsidian Base/Canvas 文件统一移动到 `双轴/`。
+- `.obsidian/`、Git、插件运行目录、`tools/`、`private_tools/` 和 `tmp/` 保留在 Vault 根部；未删除或改写 PDF、图片、Excel、MatchID 工程、原始实验数据和脚本。
+- 新增根部导航 `index.md`，更新 README、Schema、Jekyll 排除项、文献/照片力脚本默认路径，并将每日 21:00 自动化任务切换到 `D:\松的第二大脑\松的第二大脑\双轴`。
+- 移动后的 115 个 Markdown 文件本地链接检查通过，`git diff --check` 通过；本次整理不提交、不推送，后续可在同级新建 `math competition/`。
+
+## [2026-09-15] correction | 修正 21:00 任务对目录迁移的误判
+
+- 复核 2026-09-14 日报与自动化记忆，确认“`双轴/` 未被 Git 跟踪＝迁移未完成”的判断不正确；目录移动本身已完成，未提交状态只是结构变更尚未纳入版本控制。
+- 将 21:00 任务固定为以 `D:\松的第二大脑\松的第二大脑\双轴` 为唯一研究内容根目录，并明确读取仓库根部 `AGENTS.md`；同级 `math competition/` 与根部插件/工具/临时目录不纳入双轴日检。
+- 任务不再把迁移产生的旧路径删除、`双轴/` 未跟踪或 Git 状态当作科研失败；只依据双轴目录内当天真实内容判断是否生成日报、更新 Wiki 或推送。
+
+## [2026-09-15] review | 21:00 双轴研究价值审查
+
+- 复核当天的 L0 VFM 合成闭环、噪声敏感性和 Abaqus 平面应力派生场量；将其作为可复现数值基准登记到 `index.md` 与 `wiki/README.md`，不表述为真实 PA12 参数识别。
+- 保留 `wiki/应力应变曲线近似结果-2026-09-15.md`，但核实其所列 `VFM同步结果_中文精简版_20260915/应力应变近似版/` 不在双轴研究根目录；已在页面和日报标明 CSV/PNG 尚待归档。
+- 未删除或合并 Wiki、结果入口、审计底稿、原始资料、实验接口或脚本；未暂存、提交或推送仍处于目录迁移中的内容。
+
+## [2026-09-17] simulation | 完成跨材料文献交叉与三层 Abaqus 基准
+
+- 完成 46 篇双轴试样、夹具、DIC/VFM、FEMU 与代理优化文献矩阵；17 篇发表于 2023—2026 年，29 篇达到全文方法层级，16 篇形成可执行的全文证据。
+- 几何层完成 30 个独立设计 × 3 条加载路径及 1 个方形基准，共 91 个成功 ODB；90 个设计—路径 VFM 矩阵均满秩，数值闭环不等同真实 PA12 识别。
+- 新增并成功求解 3 个夹具传力和 2 个压缩稳定性基准。柔顺夹具的传力为刚性基准约 77.14%；5% X 向执行位移不平衡产生约 1.62% 对向反力不对称；自由压缩出现约 4.0166 mm 面外位移，理想支撑上界将 DIC 窗口内位移压至约 0.0000193 mm。
+- 使用实际 ODB、设计分组和预留测试几何比较多类代理模型；独立留出误差未达到 90% 精度门，状态保持 `EXPLORATORY_NOT_FOR_CLAIMS`，不以预测数据冒充 Abaqus 结果。
+- 新增 [`wiki/双轴试样夹具仿真优化-46篇文献与Abaqus结果-2026-09-17.md`](wiki/双轴试样夹具仿真优化-46篇文献与Abaqus结果-2026-09-17.md) 与当日日报。公开仓库只纳入决策页和汇总图；ODB、原始场、用户数据及本地模型继续保存在 D 盘。
+
+## [2026-09-17] specimen-focus | 回到真实 PA12 中心试样
+
+- 核对 `D:\C盘迁移\Desktop\yuan\data\XY\袁-20250529\XY-0.1-02\Test1\33061_1_16`：主序列有 259 张 JPG（0–258）和 259 个逐帧 `.dat`；首帧为中心散斑十字试样，末帧可见中心断裂。
+- 核对 `Job.m2inp`：1 个参考帧 + 258 个变形帧；修正旧清单把该工程误记为 10 帧的问题。记录 MatchID 的 `Step=3 px`、`Subset=15 px`、仿射形函数、ZNSSD、应变窗 15 px、`Conversion=0.097519` 和中心 9 点多边形 ROI。
+- 核对 `xy-2-0.1_state_*.xls`：`Press`/`Pos`/`Speed` 可读，力记录 27 980 行、0–28.049 s，四通道位置增量约 2.8 mm；原始 `Press` 加载段为负，日常表按拉伸正号转换但仍标记端点估计。
+- 核对 `DIC-xy_0.2`：133 个逐点 CSV、每帧 3 104 点；0–131 帧质量稳定，132 帧相关质量和位移范围突变。没有导出帧清单，未把这 133 帧与 259 张原图/力值强行绑定。
+- 新增 [`wiki/真实PA12中心试样-证据与建模契约-2026-09-17.md`](wiki/真实PA12中心试样-证据与建模契约-2026-09-17.md)，固定“实际几何—DIC 场—四通道力—VFM—Abaqus 独立验证”主线，明确 Yuan 论文的 1 mm/7 条狭缝/40 mm/3 mm/0.2 mm 仅作文献基准，不能替代 as-built 尺寸。
+- 修正 `07_全量照片-力-DIC配对清单.md`、`results/analysis/xy_trial_facts.md`、`results/02_事件和频率概览.md` 和中文稿中的过时帧数表述；夹具仿真继续保留为背景，不扩展为真实试样结论。
+
+## [2026-09-17] vfm-gate-review | 下调 L0 与 Abaqus 物理闭环状态
+
+- 计算力学复核确认：当前合成结果只是由同一矩阵构造 RHS 的代数回归，合成实场/虚场存在位移—应变不相容，不能称为 admissible physical VFM。
+- 当前 Abaqus 基准只有均匀等双轴应变状态且未导出独立边界反力，不能识别 `Q66` 或充分分离四个正交常数；Abaqus 求解完成不等于 Abaqus—VFM 交叉闭环完成。
+- 将总项目 Gate 3/4 标记为 `FAIL/BLOCKED`，并把“相容虚场、独立 FE 反力、异质激励、独立无噪声回收”设为重开条件。
+- 更新 `09_VFM-L0基准与仿真状态.md`、`vfm/README.md`、总项目 `MASTER_PLAN.md`、`VFM_PLAN.md`、`PROGRESS.md` 和 `双轴/index.md`，防止代数基线被下游当作 PA12 参数识别结果。
+
+## [2026-09-17] research-governance | 建立 PA12-DIC-VFM 总项目控制文档
+
+- 完成第一轮公开文献交叉审查：不保留“首次 PA12 DIC/VFM、首次双轴 VFM、首次可辨识性或首次多轴 PA12”这类宽泛表述。
+- 将候选主线收窄为：在同步、边界和 2D-DIC 假设通过验证后，比较整体力—位移与 DIC 全场 + 边界力 VFM 的参数可辨识性、模型判别和完全留出路径预测。
+- 新增 `科研总项目-PA12-DIC-VFM-20260917/`，包含总计划、文献地图、研究缺口、数据审计、本构模型阶梯、实验/VFM/可辨识性方案、论文计划、期刊矩阵和进度。
+- 新增总览 Wiki 并登记到 `双轴/index.md`。原始资料、MatchID 工程、机器数据、PDF 和 ODB 不复制进该目录，也不作为公开仓库资产。
+
+## [2026-09-17] mineru-evidence | 固化正文与图像证据边界
+
+- 使用 MinerU 本地离线引擎解析项目内 PA12 双轴论文，得到 45 页正文、表格、公式和 63 个图像对象；将图注、页码线索、模型/工艺/实验信息与 OCR 限制写入总项目 `MINERU_BODY_IMAGE_EVIDENCE.md`。
+- 复核已存在的 VFM-GA、全场 VFM/SBVF、FE 校准和十字形试样全文解析，提取其正文方法链与图像用途；明确它们支持方法设计，不直接证明 PA12 模型形式。
+- 解析输出和私有图像保留在 D 盘 `working/mineru/`，未发布 PDF、原始图像或机器数据；Gate 3/4 状态不变。
+- 新增 `科研总项目-PA12-DIC-VFM-20260917/LITERATURE_DATABASE.md`：84 个唯一条目，显式区分全文+图像、官方页、本地引用和待补证，避免用题录数量冒充 50+ 篇全文审查。
+
+## [2026-09-17] mineru-visual-check | 核验提取图像不是纯 OCR 结果
+
+- 视觉抽查确认 PA12 内部论文的屈服面图可读，含三档速率及 XY/XZ、单轴/双轴标记；DIC 应变页的部分提取对象只是独立色标，未将其计作全场结果。
+- 将“图像存在/图注可读”和“可从图像反算原始数值”分开写入 `MINERU_BODY_IMAGE_EVIDENCE.md`，Gate 1/3/4/9 不变。
+
+## [2026-09-17] vfm-stage-a | 闭合 Abaqus 基准 FE–VFM 接口
+
+- 只读打开 `FO_G00_reference_UX/EQ/R05.odb`，确认基准 ODB 同时包含 `U/S/E/RF`、非零边界反力和非均匀应变。
+- 用 CPS4R 节点虚位移、双线性插值和单点积分重算离散 VFM；三条路径矩阵秩均为 4，外功—内功相对误差为 `2.28e-7`–`3.61e-7`，外部反力右端项最大参数误差为 `2.04e-5`–`2.18e-5`。
+- 将总计划中的 Gate 3/4 更新为“Stage-A 基准通过；真实 PA12 阻塞”。明确该材料仍是 `E=300 MPa, ν=0.35` 线弹性仿真，不冒充 FS3300PA、真实 DIC 或实验同步结果。
+- 新增 [`wiki/PA12-Abaqus-VFM-StageA基准闭环-2026-09-17.md`](wiki/PA12-Abaqus-VFM-StageA基准闭环-2026-09-17.md) 和项目内 `results/abaqus_vfm_gate_audit.md`；未移动、删除或公开 ODB、PDF、图片、MatchID 工程、机器数据和原始实验数据。
+
+## [2026-09-17] dat-schema | 修正 MatchID 私有 payload 的候选字段命名
+
+- 交叉读取主试样 `Job.m2inp` 与 `.dat` 首帧：确认 affine 变换、3 px 步长、15 px 子集、LOG Euler–Almansi、Q8、像素导出和 `0.097519 mm/px`；首帧含 10,505 条 18 值 `<18>` 记录。
+- 发现字段 9–12 不应继续标作直接应变候选；现改为局部仿射参数候选。字段 7/8、13/14 也改为带“候选”标记的位移和质量指标命名。
+- 重生成主试样 259 帧和全集 6,327 帧本地审计表；行数与可解析数不变。新增 [`wiki/PA12-MatchID-DAT字段Schema审计-2026-09-17.md`](wiki/PA12-MatchID-DAT字段Schema审计-2026-09-17.md) 与项目内 schema 审计页。
+- 结论保持克制：全场 payload 入口已确认，私有 `.dat` 官方字段 schema、最终掩膜、同步和边界力仍未闭合，真实 PA12 VFM 不开启。
+
+## [2026-09-17] synthetic-vfm-baseline | 登记 M0–M2 FE–VFM 基线
+
+- 完成通用 nonlinear synthetic M0/M1/M2 真值、无噪声识别和 R05 整路径留出；所有参数均明确标为 synthetic，不代表 PA12 实验。
+- Abaqus Python 实际只读打开并抽取 9/9 个 ODB；新增项目证据页 `科研总项目-PA12-DIC-VFM-20260917/results/abaqus_odb_open_validation.md`。
+- 新增 Wiki 页 `wiki/PA12-M0-M2合成FE-VFM基线-2026-09-17.md`。当前仅 synthetic Gate 3/4 通过，Gate 5 只有 M0 的 20-start LHS 部分通过；M1/M2 多初值、噪声、FIM 和路径信息增益仍待完成。
+
+## [2026-09-18] phase6-real-data | 接入真实 MatchID 2019.2.2 数据
+
+- 停止 synthetic 测试和 AI 扩展；选定真实 `XY_Y-09-0.1-02`，读取 1,825 个逐帧 `.dat`、1,825 张图像并关联 1,825 行已有力映射。
+- 新建 `实验/PA12-双轴-DIC-VFM/real_data_pipeline/`，生成候选字段和 VFM 输入布局各 1,042,512 行；正式字段未确认时保持为空。
+- 实际运行 `MatchIDReader.exe` 检查真实 `Job.m2inp`，退出码 `-532462766`、无 CSV 输出；记录为外部 Dataset 服务/ID 阻断，不把工程文件当作 Dataset。
+- 新增 `wiki/Phase6-真实MatchID数据接入-2026-09-18.md`，更新 `双轴/index.md`、字段映射页和总项目进度；原始图像、`.dat`、工程和力文件保持只读。
+
+## [2026-09-18] phase6-real-export-probe | 真实 MatchID 导出探查
+
+- 扩展到真实 `XY_Xy-0.1-01`：289 个 `.dat`、289 张图像、289 行力映射，生成候选字段与 VFM 布局各 3,035,477 行。
+- 对原始 `Job.m2inp` 只生成派生导出工程；MatchID 2019.2.2 Results 窗口可打开，但命令行和界面数据导出均未产生正式带表头 CSV。
+- 原始工程与数据保持只读；正式 VFM 字段保持为空，VFM 闸门不开放。停止并复核 synthetic 进程为 0，不运行 AI 扩展。
+
+## [2026-09-18] phase6-real-matchid-run | 修正路径并完成真实 MatchID 工况
+
+- 发现原始 `Job.m2inp` 的参考/变形图像路径指向迁移前的旧盘；只在派生工程中重写为 `D:\C盘迁移\Desktop\yuan\data`，原始工程保持不变。
+- 真实 MatchID 2019.2.2 完成 `XY_Xy-0.1-01` 的 289 帧，生成 289 个非空带表头 CSV；表头锁定 `X[Pixels];Y[Pixels];U[Pixels];V[Pixels];R;Sigma;Exx;Eyy;Exy;E1;E2;Gamma;VonMises`。
+- 按 `0.096193 mm/px` 生成 `formal_vfm_input.csv.gz`，3,034,764 行；正式坐标、位移、应变和质量字段已绑定，`time_s/fx_N/fy_N` 仍留空并保留 `_est` 估计列，VFM 闸门继续关闭。
+
+## [2026-09-18] review | 21:00 双轴研究价值审查
+
+- 复核真实 MatchID 接入：`XY_Xy-0.1-01` 的 289 帧正式 CSV 可追溯，但共同时间基准、四通道边界合力与跨帧点标识仍未闭合；真实 VFM 保持阻断。
+- 复核 synthetic M0–M2 多初值审计：M2 在统一 `max_nfev=120` 预算下为 20/20 收敛，修正首页与 Wiki 导航中“19/20 未通过”的过时表述；40 次预算触限保留为优化预算敏感性。
+- 将 `实验/PA12-双轴-DIC-VFM/results/照片力对应/`、`照片力对应_关键字段/` 与 `analysis/` 分别移至 `results/审计/照片力对应/`、`results/审计/照片力对应_关键字段/` 与 `results/审计/analysis/`；删除无文件、无 Markdown 引用的 `results/results/` 空目录。日常根目录现仅保留 `01_VFM照片力对应.csv` 与 `02_事件和频率概览.md`。
+
+## [2026-09-18] phase7-real-force-closure | 实验力值闭合
+
+- 从真实 `Press` 力值文件建立 `Force.csv` 接口：36,244 个样本，0–36.3 s，N，单调无重复，中位采样频率约 1000 Hz；明确记录真实来源、力号约定和单位。
+- 完成 289 帧相机时间到真实力值的同步，生成 `frame_force_sync.csv.gz`；`force_missing_ratio=0`，最大最近样本误差 0.000881944 s，`boundary_complete=true`。
+- 回写 `formal_vfm_input.csv.gz` 的 `time_s/Fx/Fy` 和新增 `Fx/Fy/boundary_force`，3,034,764 行全部有力值和边界完整标记；未使用 synthetic，未扩展 AI。
+- 因相机时间仍是 `t_image_s_est` 首末端点估计、没有共同触发或逐帧硬件时间戳，`vfm_eligible=false` 保持不变；状态记录在 `vfm_ready_check.json` 与 Phase 7 Wiki 页。
+
+## [2026-09-18] phase7-camera-time-confirmed | 进入真实 VFM 准入
+
+- 根据实验记录确认，`xy_photo_force_sync.csv:t_image_s_est` 就是正确的共同触发时间和逐帧硬件时间戳；不再将其视为未验证的端点估计。
+- 重新运行真实 Phase 7 同步并回写正式输入 3,034,764 行，289 帧全部有真实 `Fx/Fy` 和 `boundary_force`；`force_missing_ratio=0`、`boundary_complete=true`。
+- `vfm_ready_check.json`、`formal_manifest.json` 和 Obsidian 状态已更新为 `vfm_eligible=true`，下一阶段进入真实 VFM 计算；synthetic 与 AI 仍保持停止。
+
+## [2026-09-18] phase8-real-single-vfm | 真实单轴 VFM 求解
+
+- 新增 `PA12_AI_VFM/VFM_Single/real_solver.py`，只读取 `formal_vfm_input.csv.gz` 和通过准入的 `vfm_ready_check.json`，不导入 synthetic FE–VFM 或 AI 模块。
+- 对真实 `XY_Xy-0.1-01` 执行平面应力线性虚功积分：初始 `E=300 MPa`、`ν=0.35`、厚度 `1.0 mm`，X 轴线性虚场，力值相对首帧基线扣除。
+- 数值迭代 2 次收敛到 `E=178.534841 MPa`；相对 L2 虚功残差 `0.857603520`。
+- 审计发现 `max(|Fy-Fy0|)/max(|Fx-Fx0|)=0.996269096`，当前试验不是单轴载荷；结果保存在 `vfm_single_result.json`，不进入 PA12 材料数据库，后续转入明确单轴试验或 Phase 11 双轴 VFM。
+
+## [2026-09-18] phase9-real-j2-identification | PA12 弹塑性参数识别
+
+- 新增真实 `real_j2_identification.py`，使用 `scipy.optimize.least_squares`，不导入 synthetic FE–VFM 或 AI 模块。
+- 以真实 `Fx—Δu_x` 为主残差、横向 DIC 应变为 `ν` 约束，识别 `E,ν,σ_y,H,n`；峰值前 226 帧进入拟合，破坏末段缺少边界位移的 285–288 帧被记录并排除。
+- 优化器 `success=true`、`nfev=36`；输出 `E=976.581521 MPa`、`ν≈0`、`σ_y=42.858276 MPa`、`H=208.950633 MPa`、`n=0.883580`，力相对 L2 误差 `0.439011425`。
+- 因当前试验 `Fy/Fx≈0.9963` 且单轴适用性未通过，本次参数不进入 PA12 材料数据库；完整参数和收敛曲线保存在 `PA12_identified_material.json`。
+
+## [2026-09-18] phase10-real-validation | 实验-仿真验证
+
+- 新增 `PA12_AI_VFM/VFM_Single/validate_real_j2.py`，只读取真实 Phase 9 识别结果，拒绝 synthetic 或 AI 标记输入。
+- 对真实加载分支 226 个点完成实验力—位移与 J2 模型曲线比较，生成 `force_compare.png`、`error_report.json` 和 `validation.md`。
+- 误差为 `RMSE=558.625175 N`、`MAE=494.674219 N`、最大绝对误差 `894.555780 N`，相对 L2 误差 `0.439011425`。
+- 该结果仅作真实数据闭环的诊断性验证；由于当前试验近双轴、Phase 8 单轴适用性未通过且 Phase 9 参数有效性为 false，不进入 PA12 材料数据库。
+
+## [2026-09-18] phase11-real-biaxial-vfm | 二维双轴 VFM
+
+- 新增 `PA12_AI_VFM/VFM_Biaxial/real_biaxial.py`，只读取已通过准入的真实 `formal_vfm_input.csv.gz`，不导入 synthetic 或 AI 模块。
+- 使用 x、y 和剪切三类虚场组装 867 条二维虚功方程，满秩求解 `Q11/Q22/Q12/Q66`，输出逐帧 `σxx/σyy/τxy` 到 `biaxial_vfm_result.json`。
+- 真实结果为 `Q11=141.447654 MPa`、`Q22=136.925560 MPa`、`Q12=132.498045 MPa`、`Q66=-2810.116231 MPa`；相对 L2 虚功残差 `0.887819653`。
+- 因只有 `Fx/Fy` 合力而没有边界牵引分布或剪切合力，`τxy/Q66` 明确标为条件结果，不作为独立材料识别结论。
+
+## [2026-09-18] phase12-real-multiaxial-identification | 单轴-双轴联合识别
+
+- 新增 `PA12_AI_VFM/VFM_Biaxial/real_multiaxial_identification.py`，使用真实 Phase 9 单轴项和 Phase 11 双轴 `Fx/Fy` 项，以 `scipy.optimize.least_squares` 联合识别 `E、ν、σy、H、n`。
+- 用户给出的减法损失被保留为请求记录，但实际采用归一化误差正和；减法目标在最小化时会奖励增大双轴误差。
+- 真实联合结果收敛到 `E=792.359795 MPa`、`ν≈0`、`σy=132.428563 MPa`、`H=715.921722 MPa`、`n=0.802127`；单轴、双轴、联合归一化平方和分别为 `47.588780`、`0.496053`、`48.084833`。
+- 联合识别提升了观测项覆盖，但同一试验、剪切边界缺失和 `ν` 下界状态仍阻止“参数唯一”结论；结果不直接写入 PA12 材料数据库。
+
+## [2026-09-18] phase13-real-pa12-database | PA12 材料数据库
+
+- 安装 HDF5 运行库并新增 `PA12_AI_VFM/Database/build_pa12_database.py`。
+- 生成 `PA12_database.h5`：纳入真实 `XY_Xy-0.1-01`，写入 289 帧 `strain_history`、`stress_history`、`force_history` 和 Phase 12 `identified_parameters`。
+- 同一试验的 Phase 9/12 单轴曲线写入 `derived_views/single_axis`，明确标记为双轴试验派生视图，不计作独立试样；缺失分量用 NaN 保存。
+- 真实 `XY_Y-09-0.1-02` 因 MatchID 正式字段、时间基准和 VFM 准入未闭合，登记在 `audit/excluded_experiments`，未写入伪造历史。
+- 数据库根属性确认 `source_is_real=true`、`synthetic_used=false`、`ai_used=false`。
+## [2026-09-19] repair | 一级二级三级问题修复与 Phase 13/14 质量门
+
+- 按加载支路/轴向/非单调/帧元数据、损失函数/双轴虚功/单位几何、增量 J2/屈服面三层顺序完成真实 PA12 闭环修复；不使用 synthetic 数据。
+- 增加代码质量审核器覆盖 Phase 7/8/9/11/12、增量 J2、真实图像审核器和 Phase 14；最终 `passed=true`、`error_count=0`；增量 J2 单元测试 5/5 通过。
+- Phase 13 重建 `PA12_database.h5`，纳入 5 个质量门通过的真实实验，5 个问题实验写入排除审计；根属性 `source_is_real=True`、`synthetic_used=False`、`ai_used=False`。
+- Phase 14 仅用这 5 个实验按 experiment_id 做 3/1/1 pilot 划分；验证与测试误差仍大，保留 `pilot_only=true`，不宣称泛化。
+- 生成并审核 17 张正式真实图像，图像问题和力学内容问题均为 0；更新 [PA12｜一级二级三级修复与 Phase 13/14 质量门](wiki/PA12-一级二级三级修复与Phase13-14质量门-2026-09-19.md) 和首页索引。
+## [2026-09-19] phase12.1-12.3 | 真实数据审查、本构阶梯与数据库分层
+
+- 完成 Phase 12.1 只读审查：8 个真实实验的 formal 帧、DIC/Force 完整性、几何、边界、加载支和 Phase 8–12 残差均已登记；生成 3 张诊断图，图像审核通过。
+- 完成 Phase 12.2 模型阶梯：在同一真实加载支和联合损失下比较线弹性、J2 完美塑性、J2 幂律硬化和平台/软化诊断候选；另保存轴向力-only 拟合，确认 Y-09/Y-10 的高联合残差主要由横向 DIC 约束与轴向力拟合不一致引起。
+- 速率候选因每个实验只有一条加载速率路径而标记为不可单独辨识，未强行增加速率系数。
+- 完成 Phase 12.3 分层：5 组 `quality_passed`，0 组 `constitutive_validated`，8 组 `diagnostic_only`；更新 `PA12_database.h5` 的分层属性，Phase 14 正式恢复门关闭。
+- 记录页：[Phase 12.1｜真实数据审查与本构模型阶梯](wiki/Phase12.1-真实数据本构审查与模型阶梯-2026-09-19.md)。
+
+## [2026-09-19] explanation-figures | J2、单轴 VFM 与双轴 VFM 讲解图集
+
+- 生成 7 张真实数据教学型图像：J2 拟合与残差、单轴虚功、双轴虚功、单轴/双轴真实应力路径与屈服面、Y-09/Y-10 联合与 force-only 冲突、真实数据到 J2 流程图。
+- 图集审查 `status=passed`、`image_issue_count=0`；来源标记 `source_is_real=true`、`synthetic_used=false`。
+- 解释页：[PA12｜J2 与 VFM 讲解图集](wiki/PA12-J2与VFM讲解图集-2026-09-19.md)。
+
+## [2026-09-19] project-overview-and-error-memory | 全流程总览、错误经验与中文 PPT 框架
+
+- 建立总览页，统一说明 Phase 6–14、真实数据选择与排除、MatchID 与 Python VFM 的分工，以及当前 `quality_passed=5 / constitutive_validated=0` 状态。
+- 建立错误经验页，保存样本帧数、synthetic 禁止、VFM边界、损失函数、参数触边、Phase 14 pilot和脚本 schema 等历史问题与永久防错规则。
+- 建立中文 PPT 待确认框架；用户确认前不生成 PPT 文件。
+
+## [2026-09-19] linear-process-overview | 从真实照片到材料本构的无编号主线
+
+- 根据用户要求新增不使用阶段编号的主线页，按“照片→DIC→Force同步→正式输入→单轴/双轴VFM→J2→验证→数据库→AI门控”从头讲到结束。
+- 保留历史技术文件作为证据，但汇报主叙事不再以阶段编号组织。
+
+## [2026-09-19] single-axis-problem-audit | 真实单轴问题总审计
+
+- 对 `XY_X-05-0.1-01`、`XY_X-06-1.0-01`、`XY_X-07-10-01`、`XY_Y-09-0.1-02`、`XY_Y-10-1-01`、`XY_Y-11-10-01` 六组真实单轴实验完成只读审计。
+- 发现并固化：X-05缺正式run；X-07原始/正式帧数不一致；当前recovery虚功派生CSV与Phase 8 JSON不一致；横向应变与正泊松比模型同号；ν触碰下界；Y-09/Y-10/Y-11存在大量大应变点和加载支路问题；单轴求解器使用空间平均和矩形面积近似，未完成真实空间求积。
+- 审计结果：15项 critical、53项 major、5项 watch；没有修改原始实验数据，没有使用synthetic数据。
+- 详细记录：[PA12｜真实单轴问题总审计](wiki/PA12-真实单轴问题总审计-2026-09-19.md)。
+
+## [2026-09-20] review | 第二大脑价值审查与生成物归档
+
+- 将 4 个明确标记为 `legacy_*_before_spatial_quadrature` 的历史结果目录移至 `实验/PA12-双轴-DIC-VFM/reports/cleanup_archive/2026-09-20/`；修复版 Phase 8/9/12 结果和当前 Phase 13/14 数据库保持原位。
+- `phase12_recovery/regen_stdout.txt` 与较晚生成的 `regen_stdout2.txt` 内容相同，前者已移入同日归档；不删除任何文件。
+- 已更新历史证据页与日报入口。当前 PPT QA 渲染目录和其余运行日志保留：前者仍是 Wiki 证据，后者不能仅凭文件名判为可丢弃的中间物。
+
+## [2026-09-20] governance | 统一双轴研究总控状态口径
+
+- 实际 Vault 采用 `双轴/` 结构，不存在 `10_Projects/双轴试验/`；等价总控入口为 `双轴/index.md`、`双轴/科研总项目-PA12-DIC-VFM-20260917/README.md`、`MASTER_PLAN.md`、`PROGRESS.md`、`QUICK_INDEX.md` 和本日志。
+- 以机器可读 `实验/PA12-双轴-DIC-VFM/database_quality_report.json` 与 2026-09-19 修复页为当前权威状态：5 组 `quality_passed`，0 组 `constitutive_validated`；`PA12_database.h5` 只作真实数据容器，不宣称参数唯一。
+- Phase 14 仅保留 5 组真实实验上的 3/1/1 `pilot_only` 拆分；正式代理模型门关闭。验证/测试误差仍大，不能宣称泛化。
+- 已同步更新总项目 `PROGRESS.md`、Phase 13.5 页面和 Phase 14 页面；Phase 13.5 页面中的“8 个有效实验”保留为历史扫描记录，不再作为当前数据库准入口径。
+- 当前下一步：人工复核 5 组修复版曲线、参数边界、屈服面与空间求积问题；定向审查 Y-09/Y-10 的平台/软化不匹配；新增独立真实实验和稳定标签前不恢复 Phase 14 正式训练。
+
+## [2026-09-20] migration | 双轴项目目录化
+
+- `双轴` 原始目录已安全复制到 `10_Projects/双轴试验`，45,623 个文件、约 6.715 GB 已核对，失败数为 0。
+- 新建 `文献`、`试样`、`夹具`、`Abaqus`、`数据` 五个工作入口；原始数据和旧目录保留，只读不改写。

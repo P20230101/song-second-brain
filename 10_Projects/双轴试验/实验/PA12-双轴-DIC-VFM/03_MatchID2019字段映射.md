@@ -10,7 +10,7 @@ updated: 2026-09-18
 
 ## Phase 6 实际检查（2026-09-18）
 
-已对真实 `XY_Y-09-0.1-02` 的 `Job.m2inp` 和 1,825 个逐帧 `.dat` 执行接入检查。`.dat` 可逐帧解析，但 `MatchIDReader.exe` 将 `Job.m2inp` 作为 Dataset 参数时没有返回 `IDataset`，退出码为 `-532462766`，未生成正式 CSV。真实候选输出见 [Phase 6 接入记录](../../wiki/Phase6-真实MatchID数据接入-2026-09-18.md)。
+已对真实 `XY_Y-09-0.1-02` 的 `Job.m2inp` 和 1,825 个逐帧 `.dat` 执行接入检查。`.dat` 可逐帧解析，但 `MatchIDReader.exe` 将 `Job.m2inp` 作为 Dataset 参数时没有返回 `IDataset`，退出码为 `-532462766`，未生成正式 CSV。真实候选输出见 [Phase 6 接入记录](../../wiki/02_实验与VFM/Phase6-真实MatchID数据接入-2026-09-18.md)。
 
 因此本页的“必须确认的逻辑字段”仍不能填入私有 `.dat` 的候选列；字段 7/8、9–12 和估计时间/力映射均保持候选或阻断状态。
 

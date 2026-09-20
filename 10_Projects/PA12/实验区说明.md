@@ -21,4 +21,4 @@ title: 实验区
 └── manuscript/
 ```
 
-双轴-DIC-VFM 的固定阶段、闸门和输出文件见 [`wiki/工程力学-双轴DIC-VFM研究路线.md`](../wiki/工程力学-双轴DIC-VFM研究路线.md)；通用阶段门控和人工确认规则见 [`wiki/科研流水线SOP.md`](../wiki/科研流水线SOP.md)。
+双轴-DIC-VFM 的固定阶段、闸门和输出文件见 [`wiki/01_研究总控/工程力学-双轴DIC-VFM研究路线.md`](../wiki/01_研究总控/工程力学-双轴DIC-VFM研究路线.md)；通用阶段门控和人工确认规则见 [`wiki/04_文献与工具/科研流水线SOP.md`](../wiki/04_文献与工具/科研流水线SOP.md)。

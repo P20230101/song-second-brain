@@ -5,12 +5,12 @@ type: wiki-index
 
 # 知识 Wiki｜总入口
 
-这里是跨项目知识的门户，不再复制 PA12 双轴项目的正文。双轴研究的正式页面统一放在：[[10_Projects/双轴试验/wiki/README]]。
+这里是跨项目知识的门户，不再复制 PA12 双轴项目的正文。双轴研究的正式页面统一放在：[[10_Projects/双轴试验/wiki/05_结果与论文/README.md]]。
 
 ## 先看哪一页
 
 - [[10_Projects/双轴试验/index]]：PA12 双轴试验的日常入口。
-- [[10_Projects/双轴试验/wiki/README]]：按研究用途进入项目 Wiki。
+- [[10_Projects/双轴试验/wiki/05_结果与论文/README.md]]：按研究用途进入项目 Wiki。
 - [[30_Reports/研究报告/README]]：按日期查看日报、周报和月报。
 
 ## 通用方法与工具

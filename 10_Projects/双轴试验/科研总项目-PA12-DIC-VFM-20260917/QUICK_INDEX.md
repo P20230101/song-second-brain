@@ -21,7 +21,7 @@
 - [MatchID `.dat` Schema 审计](results/matchid_dat_schema_audit.md)
 - [全试样 MatchID 审计](ALL_TRIALS_AUDIT.md)
 - [试验矩阵](EXPERIMENT_PLAN.md)
-- 真实样本证据：[双轴/wiki/真实PA12中心试样-证据与建模契约-2026-09-17.md](../wiki/真实PA12中心试样-证据与建模契约-2026-09-17.md)
+- 真实样本证据：[双轴/wiki/02_实验与VFM/真实PA12中心试样-证据与建模契约-2026-09-17.md](../wiki/02_实验与VFM/真实PA12中心试样-证据与建模契约-2026-09-17.md)
 - 原始数据：`D:\C盘迁移\Desktop\yuan\data`（只读，不复制进仓库）
 - legacy DIC 候选导出：`D:\C盘迁移\Desktop\yuan\DIC-xy_0.2`（133 帧；作为独立交叉检查）
 - MatchID 全量逐点入口：`D:\C盘迁移\Desktop\yuan\data\XY\袁-20250529\XY-0.1-02\Test1\33061_1_16`（259 个 `.jpg.dat`，全部可解析）

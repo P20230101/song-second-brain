@@ -56,7 +56,7 @@ git ls-remote --heads https://github.com/K-Dense-AI/scientific-agent-skills.git 
 在 Codex 中使用以下指令。将方括号替换为真实值，路径保持绝对路径：
 
 ```text
-读取 AGENTS.md、index.md、wiki/01_研究总控/研究上下文.md 和本页。
+读取 AGENTS.md、index.md、wiki/01_研究总控/01_项目入口/研究上下文.md 和本页。
 启动研究编排流程。
 研究主题：[主题]
 成果路径：D:\松的第二大脑\松的第二大脑
@@ -102,7 +102,7 @@ git ls-remote --heads https://github.com/K-Dense-AI/scientific-agent-skills.git 
 - 文字轨：将研究框架、方法说明和证据链写入 `root_path` 或 `wiki/`。
 - 代码轨：将可执行脚本、`.ipynb`、数据处理记录和图片写入 `code_and_images_path`。
 - 运行前由人工确认数据完整性、变量定义、样本范围和环境；运行后把命令、版本、输出文件和失败信息写入实验记录。
-- 不把模型输出直接写成论文结论；先回到 `wiki/01_研究总控/研究上下文.md`，标注证据、推断、限制和下一步。
+- 不把模型输出直接写成论文结论；先回到 `wiki/01_研究总控/01_项目入口/研究上下文.md`，标注证据、推断、限制和下一步。
 
 推荐的最小项目目录：
 
@@ -120,7 +120,7 @@ git ls-remote --heads https://github.com/K-Dense-AI/scientific-agent-skills.git 
 每天讨论文献后：
 
 1. 将原始对话追加到本地 `inbox/对话/每日对话记录.md`。
-2. 读取 `wiki/01_研究总控/研究上下文.md` 和当天对话，生成每日闭环页。
+2. 读取 `wiki/01_研究总控/01_项目入口/研究上下文.md` 和当天对话，生成每日闭环页。
 3. 把文献矩阵的新增行、证据冲突、待验证问题和下一步确认写入闭环页。
 4. 只有形成可复用结论并完成来源核验后，才回写主题 Wiki。
 
